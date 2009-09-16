@@ -19,13 +19,13 @@
   Boston, MA 02110-1301, USA.
 */
 
-#ifndef KONTACTINTERFACES_UNIQUEAPPHANDLER_H
-#define KONTACTINTERFACES_UNIQUEAPPHANDLER_H
+#ifndef KONTACTINTERFACE_UNIQUEAPPHANDLER_H
+#define KONTACTINTERFACE_UNIQUEAPPHANDLER_H
 
-#include "kontactinterfaces_export.h"
+#include "kontactinterface_export.h"
 #include "plugin.h"
 
-namespace Kontact
+namespace KontactInterface
 {
 
 /**
@@ -35,7 +35,7 @@ namespace Kontact
  * By default this means simply bringing the main window to the front,
  * but newInstance can be reimplemented.
  */
-class KONTACTINTERFACES_EXPORT UniqueAppHandler : public QObject
+class KONTACTINTERFACE_EXPORT UniqueAppHandler : public QObject
 {
   Q_OBJECT
   // We implement the KUniqueApplication interface
@@ -95,7 +95,7 @@ template <class T> class UniqueAppHandlerFactory : public UniqueAppHandlerFactor
  * Kontact takes over from there.
  *
  */
-class KONTACTINTERFACES_EXPORT UniqueAppWatcher : public QObject
+class KONTACTINTERFACE_EXPORT UniqueAppWatcher : public QObject
 {
   Q_OBJECT
 

@@ -23,7 +23,7 @@
 #include "plugin.h"
 #include "core.h"
 
-#include <libkdepim/utils.h>
+#include <kpimutils/processes.h>
 
 #include <kparts/componentfactory.h>
 #include <kxmlguifactory.h>
@@ -38,7 +38,7 @@
 
 #include <unistd.h>
 
-using namespace Kontact;
+using namespace KontactInterface;
 
 /**
   Private class that helps to provide binary compatibility between releases.
@@ -138,7 +138,7 @@ bool Plugin::createDBUSInterface( const QString &serviceType )
   return false;
 }
 
-bool Plugin::isRunningStandalone()
+bool Plugin::isRunningStandalone() const
 {
   return false;
 }
@@ -148,7 +148,7 @@ KParts::ReadOnlyPart *Plugin::loadPart()
   return core()->createPart( d->partLibraryName );
 }
 
-const KAboutData *Plugin::aboutData()
+const KAboutData *Plugin::aboutData() const
 {
   KPluginLoader loader( d->partLibraryName );
   KPluginFactory *factory = loader.factory();
@@ -241,10 +241,22 @@ QStringList Plugin::invisibleToolbarActions() const
   return QStringList();
 }
 
-bool Plugin::canDecodeMimeData( const QMimeData *data )
+bool Plugin::canDecodeMimeData( const QMimeData *data ) const
 {
   Q_UNUSED( data );
   return false;
+}
+
+void Plugin::processDropEvent( QDropEvent * )
+{
+}
+
+void Plugin::readProperties( const KConfigGroup & )
+{
+}
+
+void Plugin::saveProperties( KConfigGroup & )
+{
 }
 
 Core *Plugin::core() const
@@ -278,7 +290,7 @@ void Plugin::bringToForeground()
     return;
   }
 #ifdef Q_WS_WIN
-  KPIM::Utils::activateWindowForProcess( d->executableName );
+  KPIMUtils::activateWindowForProcess( d->executableName );
 #else
   KRun::runCommand( d->executableName, 0 );
 #endif

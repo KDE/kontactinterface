@@ -36,10 +36,10 @@
 #include <KIconLoader>
 #include <KDialog>
 
-using namespace Kontact;
+using namespace KontactInterface;
 
 //@cond PRIVATE
-namespace Kontact {
+namespace KontactInterface {
 class SummaryMimeData : public QMimeData
 {
   public:
@@ -111,6 +111,10 @@ QWidget *Summary::createHeader( QWidget *parent, const QString &iconname, const 
 QStringList Summary::configModules() const
 {
   return QStringList();
+}
+
+void Summary::configChanged()
+{
 }
 
 void Summary::updateSummary( bool force )

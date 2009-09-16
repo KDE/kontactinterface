@@ -30,10 +30,10 @@
 #include <QDateTime>
 #include <QTimer>
 
-using namespace Kontact;
+using namespace KontactInterface;
 
 //@cond PRIVATE
-class Kontact::Core::Private
+class KontactInterface::Core::Private
 {
   Core *const q;
 
