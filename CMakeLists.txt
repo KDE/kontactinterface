@@ -15,12 +15,11 @@ kde4_add_library(kontactinterface SHARED ${kontactinterface_LIB_SRCS})
 target_link_libraries(kontactinterface kpimutils ${KDE4_KPARTS_LIBS})
 
 set_target_properties(kontactinterface PROPERTIES VERSION ${GENERIC_LIB_VERSION} SOVERSION ${GENERIC_LIB_SOVERSION})
+
 install(TARGETS kontactinterface EXPORT kdepimlibsLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS})
 
 
 ########### install files ###############
-
-install(TARGETS kontactinterface ${INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(FILES
   kontactinterface_export.h
@@ -31,3 +30,4 @@ install(FILES
 DESTINATION ${INCLUDE_INSTALL_DIR}/kontactinterface COMPONENT Devel)
 
 install(FILES kontactplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
+
