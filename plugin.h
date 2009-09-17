@@ -245,12 +245,12 @@ class KONTACTINTERFACE_EXPORT Plugin : public QObject, virtual public KXMLGUICli
     /**
      * Returns the list of custom "New" actions.
      */
-    QList<KAction*>* newActions() const;
+    QList<KAction*> newActions() const;
 
     /**
      * Returns the list of custom "Sync" actions.
      */
-    QList<KAction*>* syncActions() const;
+    QList<KAction*> syncActions() const;
 
     /**
      * Returns a list of action names that shall be hidden in the main toolbar.
