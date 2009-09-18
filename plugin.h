@@ -61,7 +61,7 @@ K_EXPORT_PLUGIN( KontactPluginFactory( "kontact_" #pluginname "plugin" ) )
 /**
   Increase this version number whenever you make a change in the API.
  */
-#define KONTACT_PLUGIN_VERSION 7
+#define KONTACT_PLUGIN_VERSION 8
 
 namespace KontactInterface
 {
