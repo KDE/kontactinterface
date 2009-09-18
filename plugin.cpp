@@ -52,8 +52,8 @@ class Plugin::Private
     void partDestroyed();
 
     Core *core;
-    QList<KAction*> *newActions;
-    QList<KAction*> *syncActions;
+    QList<KAction*> newActions;
+    QList<KAction*> syncActions;
     QString identifier;
     QString title;
     QString icon;
@@ -74,8 +74,6 @@ Plugin::Plugin( Core *core, QObject *parent, const char *name )
   KGlobal::locale()->insertCatalog( name );
 
   d->core = core;
-  d->newActions = new QList<KAction*>;
-  d->syncActions = new QList<KAction*>;
   d->hasPart = true;
   d->part = 0;
   d->disabled = false;
@@ -218,20 +216,20 @@ int Plugin::weight() const
 
 void Plugin::insertNewAction( KAction *action )
 {
-  d->newActions->append( action );
+  d->newActions.append( action );
 }
 
 void Plugin::insertSyncAction( KAction *action )
 {
-  d->syncActions->append( action );
+  d->syncActions.append( action );
 }
 
-QList<KAction*> *Plugin::newActions() const
+QList<KAction*> Plugin::newActions() const
 {
   return d->newActions;
 }
 
-QList<KAction*> *Plugin::syncActions() const
+QList<KAction*> Plugin::syncActions() const
 {
   return d->syncActions;
 }

@@ -3,6 +3,10 @@ Type=ServiceType
 X-KDE-ServiceType=Kontact/Plugin
 Name=Kontact Plugin
 Name[ga]=Breiseán Kontact
+Name[pt]='Plugin' do Kontact
+Name[tr]=Kontact Eklentisi
+Name[uk]=Додаток до Kontact
+Name[x-test]=xxKontact Pluginxx
 Name[zh_TW]=Kontact 外掛程式
 
 [PropertyDef::X-KDE-KontactPluginVersion]
