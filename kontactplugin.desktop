@@ -3,6 +3,7 @@ Type=ServiceType
 X-KDE-ServiceType=Kontact/Plugin
 Name=Kontact Plugin
 Name[ga]=Breiseán Kontact
+Name[gl]=Extensión de Kontact
 Name[pt]='Plugin' do Kontact
 Name[pt_BR]=Plug-in do Kontact
 Name[sv]=Insticksprogram för Kontact
