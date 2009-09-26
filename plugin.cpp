@@ -21,6 +21,7 @@
 */
 
 #include "plugin.h"
+#include <QFile>
 #include "core.h"
 
 #include <kpimutils/processes.h>
@@ -31,6 +32,7 @@
 #include <kglobal.h>
 #include <kdebug.h>
 #include <kcomponentdata.h>
+#include <kstandarddirs.h>
 #include <krun.h>
 
 #include <QObject>
@@ -50,6 +52,7 @@ class Plugin::Private
   public:
 
     void partDestroyed();
+    void removeInvisibleToolbarActions(Plugin* plugin);
 
     Core *core;
     QList<KAction*> newActions;
@@ -60,19 +63,21 @@ class Plugin::Private
     QString executableName;
     QString serviceName;
     QByteArray partLibraryName;
+    QByteArray pluginName;
     bool hasPart;
     KParts::ReadOnlyPart *part;
     bool disabled;
 };
 //@endcond
 
-Plugin::Plugin( Core *core, QObject *parent, const char *name )
+Plugin::Plugin( Core *core, QObject *parent, const char *appName, const char* pluginName )
   : KXMLGUIClient( core ), QObject( parent ), d( new Private )
 {
-  setObjectName( name );
+  setObjectName( appName );
   core->factory()->addClient( this );
-  KGlobal::locale()->insertCatalog( name );
+  KGlobal::locale()->insertCatalog( appName );
 
+  d->pluginName = pluginName ? pluginName : appName;
   d->core = core;
   d->hasPart = true;
   d->part = 0;
@@ -185,6 +190,7 @@ KParts::ReadOnlyPart *Plugin::part()
     d->part = createPart();
     if ( d->part ) {
       connect( d->part, SIGNAL(destroyed()), SLOT(partDestroyed()) );
+      d->removeInvisibleToolbarActions(this);
       core()->partLoaded( this, d->part );
     }
   }
@@ -275,6 +281,55 @@ void Plugin::Private::partDestroyed()
 {
   part = 0;
 }
+
+void Plugin::Private::removeInvisibleToolbarActions(Plugin* plugin)
+{
+  if (pluginName.isEmpty())
+    return;
+
+  // Hide unwanted toolbar action by modifying the XML before createGUI, rather than
+  // doing it by calling removeAction on the toolbar after createGUI. Both solutions
+  // work visually, but only modifying the XML ensures that the actions don't appear
+  // in "edit toolbars". #207296
+  const QStringList hideActions = plugin->invisibleToolbarActions();
+  //kDebug() << "Hiding actions" << hideActions;
+  QDomDocument doc = part->domDocument();
+  QDomElement docElem = doc.documentElement();
+  // 1. Iterate over containers
+  for (QDomElement containerElem = docElem.firstChildElement();
+       !containerElem.isNull(); containerElem = containerElem.nextSiblingElement()) {
+    if (QString::compare(containerElem.tagName(), "ToolBar", Qt::CaseInsensitive) == 0) {
+      // 2. Iterate over actions in toolbars
+      QDomElement actionElem = containerElem.firstChildElement();
+      while (!actionElem.isNull()) {
+        QDomElement nextActionElem = actionElem.nextSiblingElement();
+        if (QString::compare(actionElem.tagName(), "Action", Qt::CaseInsensitive) == 0) {
+          //kDebug() << "Looking at action" << actionElem.attribute("name");
+          if (hideActions.contains(actionElem.attribute("name"))) {
+            //kDebug() << "REMOVING";
+            containerElem.removeChild(actionElem);
+          }
+        }
+        actionElem = nextActionElem;
+      }
+    }
+  }
+
+  // Possible optimization: we could do all the above and the writing below
+  // only when (newAppFile does not exist) or (version of domDocument > version of newAppFile)  (*)
+  // This requires parsing newAppFile when it exists, though, and better use the fast
+  // kdeui code for that rather than a full QDomDocument.
+  // (*) or when invisibleToolbarActions() changes :)
+
+  const QString newAppFile = KStandardDirs::locateLocal("data", "kontact/default-" + pluginName + ".rc");
+  QFile file(newAppFile);
+  if (!file.open(QFile::WriteOnly))
+    return;
+  file.write(doc.toString().toUtf8());
+  const QString localFile = KStandardDirs::locateLocal("data", "kontact/local-" + pluginName + ".rc");
+  part->replaceXMLFile(newAppFile, localFile);
+}
+
 //@endcond
 
 void Plugin::slotConfigUpdated()
