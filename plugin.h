@@ -61,7 +61,7 @@ K_EXPORT_PLUGIN( KontactPluginFactory( "kontact_" #pluginname "plugin" ) )
 /**
   Increase this version number whenever you make a change in the API.
  */
-#define KONTACT_PLUGIN_VERSION 8
+#define KONTACT_PLUGIN_VERSION 9
 
 namespace KontactInterface
 {
@@ -85,13 +85,12 @@ class KONTACTINTERFACE_EXPORT Plugin : public QObject, virtual public KXMLGUICli
      *
      * @param core The core object that manages the plugin.
      * @param parent The parent object.
-     * @param name The name of the object.
-     *
-     * @note name MUST be the name of the application that
-     *       provides the part! This is the name used for DBus registration.
+     * @param appName The name of the application that
+     *       provides the part. This is the name used for DBus registration.
      *       It's ok to have several plugins using the same application name.
+     * @param pluginName The unique name of the plugin. Defaults to appName if not set.
      */
-    Plugin( Core *core, QObject *parent, const char *name );
+    Plugin( Core *core, QObject *parent, const char *appName, const char* pluginName = 0 );
 
     /**
      * Destroys the plugin.
