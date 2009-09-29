@@ -52,6 +52,7 @@ class Plugin::Private
   public:
 
     void partDestroyed();
+    void setXmlFiles();
     void removeInvisibleToolbarActions(Plugin* plugin);
 
     Core *core;
@@ -268,6 +269,15 @@ Core *Plugin::core() const
   return d->core;
 }
 
+void Plugin::aboutToSelect()
+{
+  // Because the 3 korganizer plugins share the same part, we need to switch
+  // that part's XML files every time we are about to show its GUI...
+  d->setXmlFiles();
+
+  select();
+}
+
 void Plugin::select()
 {
 }
@@ -292,7 +302,7 @@ void Plugin::Private::removeInvisibleToolbarActions(Plugin* plugin)
   // work visually, but only modifying the XML ensures that the actions don't appear
   // in "edit toolbars". #207296
   const QStringList hideActions = plugin->invisibleToolbarActions();
-  //kDebug() << "Hiding actions" << hideActions;
+  //kDebug() << "Hiding actions" << hideActions << "from" << pluginName << part;
   QDomDocument doc = part->domDocument();
   QDomElement docElem = doc.documentElement();
   // 1. Iterate over containers
@@ -326,8 +336,17 @@ void Plugin::Private::removeInvisibleToolbarActions(Plugin* plugin)
   if (!file.open(QFile::WriteOnly))
     return;
   file.write(doc.toString().toUtf8());
+  setXmlFiles();
+}
+
+void Plugin::Private::setXmlFiles()
+{
+  const QString newAppFile = KStandardDirs::locateLocal("data", "kontact/default-" + pluginName + ".rc");
   const QString localFile = KStandardDirs::locateLocal("data", "kontact/local-" + pluginName + ".rc");
-  part->replaceXMLFile(newAppFile, localFile);
+  if (part->xmlFile() != newAppFile
+      || part->localXMLFile() != localFile) {
+    part->replaceXMLFile(newAppFile, localFile);
+  }
 }
 
 //@endcond
