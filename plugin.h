@@ -189,6 +189,13 @@ class KONTACTINTERFACE_EXPORT Plugin : public QObject, virtual public KXMLGUICli
     virtual void select();
 
     /**
+     * Called by kontact when the plugin is selected by the user.
+     * Calls the virtual method select(), but also handles some standard behavior
+     * like "invisible toolbar actions".
+     */
+    void aboutToSelect();
+
+    /**
      * This function is called whenever the config dialog has been closed
      * successfully.
      */
