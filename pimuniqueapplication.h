@@ -36,13 +36,19 @@ namespace KontactInterface {
 class KONTACTINTERFACE_EXPORT PimUniqueApplication : public KUniqueApplication
 {
   public:
-  explicit PimUniqueApplication();
+    explicit PimUniqueApplication();
+    ~PimUniqueApplication();
 
-  /**
-   * @see KUniqueApplication::start
-   */
-  static bool start();
+    /**
+     * @see KUniqueApplication::start
+     */
+    static bool start();
 
+  private:
+    //@cond PRIVATE
+    class Private;
+    Private *const d;
+    //@endcond
 };
 
 }

@@ -32,8 +32,14 @@
 
 using namespace KontactInterface;
 
+//@cond PRIVATE
+class KontactInterface::PimUniqueApplication::Private
+{
+};
+//@endcond
+
 PimUniqueApplication::PimUniqueApplication()
-  : KUniqueApplication()
+  : KUniqueApplication(), d( new Private() )
 {
   // This object name is used in start(), and also in kontact's UniqueAppHandler.
   const QString objectName = QString( '/' ) + applicationName() + "_PimApplication";
@@ -45,6 +51,11 @@ PimUniqueApplication::PimUniqueApplication()
 }
 
 static const char _k_sessionBusName[] = "kdepimapplication_session_bus";
+
+PimUniqueApplication::~PimUniqueApplication()
+{
+    delete d;
+}
 
 static QDBusConnection tryToInitDBusConnection()
 {
