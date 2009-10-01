@@ -8,7 +8,8 @@ set(kontactinterface_LIB_SRCS
     core.cpp
     plugin.cpp
     summary.cpp
-    uniqueapphandler.cpp)
+    uniqueapphandler.cpp
+    pimuniqueapplication.cpp)
 
 kde4_add_library(kontactinterface SHARED ${kontactinterface_LIB_SRCS})
 
@@ -27,6 +28,7 @@ install(FILES
   plugin.h
   summary.h
   uniqueapphandler.h
+  pimuniqueapplication.h
 DESTINATION ${INCLUDE_INSTALL_DIR}/kontactinterface COMPONENT Devel)
 
 install(FILES kontactplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
