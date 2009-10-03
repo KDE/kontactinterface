@@ -53,7 +53,7 @@ class Plugin::Private
 
     void partDestroyed();
     void setXmlFiles();
-    void removeInvisibleToolbarActions(Plugin* plugin);
+    void removeInvisibleToolbarActions( Plugin *plugin );
 
     Core *core;
     QList<KAction*> newActions;
@@ -71,7 +71,7 @@ class Plugin::Private
 };
 //@endcond
 
-Plugin::Plugin( Core *core, QObject *parent, const char *appName, const char* pluginName )
+Plugin::Plugin( Core *core, QObject *parent, const char *appName, const char *pluginName )
   : KXMLGUIClient( core ), QObject( parent ), d( new Private )
 {
   setObjectName( appName );
@@ -292,32 +292,33 @@ void Plugin::Private::partDestroyed()
   part = 0;
 }
 
-void Plugin::Private::removeInvisibleToolbarActions(Plugin* plugin)
+void Plugin::Private::removeInvisibleToolbarActions( Plugin *plugin )
 {
-  if (pluginName.isEmpty())
+  if ( pluginName.isEmpty() ) {
     return;
+  }
 
-  // Hide unwanted toolbar action by modifying the XML before createGUI, rather than
-  // doing it by calling removeAction on the toolbar after createGUI. Both solutions
-  // work visually, but only modifying the XML ensures that the actions don't appear
-  // in "edit toolbars". #207296
+  // Hide unwanted toolbar action by modifying the XML before createGUI, rather
+  // than doing it by calling removeAction on the toolbar after createGUI. Both
+  // solutions work visually, but only modifying the XML ensures that the
+  // actions don't appear in "edit toolbars". #207296
   const QStringList hideActions = plugin->invisibleToolbarActions();
   //kDebug() << "Hiding actions" << hideActions << "from" << pluginName << part;
   QDomDocument doc = part->domDocument();
   QDomElement docElem = doc.documentElement();
   // 1. Iterate over containers
-  for (QDomElement containerElem = docElem.firstChildElement();
-       !containerElem.isNull(); containerElem = containerElem.nextSiblingElement()) {
-    if (QString::compare(containerElem.tagName(), "ToolBar", Qt::CaseInsensitive) == 0) {
+  for ( QDomElement containerElem = docElem.firstChildElement();
+        !containerElem.isNull(); containerElem = containerElem.nextSiblingElement() ) {
+    if ( QString::compare( containerElem.tagName(), "ToolBar", Qt::CaseInsensitive ) == 0 ) {
       // 2. Iterate over actions in toolbars
       QDomElement actionElem = containerElem.firstChildElement();
-      while (!actionElem.isNull()) {
+      while ( !actionElem.isNull() ) {
         QDomElement nextActionElem = actionElem.nextSiblingElement();
-        if (QString::compare(actionElem.tagName(), "Action", Qt::CaseInsensitive) == 0) {
+        if ( QString::compare( actionElem.tagName(), "Action", Qt::CaseInsensitive ) == 0 ) {
           //kDebug() << "Looking at action" << actionElem.attribute("name");
-          if (hideActions.contains(actionElem.attribute("name"))) {
+          if ( hideActions.contains( actionElem.attribute( "name" ) ) ) {
             //kDebug() << "REMOVING";
-            containerElem.removeChild(actionElem);
+            containerElem.removeChild( actionElem );
           }
         }
         actionElem = nextActionElem;
@@ -327,28 +328,30 @@ void Plugin::Private::removeInvisibleToolbarActions(Plugin* plugin)
 
   // Possible optimization: we could do all the above and the writing below
   // only when (newAppFile does not exist) or (version of domDocument > version of newAppFile)  (*)
-  // This requires parsing newAppFile when it exists, though, and better use the fast
-  // kdeui code for that rather than a full QDomDocument.
+  // This requires parsing newAppFile when it exists, though, and better use
+  // the fast kdeui code for that rather than a full QDomDocument.
   // (*) or when invisibleToolbarActions() changes :)
 
-  const QString newAppFile = KStandardDirs::locateLocal("data", "kontact/default-" + pluginName + ".rc");
-  QFile file(newAppFile);
-  if (!file.open(QFile::WriteOnly))
+  const QString newAppFile =
+    KStandardDirs::locateLocal( "data", "kontact/default-" + pluginName + ".rc" );
+  QFile file( newAppFile );
+  if ( !file.open( QFile::WriteOnly ) ) {
     return;
-  file.write(doc.toString().toUtf8());
+  }
+  file.write( doc.toString().toUtf8() );
   setXmlFiles();
 }
 
 void Plugin::Private::setXmlFiles()
 {
-  const QString newAppFile = KStandardDirs::locateLocal("data", "kontact/default-" + pluginName + ".rc");
-  const QString localFile = KStandardDirs::locateLocal("data", "kontact/local-" + pluginName + ".rc");
-  if (part->xmlFile() != newAppFile
-      || part->localXMLFile() != localFile) {
-    part->replaceXMLFile(newAppFile, localFile);
+  const QString newAppFile =
+    KStandardDirs::locateLocal( "data", "kontact/default-" + pluginName + ".rc" );
+  const QString localFile =
+    KStandardDirs::locateLocal( "data", "kontact/local-" + pluginName + ".rc" );
+  if ( part->xmlFile() != newAppFile || part->localXMLFile() != localFile ) {
+    part->replaceXMLFile( newAppFile, localFile );
   }
 }
-
 //@endcond
 
 void Plugin::slotConfigUpdated()

@@ -90,7 +90,7 @@ class KONTACTINTERFACE_EXPORT Plugin : public QObject, virtual public KXMLGUICli
      *       It's ok to have several plugins using the same application name.
      * @param pluginName The unique name of the plugin. Defaults to appName if not set.
      */
-    Plugin( Core *core, QObject *parent, const char *appName, const char* pluginName = 0 );
+    Plugin( Core *core, QObject *parent, const char *appName, const char *pluginName = 0 );
 
     /**
      * Destroys the plugin.
