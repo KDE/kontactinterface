@@ -70,6 +70,11 @@ static QDBusConnection tryToInitDBusConnection()
   return connection;
 }
 
+bool PimUniqueApplication::start()
+{
+  start( KUniqueApplication::StartFlags() );
+}
+
 bool PimUniqueApplication::start( KUniqueApplication::StartFlags flags )
 {
   const QString appName = KCmdLineArgs::aboutData()->appName();
