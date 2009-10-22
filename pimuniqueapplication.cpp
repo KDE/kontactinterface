@@ -70,7 +70,7 @@ static QDBusConnection tryToInitDBusConnection()
   return connection;
 }
 
-bool PimUniqueApplication::start()
+bool PimUniqueApplication::start( KUniqueApplication::StartFlags flags )
 {
   const QString appName = KCmdLineArgs::aboutData()->appName();
   // Try talking to /appName_PimApplication in org.kde.appName,
@@ -113,5 +113,5 @@ bool PimUniqueApplication::start()
 
   //kDebug() << "kontact not running -- start standalone application";
   // kontact not running -- start standalone application.
-  return KUniqueApplication::start();
+  return KUniqueApplication::start(flags);
 }
