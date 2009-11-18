@@ -2,6 +2,7 @@
 Type=ServiceType
 X-KDE-ServiceType=Kontact/Plugin
 Name=Kontact Plugin
+Name[cs]=Modul aplikace Kontact
 Name[en_GB]=Kontact Plugin
 Name[es]=Complemento de Kontact
 Name[et]=Kontacti plugin
