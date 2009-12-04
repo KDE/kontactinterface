@@ -72,7 +72,7 @@ static QDBusConnection tryToInitDBusConnection()
 
 bool PimUniqueApplication::start()
 {
-  start( KUniqueApplication::StartFlags() );
+  return start( KUniqueApplication::StartFlags() );
 }
 
 bool PimUniqueApplication::start( KUniqueApplication::StartFlags flags )
