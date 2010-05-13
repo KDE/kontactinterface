@@ -43,6 +43,12 @@ class KONTACTINTERFACE_EXPORT PimUniqueApplication : public KUniqueApplication
      * @see KUniqueApplication::start
      */
     static bool start();
+
+    /**
+     * @see KUniqueApplication::start
+     *
+     * @since 4.5
+     */
     static bool start( KUniqueApplication::StartFlags flags );
 
   private:
