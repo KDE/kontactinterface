@@ -336,9 +336,12 @@ void Plugin::Private::removeInvisibleToolbarActions( Plugin *plugin )
     KStandardDirs::locateLocal( "data", "kontact/default-" + pluginName + ".rc" );
   QFile file( newAppFile );
   if ( !file.open( QFile::WriteOnly ) ) {
+    kWarning() << "error writing to" << newAppFile;
     return;
   }
   file.write( doc.toString().toUtf8() );
+  file.flush();
+
   setXmlFiles();
 }
 
