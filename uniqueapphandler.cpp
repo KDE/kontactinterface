@@ -174,6 +174,8 @@ UniqueAppWatcher::UniqueAppWatcher( UniqueAppHandlerFactoryBase *factory, Plugin
 
   // The app is running standalone if 1) that name is known to D-Bus
   const QString serviceName = "org.kde." + plugin->objectName();
+  //Needed for wince build
+  #undef interface
   d->mRunningStandalone =
     QDBusConnection::sessionBus().interface()->isServiceRegistered( serviceName );
 #ifdef Q_WS_WIN
