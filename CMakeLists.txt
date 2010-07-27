@@ -11,7 +11,7 @@ set(kontactinterface_LIB_SRCS
     uniqueapphandler.cpp
     pimuniqueapplication.cpp)
 
-kde4_add_library(kontactinterface SHARED ${kontactinterface_LIB_SRCS})
+kde4_add_library(kontactinterface ${LIBRARY_TYPE} ${kontactinterface_LIB_SRCS})
 
 target_link_libraries(kontactinterface kpimutils ${KDE4_KPARTS_LIBS})
 

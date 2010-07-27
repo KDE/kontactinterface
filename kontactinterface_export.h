@@ -26,7 +26,10 @@
 #include <kdemacros.h>
 
 #ifndef KONTACTINTERFACE_EXPORT
-# if defined(MAKE_KONTACTINTERFACE_LIB)
+# if defined(KDEPIM_STATIC_LIBS)
+   /* No export/import for static libraries */
+#  define KONTACTINTERFACE_EXPORT
+# elif defined(MAKE_KONTACTINTERFACE_LIB)
    /* We are building this library */
 #  define KONTACTINTERFACE_EXPORT KDE_EXPORT
 # else
