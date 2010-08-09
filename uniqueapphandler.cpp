@@ -243,4 +243,9 @@ void KontactInterface::UniqueAppHandler::setMainWidget( QWidget *widget )
   s_mainWidget = widget;
 }
 
+QWidget *KontactInterface::UniqueAppHandler::mainWidget()
+{
+  return s_mainWidget;
+}
+
 #include "uniqueapphandler.moc"

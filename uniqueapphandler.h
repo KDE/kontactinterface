@@ -50,8 +50,16 @@ class KONTACTINTERFACE_EXPORT UniqueAppHandler : public QObject
 
     Plugin *plugin() const;
 
-    // for kontact
+    /**
+      Sets the main QWidget @p widget associated with this application.
+    */
     static void setMainWidget( QWidget *widget );
+
+    /**
+      Returns the main widget, which will zero if setMainWidget() has not be called yet.
+      @since 4.6
+    */
+    QWidget *mainWidget();
 
   public Q_SLOTS: // DBUS methods
     int newInstance( const QByteArray &asn_id, const QByteArray &args );
