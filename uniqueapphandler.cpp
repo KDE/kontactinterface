@@ -95,7 +95,7 @@ class UniqueAppHandler::Private
 //@endcond
 
 UniqueAppHandler::UniqueAppHandler( Plugin *plugin )
- : d( new Private )
+ : QObject( plugin ), d( new Private )
 {
   //kDebug() << "plugin->objectName():" << plugin->objectName();
 
@@ -109,6 +109,9 @@ UniqueAppHandler::UniqueAppHandler( Plugin *plugin )
 
 UniqueAppHandler::~UniqueAppHandler()
 {
+  QDBusConnection session = QDBusConnection::sessionBus();
+  const QString appName = parent()->objectName();
+  session.unregisterService( "org.kde." + appName );
   delete d;
 }
 
