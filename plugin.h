@@ -63,8 +63,7 @@ K_EXPORT_PLUGIN( KontactPluginFactory( "kontact_" #pluginname "plugin" ) )
  */
 #define KONTACT_PLUGIN_VERSION 9
 
-namespace KontactInterface
-{
+namespace KontactInterface {
 
 class Core;
 class Summary;

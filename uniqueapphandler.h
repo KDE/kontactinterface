@@ -25,8 +25,7 @@
 #include "kontactinterface_export.h"
 #include "plugin.h"
 
-namespace KontactInterface
-{
+namespace KontactInterface {
 
 /**
  * D-Bus Object that has the name of the standalone application (e.g. "kmail")

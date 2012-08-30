@@ -27,8 +27,7 @@
 #include <kparts/mainwindow.h>
 #include <kparts/part.h>
 
-namespace KontactInterface
-{
+namespace KontactInterface {
 
 class Plugin;
 

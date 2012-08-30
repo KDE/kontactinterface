@@ -30,8 +30,7 @@ class QMouseEvent;
 class QDragEnterEvent;
 class QDropEvent;
 
-namespace KontactInterface
-{
+namespace KontactInterface {
 
 /**
  * @short Base class for summary widgets in Kontact.
