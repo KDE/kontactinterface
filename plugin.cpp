@@ -191,7 +191,7 @@ KParts::ReadOnlyPart *Plugin::part()
     d->part = createPart();
     if ( d->part ) {
       connect( d->part, SIGNAL(destroyed()), SLOT(partDestroyed()) );
-      d->removeInvisibleToolbarActions(this);
+      d->removeInvisibleToolbarActions( this );
       core()->partLoaded( this, d->part );
     }
   }

@@ -65,7 +65,7 @@ static QDBusConnection tryToInitDBusConnection()
     QDBusConnection::SessionBus, _k_sessionBusName );
   if ( !connection.isConnected() ) {
     kError() << "Cannot find the D-Bus session server" << endl; //krazy:exclude=kdebug
-    ::exit(255);
+    ::exit( 255 );
   }
   return connection;
 }
@@ -91,12 +91,12 @@ bool PimUniqueApplication::start( KUniqueApplication::StartFlags flags )
     QByteArray new_asn_id;
 #if defined Q_WS_X11
     KStartupInfoId id;
-    if( kapp ) { // KApplication constructor unsets the env. variable
+    if ( kapp ) { // KApplication constructor unsets the env. variable
       id.initId( kapp->startupId() );
     } else {
       id = KStartupInfo::currentStartupIdEnv();
     }
-    if( !id.none() ) {
+    if ( !id.none() ) {
       new_asn_id = id.id();
     }
 #endif
@@ -118,5 +118,5 @@ bool PimUniqueApplication::start( KUniqueApplication::StartFlags flags )
 
   //kDebug() << "kontact not running -- start standalone application";
   // kontact not running -- start standalone application.
-  return KUniqueApplication::start(flags);
+  return KUniqueApplication::start( flags );
 }

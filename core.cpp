@@ -87,7 +87,7 @@ KParts::ReadOnlyPart *Core::createPart( const char *libname )
     part = factory->create<KParts::ReadOnlyPart>( this );
   }
 
-  if (part) {
+  if ( part ) {
     d->mParts.insert( libname, part );
     QObject::connect( part, SIGNAL(destroyed(QObject*)),
                       SLOT(slotPartDestroyed(QObject*)) );
