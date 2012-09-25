@@ -23,7 +23,7 @@
 
 #include "kontactinterface_export.h"
 
-#include <QtGui/QWidget>
+#include <QWidget>
 
 class KStatusBar;
 class QMouseEvent;
