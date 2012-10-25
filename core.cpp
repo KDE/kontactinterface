@@ -129,5 +129,5 @@ QString Core::lastErrorMessage() const
   return d->lastErrorMessage;
 }
 
-#include "core.moc"
+#include "moc_core.cpp"
 // vim: sw=2 sts=2 et tw=80

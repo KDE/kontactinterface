@@ -251,4 +251,3 @@ QWidget *KontactInterface::UniqueAppHandler::mainWidget()
   return s_mainWidget;
 }
 
-#include "uniqueapphandler.moc"
