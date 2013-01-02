@@ -144,6 +144,7 @@ class KONTACTINTERFACE_EXPORT Plugin : public QObject, virtual public KXMLGUICli
     /**
      * Create the D-Bus interface for the given @p serviceType, if this
      * plugin provides it. Returns @c true on success, @c false otherwise.
+     * @param serviceType the D-Bus service type to create an interface for
      */
     virtual bool createDBUSInterface( const QString &serviceType );
 
@@ -215,6 +216,7 @@ class KONTACTINTERFACE_EXPORT Plugin : public QObject, virtual public KXMLGUICli
 
     /**
      * Set if the plugin provides a part that should be shown in the sidebar.
+     * @param hasPart shows part in sidebar if set as @c true
      */
     void setShowInSideBar( bool hasPart );
 
@@ -239,11 +241,13 @@ class KONTACTINTERFACE_EXPORT Plugin : public QObject, virtual public KXMLGUICli
 
     /**
      * Inserts a custom "New" @p action.
+     * @param action the new action to insert
      */
     void insertNewAction( KAction *action );
 
     /**
      * Inserts a custom "Sync" @p action.
+     * @param action the custom Sync action to insert
      */
     void insertSyncAction( KAction *action );
 

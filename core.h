@@ -70,6 +70,7 @@ class KONTACTINTERFACE_EXPORT Core : public KParts::MainWindow
     /**
      * @internal (for Plugin)
      *
+     * @param library the library to create part from
      * Creates a part from the given @p library.
      */
     KParts::ReadOnlyPart *createPart( const char *library );

@@ -51,6 +51,7 @@ class KONTACTINTERFACE_EXPORT UniqueAppHandler : public QObject
 
     /**
       Sets the main QWidget @p widget associated with this application.
+      @param widget the QWidget to set as main
     */
     static void setMainWidget( QWidget *widget );
 
