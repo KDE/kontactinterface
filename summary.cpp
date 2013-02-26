@@ -25,10 +25,12 @@
 #include <QImage>
 #include <QFont>
 #include <QLabel>
+#include <QDrag>
 #include <QPainter>
 #include <QPixmap>
 #include <QMouseEvent>
 #include <QDragEnterEvent>
+#include <QMimeData>
 #include <QDropEvent>
 
 #include <KGlobalSettings>

@@ -38,6 +38,7 @@
 
 #include <QObject>
 #include <QDBusConnection>
+#include <QDomDocument>
 
 #include <unistd.h>
 
