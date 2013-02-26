@@ -13,7 +13,7 @@ set(kontactinterface_LIB_SRCS
 
 kde4_add_library(kontactinterface ${LIBRARY_TYPE} ${kontactinterface_LIB_SRCS})
 
-target_link_libraries(kontactinterface kpimutils ${KDE4_KPARTS_LIBS})
+target_link_libraries(kontactinterface kpimutils ${KDE4_KPARTS_LIBS} ${KDE4_KDE4SUPPORT_LIBS})
 
 set_target_properties(kontactinterface PROPERTIES
   VERSION ${GENERIC_LIB_VERSION}
