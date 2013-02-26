@@ -105,7 +105,7 @@ class KONTACTINTERFACE_EXPORT Summary : public QWidget
      * This signal is emitted whenever a summary widget has been dropped on
      * this summary widget.
      */
-    void summaryWidgetDropped( QWidget *target, QWidget *widget, int alignment );
+    void summaryWidgetDropped( QWidget *target, QObject *object, int alignment );
 
   protected:
     virtual void mousePressEvent( QMouseEvent * );
