@@ -1,5 +1,8 @@
 project(kontactinterface)
 
+add_definitions( -DQT_NO_CAST_FROM_ASCII )
+add_definitions( -DQT_NO_CAST_TO_ASCII )
+
 add_definitions(-DKDE_DEFAULT_DEBUG_AREA=5601)
 
 include_directories(${CMAKE_SOURCE_DIR}/kpimutils)

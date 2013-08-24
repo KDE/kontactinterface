@@ -42,7 +42,7 @@ PimUniqueApplication::PimUniqueApplication()
   : KUniqueApplication(), d( new Private() )
 {
   // This object name is used in start(), and also in kontact's UniqueAppHandler.
-  const QString objectName = QString( '/' ) + applicationName() + "_PimApplication";
+  const QString objectName = QLatin1Char( '/' ) + applicationName() + QLatin1String("_PimApplication");
   QDBusConnection::sessionBus().registerObject(
     objectName, this,
     QDBusConnection::ExportScriptableSlots |
@@ -62,7 +62,7 @@ static QDBusConnection tryToInitDBusConnection()
   // Check the D-Bus connection health, and connect - but not using QDBusConnection::sessionBus()
   // since we can't close that one before forking.
   QDBusConnection connection = QDBusConnection::connectToBus(
-    QDBusConnection::SessionBus, _k_sessionBusName );
+    QDBusConnection::SessionBus, QLatin1String(_k_sessionBusName) );
   if ( !connection.isConnected() ) {
     kError() << "Cannot find the D-Bus session server" << endl; //krazy:exclude=kdebug
     ::exit( 255 );
@@ -82,7 +82,7 @@ bool PimUniqueApplication::start( KUniqueApplication::StartFlags flags )
   // (which could be kontact or the standalone application),
   // otherwise fall back to standard KUniqueApplication behavior (start appName).
 
-  const QString serviceName = "org.kde." + appName;
+  const QString serviceName = QLatin1String("org.kde.") + appName;
   if ( tryToInitDBusConnection().interface()->isServiceRegistered( serviceName ) ) {
     QByteArray saved_args;
     QDataStream ds( &saved_args, QIODevice::WriteOnly );
@@ -103,18 +103,18 @@ bool PimUniqueApplication::start( KUniqueApplication::StartFlags flags )
 
     KWindowSystem::allowExternalProcessWindowActivation();
 
-    const QString objectName = QString( '/' ) + appName + "_PimApplication";
+    const QString objectName = QLatin1Char( '/' ) + appName + QLatin1String("_PimApplication");
     //kDebug() << objectName;
     QDBusInterface iface(
-      serviceName, objectName, "org.kde.KUniqueApplication", QDBusConnection::sessionBus() );
+      serviceName, objectName, QLatin1String("org.kde.KUniqueApplication"), QDBusConnection::sessionBus() );
     QDBusReply<int> reply;
     if ( iface.isValid() &&
-         ( reply = iface.call( "newInstance", new_asn_id, saved_args ) ).isValid() ) {
+         ( reply = iface.call( QLatin1String("newInstance"), new_asn_id, saved_args ) ).isValid() ) {
       return false; // success means that main() can exit now.
     }
   }
 
-  QDBusConnection::disconnectFromBus( _k_sessionBusName );
+  QDBusConnection::disconnectFromBus( QLatin1String(_k_sessionBusName) );
 
   //kDebug() << "kontact not running -- start standalone application";
   // kontact not running -- start standalone application.

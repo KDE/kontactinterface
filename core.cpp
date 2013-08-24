@@ -79,7 +79,7 @@ KParts::ReadOnlyPart *Core::createPart( const char *libname )
 
   kDebug() << "Creating new KPart";
 
-  KPluginLoader loader( libname );
+  KPluginLoader loader( QString::fromLatin1(libname) );
   kDebug() << loader.fileName();
   KPluginFactory *factory = loader.factory();
   KParts::ReadOnlyPart *part = 0;

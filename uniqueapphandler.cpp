@@ -102,8 +102,8 @@ UniqueAppHandler::UniqueAppHandler( Plugin *plugin )
   d->mPlugin = plugin;
   QDBusConnection session = QDBusConnection::sessionBus();
   const QString appName = plugin->objectName();
-  session.registerService( "org.kde." + appName );
-  const QString objectName = QString( '/' ) + appName + "_PimApplication";
+  session.registerService( QLatin1String("org.kde.") + appName );
+  const QString objectName = QLatin1Char( '/' ) + appName + QLatin1String("_PimApplication");
   session.registerObject( objectName, this, QDBusConnection::ExportAllSlots );
 }
 
@@ -111,7 +111,7 @@ UniqueAppHandler::~UniqueAppHandler()
 {
   QDBusConnection session = QDBusConnection::sessionBus();
   const QString appName = parent()->objectName();
-  session.unregisterService( "org.kde." + appName );
+  session.unregisterService( QLatin1String("org.kde.") + appName );
   delete d;
 }
 
@@ -176,7 +176,7 @@ UniqueAppWatcher::UniqueAppWatcher( UniqueAppHandlerFactoryBase *factory, Plugin
   d->mPlugin = plugin;
 
   // The app is running standalone if 1) that name is known to D-Bus
-  const QString serviceName = "org.kde." + plugin->objectName();
+  const QString serviceName = QLatin1String("org.kde.") + plugin->objectName();
   //Needed for wince build
   #undef interface
   d->mRunningStandalone =
@@ -234,7 +234,7 @@ void KontactInterface::UniqueAppWatcher::slotApplicationRemoved( const QString &
     return;
   }
 
-  const QString serviceName = "org.kde." + d->mPlugin->objectName();
+  const QString serviceName = QLatin1String("org.kde.") + d->mPlugin->objectName();
   if ( name == serviceName && d->mRunningStandalone ) {
     d->mFactory->createHandler( d->mPlugin );
     d->mRunningStandalone = false;
