@@ -18,7 +18,7 @@ include_directories(
   ${CMAKE_BINARY_DIR}/kpimutils
 )
 
-kde4_add_library(kontactinterface ${LIBRARY_TYPE} ${kontactinterface_LIB_SRCS})
+add_library(kontactinterface ${LIBRARY_TYPE} ${kontactinterface_LIB_SRCS})
 generate_export_header(kontactinterface)
 
 target_link_libraries(kontactinterface kpimutils ${KDE4_KPARTS_LIBS})
