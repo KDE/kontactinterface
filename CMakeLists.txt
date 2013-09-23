@@ -14,7 +14,12 @@ set(kontactinterface_LIB_SRCS
     uniqueapphandler.cpp
     pimuniqueapplication.cpp)
 
+include_directories(
+  ${CMAKE_BINARY_DIR}/kpimutils
+)
+
 kde4_add_library(kontactinterface ${LIBRARY_TYPE} ${kontactinterface_LIB_SRCS})
+generate_export_header(kontactinterface)
 
 target_link_libraries(kontactinterface kpimutils ${KDE4_KPARTS_LIBS})
 
@@ -28,7 +33,7 @@ install(TARGETS kontactinterface EXPORT kdepimlibsLibraryTargets ${INSTALL_TARGE
 ########### install files ###############
 
 install(FILES
-  kontactinterface_export.h
+  ${CMAKE_CURRENT_BINARY_DIR}/kontactinterface_export.h
   core.h
   plugin.h
   summary.h
