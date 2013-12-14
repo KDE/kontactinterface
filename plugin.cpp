@@ -35,6 +35,7 @@
 #include <kcomponentdata.h>
 #include <kstandarddirs.h>
 #include <krun.h>
+#include <k4aboutdata.h>
 
 #include <QObject>
 #include <QDBusConnection>
@@ -154,7 +155,7 @@ KParts::ReadOnlyPart *Plugin::loadPart()
   return core()->createPart( d->partLibraryName );
 }
 
-const KAboutData *Plugin::aboutData() const
+const K4AboutData *Plugin::aboutData() const
 {
   KPluginLoader loader( d->partLibraryName );
   KPluginFactory *factory = loader.factory();

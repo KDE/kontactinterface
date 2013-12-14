@@ -21,7 +21,7 @@
 
 #include "pimuniqueapplication.h"
 
-#include <kaboutdata.h>
+#include <k4aboutdata.h>
 #include <kcmdlineargs.h>
 #include <kdebug.h>
 #include <kstartupinfo.h>
