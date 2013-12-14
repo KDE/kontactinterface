@@ -159,20 +159,21 @@ const K4AboutData *Plugin::aboutData() const
 {
   KPluginLoader loader( d->partLibraryName );
   KPluginFactory *factory = loader.factory();
-  kDebug() << "filename:" << loader.fileName();
+  kDebug() << "filename:" << loader.pluginName();
   kDebug() << "libname:" << d->partLibraryName;
 
   if ( factory ) {
-    if ( factory->componentData().isValid() ) {
+#warning Figure out how to replace this
+   /* if ( factory->componentData().isValid() ) {
       kDebug() << "returning factory component aboutdata";
       return factory->componentData().aboutData();
-    } else {
+    } else */{
       // If the componentData of the factory is invalid, the likely cause is that
       // the part has not been ported to use K_PLUGIN_FACTORY/K_EXPORT_PLUGIN yet.
       // In that case, fallback to the old method of loading component data, which
       // does only work for old-style parts.
 
-      kDebug() << "Unable to load component data for" << loader.fileName()
+      kDebug() << "Unable to load component data for" << loader.pluginName()
                << "trying to use the old style plugin system now.";
       const KComponentData instance =
         KParts::Factory::partComponentDataFromLibrary( d->partLibraryName );
