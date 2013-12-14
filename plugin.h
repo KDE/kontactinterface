@@ -32,7 +32,7 @@
 #include <QtCore/QList>
 #include <QtCore/QObject>
 
-class KAboutData;
+class K4AboutData;
 class KAction;
 class KConfig;
 class KConfigGroup;
@@ -67,7 +67,6 @@ namespace KontactInterface {
 
 class Core;
 class Summary;
-
 /**
  * @short Base class for all Plugins in Kontact.
  *
@@ -166,7 +165,7 @@ class KONTACTINTERFACE_EXPORT Plugin : public QObject, virtual public KXMLGUICli
      * Reimplement this method if you want to add your credits to the Kontact
      * about dialog.
      */
-    virtual const KAboutData *aboutData() const;
+    virtual const K4AboutData *aboutData() const;
 
     /**
      * You can use this method if you need to access the current part. You can be
