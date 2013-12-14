@@ -1,5 +1,7 @@
 project(kontactinterface)
 
+find_package(KF5 NO_MODULE REQUIRED COMPONENTS KDE4Support Parts)
+
 add_definitions(-DKDE_DEFAULT_DEBUG_AREA=5601)
 
 include_directories(${CMAKE_SOURCE_DIR}/kpimutils)
@@ -13,7 +15,7 @@ set(kontactinterface_LIB_SRCS
 
 kde4_add_library(kontactinterface ${LIBRARY_TYPE} ${kontactinterface_LIB_SRCS})
 
-target_link_libraries(kontactinterface kpimutils ${KDE4_KPARTS_LIBS} ${KDE4_KDE4SUPPORT_LIBS})
+target_link_libraries(kontactinterface kpimutils KF5::Parts KF5::KDE4Support)
 
 set_target_properties(kontactinterface PROPERTIES
   VERSION ${GENERIC_LIB_VERSION}
