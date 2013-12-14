@@ -79,7 +79,8 @@ Plugin::Plugin( Core *core, QObject *parent, const char *appName, const char *pl
 {
   setObjectName( appName );
   core->factory()->addClient( this );
-  KLocalizedString::insertCatalog( appName );
+#warning port this to the new stuff
+//   KLocalizedString::insertCatalog( appName );
 
   d->pluginName = pluginName ? pluginName : appName;
   d->core = core;
