@@ -77,7 +77,7 @@ class Plugin::Private
 Plugin::Plugin( Core *core, QObject *parent, const char *appName, const char *pluginName )
   : KXMLGUIClient( core ), QObject( parent ), d( new Private )
 {
-  setObjectName( appName );
+  setObjectName( QLatin1String(appName) );
   core->factory()->addClient( this );
 #warning port this to the new stuff
 //   KLocalizedString::insertCatalog( appName );
@@ -158,7 +158,7 @@ KParts::ReadOnlyPart *Plugin::loadPart()
 
 const K4AboutData *Plugin::aboutData() const
 {
-  KPluginLoader loader( d->partLibraryName );
+  KPluginLoader loader( QString::fromLatin1(d->partLibraryName) );
   KPluginFactory *factory = loader.factory();
   kDebug() << "filename:" << loader.pluginName();
   kDebug() << "libname:" << d->partLibraryName;
@@ -177,7 +177,7 @@ const K4AboutData *Plugin::aboutData() const
       kDebug() << "Unable to load component data for" << loader.pluginName()
                << "trying to use the old style plugin system now.";
       const KComponentData instance =
-        KParts::Factory::partComponentDataFromLibrary( d->partLibraryName );
+        KParts::Factory::partComponentDataFromLibrary( QString::fromLatin1(d->partLibraryName) );
       if ( instance.isValid() ) {
         return instance.aboutData();
       } else {
@@ -211,10 +211,10 @@ QString Plugin::tipFile() const
 QString Plugin::registerClient()
 {
   if ( d->serviceName.isEmpty() ) {
-    d->serviceName = "org.kde." + objectName().toLatin1();
+    d->serviceName = QLatin1String("org.kde.") + QLatin1String(objectName().toLatin1());
 #ifdef Q_WS_WIN
     const QString pid = QString::number( getpid() );
-    d->serviceName.append( ".unique-" + pid );
+    d->serviceName.append( QLatin1String(".unique-") + pid );
 #endif
     QDBusConnection::sessionBus().registerService( d->serviceName );
   }
@@ -314,14 +314,14 @@ void Plugin::Private::removeInvisibleToolbarActions( Plugin *plugin )
   // 1. Iterate over containers
   for ( QDomElement containerElem = docElem.firstChildElement();
         !containerElem.isNull(); containerElem = containerElem.nextSiblingElement() ) {
-    if ( QString::compare( containerElem.tagName(), "ToolBar", Qt::CaseInsensitive ) == 0 ) {
+    if ( QString::compare( containerElem.tagName(), QLatin1String("ToolBar"), Qt::CaseInsensitive ) == 0 ) {
       // 2. Iterate over actions in toolbars
       QDomElement actionElem = containerElem.firstChildElement();
       while ( !actionElem.isNull() ) {
         QDomElement nextActionElem = actionElem.nextSiblingElement();
-        if ( QString::compare( actionElem.tagName(), "Action", Qt::CaseInsensitive ) == 0 ) {
+        if ( QString::compare( actionElem.tagName(), QLatin1String("Action"), Qt::CaseInsensitive ) == 0 ) {
           //kDebug() << "Looking at action" << actionElem.attribute("name");
-          if ( hideActions.contains( actionElem.attribute( "name" ) ) ) {
+          if ( hideActions.contains( actionElem.attribute( QLatin1String("name") ) ) ) {
             //kDebug() << "REMOVING";
             containerElem.removeChild( actionElem );
           }
@@ -338,7 +338,7 @@ void Plugin::Private::removeInvisibleToolbarActions( Plugin *plugin )
   // (*) or when invisibleToolbarActions() changes :)
 
   const QString newAppFile =
-    KStandardDirs::locateLocal( "data", "kontact/default-" + pluginName + ".rc" );
+    KStandardDirs::locateLocal( "data", QLatin1String("kontact/default-") + QLatin1String(pluginName) + QLatin1String(".rc") );
   QFile file( newAppFile );
   if ( !file.open( QFile::WriteOnly ) ) {
     kWarning() << "error writing to" << newAppFile;
@@ -353,9 +353,9 @@ void Plugin::Private::removeInvisibleToolbarActions( Plugin *plugin )
 void Plugin::Private::setXmlFiles()
 {
   const QString newAppFile =
-    KStandardDirs::locateLocal( "data", "kontact/default-" + pluginName + ".rc" );
+    KStandardDirs::locateLocal( "data", QLatin1String("kontact/default-") + QLatin1String(pluginName) + QLatin1String(".rc") );
   const QString localFile =
-    KStandardDirs::locateLocal( "data", "kontact/local-" + pluginName + ".rc" );
+    KStandardDirs::locateLocal( "data", QLatin1String("kontact/local-") + QLatin1String(pluginName) + QLatin1String(".rc") );
   if ( part->xmlFile() != newAppFile || part->localXMLFile() != localFile ) {
     part->replaceXMLFile( newAppFile, localFile );
   }

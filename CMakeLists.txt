@@ -2,6 +2,7 @@ project(kontactinterface)
 
 find_package(KF5 NO_MODULE REQUIRED COMPONENTS KDE4Support Parts)
 
+
 add_definitions(-DKDE_DEFAULT_DEBUG_AREA=5601)
 
 include_directories(${CMAKE_SOURCE_DIR}/kpimutils)
@@ -13,7 +14,12 @@ set(kontactinterface_LIB_SRCS
     uniqueapphandler.cpp
     pimuniqueapplication.cpp)
 
-kde4_add_library(kontactinterface ${LIBRARY_TYPE} ${kontactinterface_LIB_SRCS})
+include_directories(
+  ${CMAKE_BINARY_DIR}/kpimutils
+)
+
+add_library(kontactinterface ${LIBRARY_TYPE} ${kontactinterface_LIB_SRCS})
+generate_export_header(kontactinterface)
 
 target_link_libraries(kontactinterface kpimutils KF5::Parts KF5::KDE4Support)
 
@@ -27,7 +33,7 @@ install(TARGETS kontactinterface EXPORT kdepimlibsLibraryTargets ${INSTALL_TARGE
 ########### install files ###############
 
 install(FILES
-  kontactinterface_export.h
+  ${CMAKE_CURRENT_BINARY_DIR}/kontactinterface_export.h
   core.h
   plugin.h
   summary.h

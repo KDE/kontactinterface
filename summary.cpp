@@ -47,7 +47,7 @@ class SummaryMimeData : public QMimeData
   public:
     virtual bool hasFormat( const QString &format ) const
     {
-      if ( format == "application/x-kontact-summary" ) {
+      if ( format == QLatin1String("application/x-kontact-summary") ) {
         return true;
       }
       return false;
@@ -84,14 +84,14 @@ int Summary::summaryHeight() const
 
 QWidget *Summary::createHeader( QWidget *parent, const QString &iconname, const QString &heading )
 {
-  setStyleSheet( "KHBox {"
+  setStyleSheet( QLatin1String("KHBox {"
                     "border: 0px;"
                     "font: bold large;"
                     "padding: 2px;"
                     "background: palette(window);"
                     "color: palette(windowtext);"
                  "}"
-                 "KHBox > QLabel { font: bold larger; } " );
+                 "KHBox > QLabel { font: bold larger; } ") );
 
   KHBox *hbox = new KHBox( parent );
 
@@ -138,7 +138,7 @@ void Summary::mouseMoveEvent( QMouseEvent *event )
 
     QDrag *drag = new QDrag( this );
     drag->setMimeData( new SummaryMimeData() );
-    drag->setObjectName( "SummaryWidgetDrag" );
+    drag->setObjectName( QLatin1String("SummaryWidgetDrag") );
 
     QPixmap pm = QPixmap::grabWidget( this );
     if ( pm.width() > 300 ) {
@@ -160,7 +160,7 @@ void Summary::mouseMoveEvent( QMouseEvent *event )
 
 void Summary::dragEnterEvent( QDragEnterEvent *event )
 {
-  if ( event->mimeData()->hasFormat( "application/x-kontact-summary" ) ) {
+  if ( event->mimeData()->hasFormat( QLatin1String("application/x-kontact-summary") ) ) {
     event->acceptProposedAction();
   }
 }
