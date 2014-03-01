@@ -61,7 +61,7 @@ K_EXPORT_PLUGIN( KontactPluginFactory( "kontact_" #pluginname "plugin" ) )
 /**
   Increase this version number whenever you make a change in the API.
  */
-#define KONTACT_PLUGIN_VERSION 9
+#define KONTACT_PLUGIN_VERSION 10
 
 namespace KontactInterface {
 
@@ -300,6 +300,11 @@ class KONTACTINTERFACE_EXPORT Plugin : public QObject, virtual public KXMLGUICli
      * Returns whether the plugin is disabled.
      */
     bool disabled() const;
+
+    /**
+     * @since 4.13
+     */
+    virtual void shortcutChanged();
 
   public Q_SLOTS:
     /**
