@@ -407,7 +407,11 @@ void Plugin::setDisabled( bool disabled )
 
 bool Plugin::disabled() const
 {
-  return d->disabled;
+    return d->disabled;
+}
+
+void Plugin::shortcutChanged()
+{
 }
 
 void Plugin::virtual_hook( int, void * )
