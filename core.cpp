@@ -69,7 +69,7 @@ Core::~Core()
 
 KParts::ReadOnlyPart *Core::createPart( const char *libname )
 {
-  kDebug() << libname;
+  qDebug() << libname;
 
   QMap<QByteArray,KParts::ReadOnlyPart *>::ConstIterator it;
   it = d->mParts.constFind( libname );
@@ -77,10 +77,10 @@ KParts::ReadOnlyPart *Core::createPart( const char *libname )
     return it.value();
   }
 
-  kDebug() << "Creating new KPart";
+  qDebug() << "Creating new KPart";
 
   KPluginLoader loader( QString::fromLatin1(libname) );
-  kDebug() << loader.fileName();
+  qDebug() << loader.fileName();
   KPluginFactory *factory = loader.factory();
   KParts::ReadOnlyPart *part = 0;
   if ( factory ) {
@@ -93,7 +93,7 @@ KParts::ReadOnlyPart *Core::createPart( const char *libname )
                       SLOT(slotPartDestroyed(QObject*)) );
   } else {
     d->lastErrorMessage = loader.errorString();
-    kWarning() << d->lastErrorMessage;
+    qWarning() << d->lastErrorMessage;
   }
 
   return part;

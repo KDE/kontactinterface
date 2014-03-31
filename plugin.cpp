@@ -160,13 +160,13 @@ const K4AboutData *Plugin::aboutData() const
 {
   KPluginLoader loader( QString::fromLatin1(d->partLibraryName) );
   KPluginFactory *factory = loader.factory();
-  kDebug() << "filename:" << loader.pluginName();
-  kDebug() << "libname:" << d->partLibraryName;
+  qDebug() << "filename:" << loader.pluginName();
+  qDebug() << "libname:" << d->partLibraryName;
 
   if ( factory ) {
 #warning Figure out how to replace this
    /* if ( factory->componentData().isValid() ) {
-      kDebug() << "returning factory component aboutdata";
+      qDebug() << "returning factory component aboutdata";
       return factory->componentData().aboutData();
     } else */{
       // If the componentData of the factory is invalid, the likely cause is that
@@ -174,19 +174,19 @@ const K4AboutData *Plugin::aboutData() const
       // In that case, fallback to the old method of loading component data, which
       // does only work for old-style parts.
 
-      kDebug() << "Unable to load component data for" << loader.pluginName()
+      qDebug() << "Unable to load component data for" << loader.pluginName()
                << "trying to use the old style plugin system now.";
       const KComponentData instance =
         KParts::Factory::partComponentDataFromLibrary( QString::fromLatin1(d->partLibraryName) );
       if ( instance.isValid() ) {
         return instance.aboutData();
       } else {
-        kDebug() << "Invalid instance, unable to get about information!";
+        qDebug() << "Invalid instance, unable to get about information!";
       }
     }
   }
 
-  kError() << "Cannot load instance for" << title();
+  qCritical() << "Cannot load instance for" << title();
   return 0;
 }
 
@@ -308,7 +308,7 @@ void Plugin::Private::removeInvisibleToolbarActions( Plugin *plugin )
   // solutions work visually, but only modifying the XML ensures that the
   // actions don't appear in "edit toolbars". #207296
   const QStringList hideActions = plugin->invisibleToolbarActions();
-  //kDebug() << "Hiding actions" << hideActions << "from" << pluginName << part;
+  //qDebug() << "Hiding actions" << hideActions << "from" << pluginName << part;
   QDomDocument doc = part->domDocument();
   QDomElement docElem = doc.documentElement();
   // 1. Iterate over containers
@@ -320,9 +320,9 @@ void Plugin::Private::removeInvisibleToolbarActions( Plugin *plugin )
       while ( !actionElem.isNull() ) {
         QDomElement nextActionElem = actionElem.nextSiblingElement();
         if ( QString::compare( actionElem.tagName(), QLatin1String("Action"), Qt::CaseInsensitive ) == 0 ) {
-          //kDebug() << "Looking at action" << actionElem.attribute("name");
+          //qDebug() << "Looking at action" << actionElem.attribute("name");
           if ( hideActions.contains( actionElem.attribute( QLatin1String("name") ) ) ) {
-            //kDebug() << "REMOVING";
+            //qDebug() << "REMOVING";
             containerElem.removeChild( actionElem );
           }
         }
@@ -341,7 +341,7 @@ void Plugin::Private::removeInvisibleToolbarActions( Plugin *plugin )
     KStandardDirs::locateLocal( "data", QLatin1String("kontact/default-") + QLatin1String(pluginName) + QLatin1String(".rc") );
   QFile file( newAppFile );
   if ( !file.open( QFile::WriteOnly ) ) {
-    kWarning() << "error writing to" << newAppFile;
+    qWarning() << "error writing to" << newAppFile;
     return;
   }
   file.write( doc.toString().toUtf8() );

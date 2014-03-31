@@ -97,7 +97,7 @@ class UniqueAppHandler::Private
 UniqueAppHandler::UniqueAppHandler( Plugin *plugin )
  : QObject( plugin ), d( new Private )
 {
-  //kDebug() << "plugin->objectName():" << plugin->objectName();
+  //qDebug() << "plugin->objectName():" << plugin->objectName();
 
   d->mPlugin = plugin;
   QDBusConnection session = QDBusConnection::sessionBus();
@@ -203,7 +203,7 @@ UniqueAppWatcher::UniqueAppWatcher( UniqueAppHandlerFactoryBase *factory, Plugin
   if ( d->mRunningStandalone && ( owner == QDBusConnection::sessionBus().baseService() ) ) {
     d->mRunningStandalone = false;
   }
-  //kDebug() << " plugin->objectName()=" << plugin->objectName()
+  //qDebug() << " plugin->objectName()=" << plugin->objectName()
   //         << " running standalone:" << d->mRunningStandalone;
 
   if ( d->mRunningStandalone ) {

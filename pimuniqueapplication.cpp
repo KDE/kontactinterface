@@ -64,7 +64,7 @@ static QDBusConnection tryToInitDBusConnection()
   QDBusConnection connection = QDBusConnection::connectToBus(
     QDBusConnection::SessionBus, QLatin1String(_k_sessionBusName) );
   if ( !connection.isConnected() ) {
-    kError() << "Cannot find the D-Bus session server" << endl; //krazy:exclude=kdebug
+    qCritical() << "Cannot find the D-Bus session server" << endl; //krazy:exclude=kdebug
     ::exit( 255 );
   }
   return connection;
@@ -104,7 +104,7 @@ bool PimUniqueApplication::start( KUniqueApplication::StartFlags flags )
     KWindowSystem::allowExternalProcessWindowActivation();
 
     const QString objectName = QLatin1Char( '/' ) + appName + QLatin1String("_PimApplication");
-    //kDebug() << objectName;
+    //qDebug() << objectName;
     QDBusInterface iface(
       serviceName, objectName, QLatin1String("org.kde.KUniqueApplication"), QDBusConnection::sessionBus() );
     QDBusReply<int> reply;
@@ -116,7 +116,7 @@ bool PimUniqueApplication::start( KUniqueApplication::StartFlags flags )
 
   QDBusConnection::disconnectFromBus( QLatin1String(_k_sessionBusName) );
 
-  //kDebug() << "kontact not running -- start standalone application";
+  //qDebug() << "kontact not running -- start standalone application";
   // kontact not running -- start standalone application.
   return KUniqueApplication::start( flags );
 }
