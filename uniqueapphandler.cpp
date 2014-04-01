@@ -27,7 +27,7 @@
 
 #include <kapplication.h>
 #include <kcmdlineargs.h>
-#include <kdebug.h>
+#include <qdebug.h>
 #include <kstartupinfo.h>
 #include <kuniqueapplication.h>
 #include <kwindowsystem.h>
