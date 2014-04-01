@@ -31,7 +31,7 @@
 #include <kaboutdata.h>
 #include <kglobal.h>
 #include <klocalizedstring.h>
-#include <kdebug.h>
+#include <qdebug.h>
 #include <kcomponentdata.h>
 #include <kstandarddirs.h>
 #include <krun.h>

@@ -23,7 +23,7 @@
 
 #include <k4aboutdata.h>
 #include <kcmdlineargs.h>
-#include <kdebug.h>
+#include <qdebug.h>
 #include <kstartupinfo.h>
 #include <kwindowsystem.h>
 
