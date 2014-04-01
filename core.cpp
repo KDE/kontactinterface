@@ -23,7 +23,7 @@
 
 #include "core.h"
 
-#include <qdebug.h>
+#include <kdebug.h>
 #include <kparts/part.h>
 #include <kparts/componentfactory.h>
 

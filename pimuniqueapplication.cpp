@@ -23,7 +23,7 @@
 
 #include <k4aboutdata.h>
 #include <kcmdlineargs.h>
-#include <qdebug.h>
+#include <kdebug.h>
 #include <kstartupinfo.h>
 #include <kwindowsystem.h>
 
@@ -64,7 +64,7 @@ static QDBusConnection tryToInitDBusConnection()
   QDBusConnection connection = QDBusConnection::connectToBus(
     QDBusConnection::SessionBus, QLatin1String(_k_sessionBusName) );
   if ( !connection.isConnected() ) {
-    qCritical() << "Cannot find the D-Bus session server" ; //krazy:exclude=kdebug
+    qCritical() << "Cannot find the D-Bus session server" << endl; //krazy:exclude=kdebug
     ::exit( 255 );
   }
   return connection;
