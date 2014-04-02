@@ -25,7 +25,8 @@
 
 #include <qdebug.h>
 #include <kparts/part.h>
-#include <kparts/componentfactory.h>
+#include <KService/kpluginfactory.h>
+#include <KService/kpluginloader.h>
 
 #include <QDateTime>
 #include <QTimer>

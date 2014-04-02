@@ -26,7 +26,7 @@
 #include "kontactinterface_export.h"
 #include <kparts/mainwindow.h>
 #include <kparts/part.h>
-
+#include <KParts/ReadOnlyPart>
 namespace KontactInterface {
 
 class Plugin;

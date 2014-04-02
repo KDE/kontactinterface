@@ -1,45 +1,36 @@
-project(kontactinterface)
+cmake_minimum_required(VERSION 2.8.12)
 
-find_package(KF5 NO_MODULE REQUIRED COMPONENTS KDE4Support Parts)
+project(KontactInterface)
+
+# ECM setup
+find_package(ECM 0.0.11 CONFIG REQUIRED)
+set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
+
+include(GenerateExportHeader)
+include(ECMGenerateHeaders)
+include(ECMGeneratePriFile)
+include(ECMPackageConfigHelpers)
+include(ECMSetupVersion)
+include(FeatureSummary)
+include(KDEInstallDirs)
+include(KDECMakeSettings)
+include(KDEFrameworkCompilerSettings)
 
 
 add_definitions(-DKDE_DEFAULT_DEBUG_AREA=5601)
 
-include_directories(${CMAKE_SOURCE_DIR}/kpimutils)
+# FIXME: Do we want the same versions in kdepimlibs and kf5?
+set(KF5_VERSION "4.97.0")
 
-set(kontactinterface_LIB_SRCS
-    core.cpp
-    plugin.cpp
-    summary.cpp
-    uniqueapphandler.cpp
-    pimuniqueapplication.cpp)
-
-include_directories(
-  ${CMAKE_BINARY_DIR}/kpimutils
+ecm_setup_version(${KF5_VERSION} VARIABLE_PREFIX KLDAP
+                        VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kontactinterface_version.h"
+                        PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5KontactInterfaceConfigVersion.cmake"
+                        SOVERSION 5
 )
 
-add_library(kontactinterface ${LIBRARY_TYPE} ${kontactinterface_LIB_SRCS})
-generate_export_header(kontactinterface)
+########### Find packages ###########
+find_package(KF5KDE4Support ${KF5_VERSION} CONFIG REQUIRED)
+find_package(KF5PimUtils ${KF5_VERSION} CONFIG REQUIRED)
+find_package(KF5Parts ${KF5_VERSION} CONFIG REQUIRED)
 
-target_link_libraries(kontactinterface kpimutils KF5::Parts KF5::KDE4Support)
-
-set_target_properties(kontactinterface PROPERTIES
-  VERSION ${GENERIC_LIB_VERSION}
-  SOVERSION ${GENERIC_LIB_SOVERSION}
-)
-
-install(TARGETS kontactinterface EXPORT kdepimlibsLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS})
-
-########### install files ###############
-
-install(FILES
-  ${CMAKE_CURRENT_BINARY_DIR}/kontactinterface_export.h
-  core.h
-  plugin.h
-  summary.h
-  uniqueapphandler.h
-  pimuniqueapplication.h
-DESTINATION ${INCLUDE_INSTALL_DIR}/kontactinterface COMPONENT Devel)
-
-install(FILES kontactplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
-
+add_subdirectory(src)

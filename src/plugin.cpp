@@ -25,8 +25,9 @@
 #include "core.h"
 
 #include <kpimutils/processes.h>
+#include <kparts/factory.h>
+#include <KService/kpluginloader.h>
 
-#include <kparts/componentfactory.h>
 #include <kxmlguifactory.h>
 #include <kaboutdata.h>
 #include <kglobal.h>
