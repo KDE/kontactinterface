@@ -28,8 +28,8 @@ target_link_libraries(KF5KontactInterface
 )
 
 set_target_properties(KF5KontactInterface PROPERTIES
-    VERSION ${KTNEF_VERSION_STRING}
-    SOVERSION ${KTNEF_SOVERSION}
+    VERSION ${KONTACTINTERFACE_VERSION_STRING}
+    SOVERSION ${KONTACTINTERFACE_SOVERSION}
     EXPORT_NAME KontactInterface
 )
 
