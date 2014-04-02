@@ -34,7 +34,7 @@
 #include <klocalizedstring.h>
 #include <qdebug.h>
 #include <kcomponentdata.h>
-#include <kstandarddirs.h>
+
 #include <krun.h>
 #include <k4aboutdata.h>
 
@@ -43,6 +43,7 @@
 #include <QDomDocument>
 
 #include <unistd.h>
+#include <QStandardPaths>
 
 using namespace KontactInterface;
 
@@ -339,7 +340,7 @@ void Plugin::Private::removeInvisibleToolbarActions( Plugin *plugin )
   // (*) or when invisibleToolbarActions() changes :)
 
   const QString newAppFile =
-    KStandardDirs::locateLocal( "data", QLatin1String("kontact/default-") + QLatin1String(pluginName) + QLatin1String(".rc") );
+    QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kontact/default-") + QLatin1String(pluginName) + QLatin1String(".rc") ;
   QFile file( newAppFile );
   if ( !file.open( QFile::WriteOnly ) ) {
     qWarning() << "error writing to" << newAppFile;
@@ -354,9 +355,9 @@ void Plugin::Private::removeInvisibleToolbarActions( Plugin *plugin )
 void Plugin::Private::setXmlFiles()
 {
   const QString newAppFile =
-    KStandardDirs::locateLocal( "data", QLatin1String("kontact/default-") + QLatin1String(pluginName) + QLatin1String(".rc") );
+    QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kontact/default-") + QLatin1String(pluginName) + QLatin1String(".rc") ;
   const QString localFile =
-    KStandardDirs::locateLocal( "data", QLatin1String("kontact/local-") + QLatin1String(pluginName) + QLatin1String(".rc") );
+    QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kontact/local-") + QLatin1String(pluginName) + QLatin1String(".rc") ;
   if ( part->xmlFile() != newAppFile || part->localXMLFile() != localFile ) {
     part->replaceXMLFile( newAppFile, localFile );
   }
