@@ -33,7 +33,7 @@
 #include <QtCore/QObject>
 
 class K4AboutData;
-class KAction;
+class QAction;
 class KConfig;
 class KConfigGroup;
 class QDropEvent;
@@ -242,23 +242,23 @@ class KONTACTINTERFACE_EXPORT Plugin : public QObject, virtual public KXMLGUICli
      * Inserts a custom "New" @p action.
      * @param action the new action to insert
      */
-    void insertNewAction( KAction *action );
+    void insertNewAction( QAction *action );
 
     /**
      * Inserts a custom "Sync" @p action.
      * @param action the custom Sync action to insert
      */
-    void insertSyncAction( KAction *action );
+    void insertSyncAction( QAction *action );
 
     /**
      * Returns the list of custom "New" actions.
      */
-    QList<KAction*> newActions() const;
+    QList<QAction*> newActions() const;
 
     /**
      * Returns the list of custom "Sync" actions.
      */
-    QList<KAction*> syncActions() const;
+    QList<QAction*> syncActions() const;
 
     /**
      * Returns a list of action names that shall be hidden in the main toolbar.

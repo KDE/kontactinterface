@@ -61,8 +61,8 @@ class Plugin::Private
     void removeInvisibleToolbarActions( Plugin *plugin );
 
     Core *core;
-    QList<KAction*> newActions;
-    QList<KAction*> syncActions;
+    QList<QAction *> newActions;
+    QList<QAction *> syncActions;
     QString identifier;
     QString title;
     QString icon;
@@ -228,22 +228,22 @@ int Plugin::weight() const
   return 0;
 }
 
-void Plugin::insertNewAction( KAction *action )
+void Plugin::insertNewAction( QAction *action )
 {
   d->newActions.append( action );
 }
 
-void Plugin::insertSyncAction( KAction *action )
+void Plugin::insertSyncAction( QAction *action )
 {
   d->syncActions.append( action );
 }
 
-QList<KAction*> Plugin::newActions() const
+QList<QAction *> Plugin::newActions() const
 {
   return d->newActions;
 }
 
-QList<KAction*> Plugin::syncActions() const
+QList<QAction *> Plugin::syncActions() const
 {
   return d->syncActions;
 }
