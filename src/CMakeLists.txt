@@ -38,6 +38,24 @@ install(TARGETS KF5KontactInterface EXPORT KF5KontactInterfaceTargets ${INSTALL_
 
 ########### install files ###############
 
+ecm_generate_headers(KontactInterface_CamelCase_HEADERS
+  HEADER_NAMES
+  Core
+  PimUniqueApplication  
+  Plugin  
+  Summary  
+  UniqueAppHandler
+
+  REQUIRED_HEADERS KontactInterface_HEADERS
+  PREFIX KontactInterface
+)
+
+install(FILES
+    ${KontactInterface_CamelCase_HEADERS}
+    DESTINATION ${INCLUDE_INSTALL_DIR}/KontactInterface
+    COMPONENT Devel
+)
+
 install(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/kontactinterface_export.h
   core.h
@@ -45,7 +63,10 @@ install(FILES
   summary.h
   uniqueapphandler.h
   pimuniqueapplication.h
+  ${KontactInterface_HEADERS}
 DESTINATION ${INCLUDE_INSTALL_DIR}/kontactinterface COMPONENT Devel)
+
+
 
 install(FILES kontactplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
 
