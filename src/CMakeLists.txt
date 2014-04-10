@@ -1,5 +1,4 @@
 remove_definitions(-DQT_NO_CAST_FROM_BYTEARRAY)
-include_directories(${CMAKE_SOURCE_DIR}/kpimutils)
 
 set(kontactinterface_LIB_SRCS
     core.cpp
@@ -18,7 +17,7 @@ generate_export_header(KF5KontactInterface BASE_NAME kontactinterface)
 
 add_library(KF5::KontactInterface ALIAS KF5KontactInterface)
 
-target_include_directories(KF5KontactInterface INTERFACE "$<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}/ktnef;${Boost_INCLUDE_DIR}>")
+target_include_directories(KF5KontactInterface INTERFACE "$<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}/kontactinterface>")
 target_include_directories(KF5KontactInterface PUBLIC "$<BUILD_INTERFACE:${KontactInterface_SOURCE_DIR}/src;${KontactInterface_BINARY_DIR}/src>")
 
 target_link_libraries(KF5KontactInterface 
@@ -67,8 +66,8 @@ install(FILES
 DESTINATION ${INCLUDE_INSTALL_DIR}/kontactinterface COMPONENT Devel)
 
 
-
 install(FILES kontactplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
 
 ecm_generate_pri_file(BASE_NAME KontactInterface LIB_NAME KF5KontactInterface DEPS "PimUtils Parts KDE4Support" FILENAME_VAR PRI_FILENAME)
 install(FILES ${PRI_FILENAME} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
+
