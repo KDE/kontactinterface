@@ -31,8 +31,12 @@ ecm_setup_version(${KF5_VERSION} VARIABLE_PREFIX KONTACTINTERFACE
 
 ########### Find packages ###########
 find_package(KF5KDELibs4Support ${KF5_VERSION} CONFIG REQUIRED)
-find_package(KF5PimUtils ${KF5_VERSION} CONFIG REQUIRED)
 find_package(KF5Parts ${KF5_VERSION} CONFIG REQUIRED)
+
+if(${CMAKE_SOURCE_DIR} STREQUAL ${KontactInterface_SOURCE_DIR})
+  find_package(KF5PimUtils ${KF5_VERSION} CONFIG REQUIRED)
+endif()
+
 
 ecm_configure_package_config_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/KF5KontactInterfaceConfig.cmake.in"
