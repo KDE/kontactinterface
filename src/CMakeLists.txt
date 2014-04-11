@@ -23,7 +23,7 @@ target_include_directories(KF5KontactInterface PUBLIC "$<BUILD_INTERFACE:${Konta
 target_link_libraries(KF5KontactInterface 
                       KF5::PimUtils 
                       KF5::Parts 
-                      KF5::KDE4Support
+                      KF5::KDELibs4Support
 )
 
 set_target_properties(KF5KontactInterface PROPERTIES

@@ -30,7 +30,7 @@ ecm_setup_version(${KF5_VERSION} VARIABLE_PREFIX KONTACTINTERFACE
 )
 
 ########### Find packages ###########
-find_package(KF5KDE4Support ${KF5_VERSION} CONFIG REQUIRED)
+find_package(KF5KDELibs4Support ${KF5_VERSION} CONFIG REQUIRED)
 find_package(KF5PimUtils ${KF5_VERSION} CONFIG REQUIRED)
 find_package(KF5Parts ${KF5_VERSION} CONFIG REQUIRED)
 
