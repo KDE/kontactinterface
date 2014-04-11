@@ -24,7 +24,7 @@
 #include <QFile>
 #include "core.h"
 
-#include <kpimutils/processes.h>
+#include <processes.h>
 #include <kparts/factory.h>
 #include <KService/kpluginloader.h>
 

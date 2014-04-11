@@ -68,6 +68,6 @@ DESTINATION ${INCLUDE_INSTALL_DIR}/kontactinterface COMPONENT Devel)
 
 install(FILES kontactplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
 
-ecm_generate_pri_file(BASE_NAME KontactInterface LIB_NAME KF5KontactInterface DEPS "PimUtils Parts KDE4Support" FILENAME_VAR PRI_FILENAME)
+ecm_generate_pri_file(BASE_NAME KontactInterface LIB_NAME KF5KontactInterface DEPS "PimUtils Parts KDELibs4Support" FILENAME_VAR PRI_FILENAME)
 install(FILES ${PRI_FILENAME} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
 
