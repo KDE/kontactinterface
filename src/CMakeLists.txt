@@ -7,10 +7,6 @@ set(kontactinterface_LIB_SRCS
     uniqueapphandler.cpp
     pimuniqueapplication.cpp)
 
-include_directories(
-  ${CMAKE_BINARY_DIR}/kpimutils
-)
-
 add_library(KF5KontactInterface ${kontactinterface_LIB_SRCS})
 
 generate_export_header(KF5KontactInterface BASE_NAME kontactinterface)
