@@ -26,7 +26,7 @@
 
 #include <processes.h>
 #include <kparts/factory.h>
-#include <KService/kpluginloader.h>
+#include <kpluginloader.h>
 
 #include <kxmlguifactory.h>
 #include <kaboutdata.h>
