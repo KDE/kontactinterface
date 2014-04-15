@@ -32,9 +32,9 @@
 #include <QDragEnterEvent>
 #include <QMimeData>
 #include <QDropEvent>
+#include <QHBoxLayout>
 
 #include <KGlobalSettings>
-#include <KHBox>
 #include <KIconLoader>
 #include <KDialog>
 
@@ -93,21 +93,27 @@ QWidget *Summary::createHeader( QWidget *parent, const QString &iconname, const 
                  "}"
                  "KHBox > QLabel { font: bold larger; } ") );
 
-  KHBox *hbox = new KHBox( parent );
+  QWidget *box = new QWidget(parent);
+  QHBoxLayout *hbox = new QHBoxLayout;
+  hbox->setMargin(0);
+  hbox->setSpacing(0);
+  box->setLayout(hbox);
 
-  QLabel *label = new QLabel( hbox );
+  QLabel *label = new QLabel( box );
+  hbox->addWidget(label);
   label->setPixmap( KIconLoader::global()->loadIcon( iconname, KIconLoader::Toolbar ) );
 
   label->setFixedSize( label->sizeHint() );
   label->setAcceptDrops( true );
 
-  label = new QLabel( heading, hbox );
+  label = new QLabel( heading, box );
+  hbox->addWidget(label);
   label->setAlignment( Qt::AlignLeft | Qt::AlignVCenter );
   label->setIndent( KDialog::spacingHint() );
 
-  hbox->setMaximumHeight( hbox->minimumSizeHint().height() );
+  box->setMaximumHeight( box->minimumSizeHint().height() );
 
-  return hbox;
+  return box;
 }
 
 QStringList Summary::configModules() const
