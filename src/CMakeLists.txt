@@ -1,5 +1,3 @@
-remove_definitions(-DQT_NO_CAST_FROM_BYTEARRAY)
-
 set(kontactinterface_LIB_SRCS
     core.cpp
     plugin.cpp

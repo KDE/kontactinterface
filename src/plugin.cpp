@@ -155,7 +155,7 @@ bool Plugin::isRunningStandalone() const
 
 KParts::ReadOnlyPart *Plugin::loadPart()
 {
-  return core()->createPart( d->partLibraryName );
+  return core()->createPart( d->partLibraryName.constData() );
 }
 
 const K4AboutData *Plugin::aboutData() const
