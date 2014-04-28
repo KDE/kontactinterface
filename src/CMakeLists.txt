@@ -40,7 +40,6 @@ ecm_generate_headers(KontactInterface_CamelCase_HEADERS
   UniqueAppHandler
 
   REQUIRED_HEADERS KontactInterface_HEADERS
-  PREFIX KontactInterface
 )
 
 install(FILES
