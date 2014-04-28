@@ -11,7 +11,7 @@ generate_export_header(KF5KontactInterface BASE_NAME kontactinterface)
 
 add_library(KF5::KontactInterface ALIAS KF5KontactInterface)
 
-target_include_directories(KF5KontactInterface INTERFACE "$<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}/kontactinterface>")
+target_include_directories(KF5KontactInterface INTERFACE "$<INSTALL_INTERFACE:${KF5_INCLUDE_INSTALL_DIR}/KontactInterface>")
 target_include_directories(KF5KontactInterface PUBLIC "$<BUILD_INTERFACE:${KontactInterface_SOURCE_DIR}/src;${KontactInterface_BINARY_DIR}/src>")
 
 target_link_libraries(KF5KontactInterface 
@@ -44,12 +44,6 @@ ecm_generate_headers(KontactInterface_CamelCase_HEADERS
 )
 
 install(FILES
-    ${KontactInterface_CamelCase_HEADERS}
-    DESTINATION ${INCLUDE_INSTALL_DIR}/KontactInterface
-    COMPONENT Devel
-)
-
-install(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/kontactinterface_export.h
   core.h
   plugin.h
@@ -57,7 +51,11 @@ install(FILES
   uniqueapphandler.h
   pimuniqueapplication.h
   ${KontactInterface_HEADERS}
-DESTINATION ${INCLUDE_INSTALL_DIR}/kontactinterface COMPONENT Devel)
+
+    ${KontactInterface_CamelCase_HEADERS}
+    DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/KontactInterface
+    COMPONENT Devel
+)
 
 
 install(FILES kontactplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
