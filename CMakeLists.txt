@@ -53,6 +53,13 @@ install(FILES
 )
 
 
+install(FILES
+   ${CMAKE_CURRENT_BINARY_DIR}/kontactinterface_version.h
+   DESTINATION ${KF5_INCLUDE_INSTALL_DIR}
+   COMPONENT Devel
+)
+
+
 install(EXPORT KF5KontactInterfaceTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE KF5KontactInterfaceTargets.cmake NAMESPACE KF5::)
 
 add_subdirectory(src)
