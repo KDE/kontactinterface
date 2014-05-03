@@ -14,10 +14,12 @@ add_library(KF5::KontactInterface ALIAS KF5KontactInterface)
 target_include_directories(KF5KontactInterface INTERFACE "$<INSTALL_INTERFACE:${KF5_INCLUDE_INSTALL_DIR}/KontactInterface>")
 target_include_directories(KF5KontactInterface PUBLIC "$<BUILD_INTERFACE:${KontactInterface_SOURCE_DIR}/src;${KontactInterface_BINARY_DIR}/src>")
 
-target_link_libraries(KF5KontactInterface 
-                      KF5::PimUtils 
-                      KF5::Parts 
+target_link_libraries(KF5KontactInterface
+                     PUBLIC
+                      KF5::Parts
                       KF5::KDELibs4Support
+                     PRIVATE 
+                      KF5::PimUtils 
 )
 
 set_target_properties(KF5KontactInterface PROPERTIES
@@ -59,6 +61,6 @@ install(FILES
 
 install(FILES kontactplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
 
-ecm_generate_pri_file(BASE_NAME KontactInterface LIB_NAME KF5KontactInterface DEPS "PimUtils Parts KDELibs4Support" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KF5_INCLUDE_INSTALL_DIR}/KontactInterface)
+ecm_generate_pri_file(BASE_NAME KontactInterface LIB_NAME KF5KontactInterface DEPS "Parts KDELibs4Support" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KF5_INCLUDE_INSTALL_DIR}/KontactInterface)
 install(FILES ${PRI_FILENAME} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
 
