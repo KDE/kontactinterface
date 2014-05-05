@@ -40,7 +40,7 @@ ecm_generate_headers(KontactInterface_CamelCase_HEADERS
   Plugin  
   Summary  
   UniqueAppHandler
-
+  PREFIX KontactInterface
   REQUIRED_HEADERS KontactInterface_HEADERS
 )
 
@@ -54,7 +54,7 @@ install(FILES
   ${KontactInterface_HEADERS}
 
     ${KontactInterface_CamelCase_HEADERS}
-    DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/KontactInterface
+    DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/KontactInterface/kontactinterface
     COMPONENT Devel
 )
 
