@@ -23,7 +23,7 @@
 #include <qdbusabstractadaptor.h>
 #include "core.h"
 
-#include <processes.h>
+#include <kpimutils/processes.h>
 
 #include <kapplication.h>
 #include <kcmdlineargs.h>
