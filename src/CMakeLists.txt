@@ -53,8 +53,13 @@ install(FILES
   pimuniqueapplication.h
   ${KontactInterface_HEADERS}
 
-    ${KontactInterface_CamelCase_HEADERS}
     DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/KontactInterface/kontactinterface
+    COMPONENT Devel
+)
+
+install(FILES
+    ${KontactInterface_CamelCase_HEADERS}
+    DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/KontactInterface/KontactInterface/
     COMPONENT Devel
 )
 
