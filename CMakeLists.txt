@@ -18,7 +18,7 @@ include(KDEFrameworkCompilerSettings)
 
 
 add_definitions(-DKDE_DEFAULT_DEBUG_AREA=5601)
-add_definitions(-DTRANSLATION_DOMAIN=\"kontactinterfaces\")
+add_definitions(-DTRANSLATION_DOMAIN=\"kontactinterfaces5\")
 # FIXME: Do we want the same versions in kdepimlibs and kf5?
 set(KF5_VERSION "4.98.0")
 set(CMAKECONFIG_INSTALL_DIR "${CMAKECONFIG_INSTALL_PREFIX}/KF5KontactInterface")

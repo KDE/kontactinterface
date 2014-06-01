@@ -1,2 +1,2 @@
 #! /bin/sh
-$XGETTEXT `find . src -name "*.cpp" -o -name "*.h" | grep -v "/tests"` -o $podir/kontactinterfaces.pot
+$XGETTEXT `find . src -name "*.cpp" -o -name "*.h"` -o $podir/kontactinterfaces5.pot
