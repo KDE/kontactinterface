@@ -22,7 +22,6 @@
 
 #include "summary.h"
 
-#include <QImage>
 #include <QFont>
 #include <QLabel>
 #include <QDrag>
@@ -34,7 +33,6 @@
 #include <QDropEvent>
 #include <QHBoxLayout>
 
-#include <KGlobalSettings>
 #include <KIconLoader>
 #include <KDialog>
 #include <QFontDatabase>
