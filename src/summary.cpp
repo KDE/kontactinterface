@@ -37,6 +37,7 @@
 #include <KGlobalSettings>
 #include <KIconLoader>
 #include <KDialog>
+#include <QFontDatabase>
 
 using namespace KontactInterface;
 
@@ -68,7 +69,7 @@ class Summary::Private
 Summary::Summary( QWidget *parent )
   : QWidget( parent ), d( new Private )
 {
-  setFont( KGlobalSettings::generalFont() );
+  setFont( QFontDatabase::systemFont(QFontDatabase::GeneralFont) );
   setAcceptDrops( true );
 }
 
