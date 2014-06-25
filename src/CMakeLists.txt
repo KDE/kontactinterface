@@ -47,9 +47,8 @@ ecm_generate_headers(KontactInterface_CamelCase_HEADERS
 install(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/kontactinterface_export.h
   ${KontactInterface_HEADERS}
-
-    DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/KontactInterface/kontactinterface
-    COMPONENT Devel
+  DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/KontactInterface/kontactinterface
+  COMPONENT Devel
 )
 
 install(FILES
