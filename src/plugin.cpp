@@ -36,7 +36,7 @@
 #include <kcomponentdata.h>
 
 #include <krun.h>
-#include <k4aboutdata.h>
+#include <kaboutdata.h>
 
 #include <QObject>
 #include <QDBusConnection>
@@ -158,8 +158,10 @@ KParts::ReadOnlyPart *Plugin::loadPart()
   return core()->createPart( d->partLibraryName.constData() );
 }
 
-const K4AboutData *Plugin::aboutData() const
+const KAboutData *Plugin::aboutData() const
 {
+//QT5 port it.
+#if 0
   KPluginLoader loader( QString::fromLatin1(d->partLibraryName) );
   KPluginFactory *factory = loader.factory();
   qDebug() << "filename:" << loader.pluginName();
@@ -187,7 +189,7 @@ const K4AboutData *Plugin::aboutData() const
       }
     }
   }
-
+#endif
   qCritical() << "Cannot load instance for" << title();
   return 0;
 }
