@@ -12,7 +12,7 @@ generate_export_header(KF5KontactInterface BASE_NAME kontactinterface)
 add_library(KF5::KontactInterface ALIAS KF5KontactInterface)
 
 target_include_directories(KF5KontactInterface INTERFACE "$<INSTALL_INTERFACE:${KF5_INCLUDE_INSTALL_DIR}/KontactInterface>")
-target_include_directories(KF5KontactInterface PUBLIC "$<BUILD_INTERFACE:${KontactInterface_SOURCE_DIR}/src;${KontactInterface_BINARY_DIR}/src>")
+target_include_directories(KF5KontactInterface PUBLIC "$<BUILD_INTERFACE:${KontactInterface_SOURCE_DIR}/src;${KontactInterface_BINARY_DIR}/src;${KontactInterface_BINARY_DIR}>")
 
 target_link_libraries(KF5KontactInterface
                      PUBLIC

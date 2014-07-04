@@ -19,6 +19,7 @@
    Boston, MA 02110-1301, USA.
 */
 
+#include "config-kontactinterface.h"
 #include "pimuniqueapplication.h"
 
 #include <k4aboutdata.h>
@@ -89,14 +90,14 @@ bool PimUniqueApplication::start( KUniqueApplication::StartFlags flags )
     KCmdLineArgs::saveAppArgs( ds );
 
     QByteArray new_asn_id;
-#if defined Q_WS_X11
+#if KONTACTINTERFACE_HAVE_X11
     KStartupInfoId id;
     if ( kapp ) { // KApplication constructor unsets the env. variable
       id.initId( kapp->startupId() );
     } else {
       id = KStartupInfo::currentStartupIdEnv();
     }
-    if ( !id.none() ) {
+    if ( !id.isNull() ) {
       new_asn_id = id.id();
     }
 #endif

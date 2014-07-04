@@ -34,6 +34,14 @@ ecm_setup_version(${KDEPIMLIBS_VERSION} VARIABLE_PREFIX KONTACTINTERFACE
 find_package(KF5KDELibs4Support ${KF5_VERSION} CONFIG REQUIRED)
 find_package(KF5Parts ${KF5_VERSION} CONFIG REQUIRED)
 
+if (NOT APPLE)
+    find_package(X11)
+endif()
+
+set(KONTACTINTERFACE_HAVE_X11 ${X11_FOUND})
+configure_file(config-kontactinterface.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kontactinterface.h )
+
+
 if(${CMAKE_SOURCE_DIR} STREQUAL ${KontactInterface_SOURCE_DIR})
   find_package(KF5PimUtils ${KDEPIMLIBS_VERSION} CONFIG REQUIRED)
 endif()
