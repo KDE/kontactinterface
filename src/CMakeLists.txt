@@ -2,6 +2,7 @@ set(kontactinterface_LIB_SRCS
     core.cpp
     plugin.cpp
     summary.cpp
+    processes.cpp
     uniqueapphandler.cpp
     pimuniqueapplication.cpp)
 
@@ -18,8 +19,6 @@ target_link_libraries(KF5KontactInterface
                      PUBLIC
                       KF5::Parts
                       KF5::KDELibs4Support
-                     PRIVATE 
-                      KF5::PimUtils 
 )
 
 set_target_properties(KF5KontactInterface PROPERTIES
@@ -40,6 +39,7 @@ ecm_generate_headers(KontactInterface_CamelCase_HEADERS
   Plugin
   Summary
   UniqueAppHandler
+  Processes
   PREFIX KontactInterface
   REQUIRED_HEADERS KontactInterface_HEADERS
 )

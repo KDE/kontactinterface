@@ -24,7 +24,7 @@
 #include <QFile>
 #include "core.h"
 
-#include <kpimutils/processes.h>
+#include "processes.h"
 #include <kparts/factory.h>
 #include <kpluginloader.h>
 
@@ -377,7 +377,7 @@ void Plugin::bringToForeground()
     return;
   }
 #ifdef Q_WS_WIN
-  KPIMUtils::activateWindowForProcess( d->executableName );
+  activateWindowForProcess( d->executableName );
 #else
   KRun::runCommand( d->executableName, 0 );
 #endif

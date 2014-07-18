@@ -23,7 +23,7 @@
 #include <qdbusabstractadaptor.h>
 #include "core.h"
 
-#include <kpimutils/processes.h>
+#include "processes.h"
 
 #include <kapplication.h>
 #include <kcmdlineargs.h>
@@ -184,7 +184,7 @@ UniqueAppWatcher::UniqueAppWatcher( UniqueAppHandlerFactoryBase *factory, Plugin
 #ifdef Q_WS_WIN
   if ( d->mRunningStandalone ) {
     QList<int> pids;
-    KPIMUtils::getProcessesIdForName( plugin->objectName(), pids );
+    getProcessesIdForName( plugin->objectName(), pids );
     const int mypid = getpid();
     bool processExits = false;
     foreach ( int pid, pids ) {
