@@ -34,7 +34,6 @@
 #include <QHBoxLayout>
 
 #include <KIconLoader>
-#include <KDialog>
 #include <QFontDatabase>
 
 using namespace KontactInterface;
@@ -108,7 +107,7 @@ QWidget *Summary::createHeader( QWidget *parent, const QString &iconname, const 
   label = new QLabel( heading, box );
   hbox->addWidget(label);
   label->setAlignment( Qt::AlignLeft | Qt::AlignVCenter );
-  label->setIndent( KDialog::spacingHint() );
+//TODO PORT QT5   label->setIndent( QDialog::spacingHint() );
 
   box->setMaximumHeight( box->minimumSizeHint().height() );
 
