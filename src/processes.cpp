@@ -32,7 +32,7 @@
 #include "processes.h"
 using namespace KontactInterface;
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 
 #include <windows.h>
 #include <tlhelp32.h>
@@ -220,4 +220,4 @@ void KPIMUtils::activateWindowForProcess( const QString &executableName )
   SetForegroundWindow( winStruct.windowId );
 }
 
-#endif // Q_WS_WIN
+#endif // Q_OS_WIN

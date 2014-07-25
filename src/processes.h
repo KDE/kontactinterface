@@ -40,7 +40,7 @@ class QString;
 
 namespace KontactInterface {
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
   /**
    * Sets @a pids to a list of processes having name @a processName.
    */

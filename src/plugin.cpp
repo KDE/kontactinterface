@@ -216,7 +216,7 @@ QString Plugin::registerClient()
 {
   if ( d->serviceName.isEmpty() ) {
     d->serviceName = QLatin1String("org.kde.") + QLatin1String(objectName().toLatin1());
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     const QString pid = QString::number( getpid() );
     d->serviceName.append( QLatin1String(".unique-") + pid );
 #endif
@@ -376,7 +376,7 @@ void Plugin::bringToForeground()
   if ( d->executableName.isEmpty() ) {
     return;
   }
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
   activateWindowForProcess( d->executableName );
 #else
   KRun::runCommand( d->executableName, 0 );

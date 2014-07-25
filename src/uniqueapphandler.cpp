@@ -35,7 +35,7 @@
 #include <QDBusConnection>
 #include <QDBusConnectionInterface>
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #  include <process.h>
 #endif
 
@@ -181,7 +181,7 @@ UniqueAppWatcher::UniqueAppWatcher( UniqueAppHandlerFactoryBase *factory, Plugin
   #undef interface
   d->mRunningStandalone =
     QDBusConnection::sessionBus().interface()->isServiceRegistered( serviceName );
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
   if ( d->mRunningStandalone ) {
     QList<int> pids;
     getProcessesIdForName( plugin->objectName(), pids );
