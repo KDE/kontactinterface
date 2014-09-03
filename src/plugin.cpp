@@ -41,6 +41,8 @@
 #include <QObject>
 #include <QDBusConnection>
 #include <QDomDocument>
+#include <QFileInfo>
+#include <QDir>
 
 #include <unistd.h>
 #include <QStandardPaths>
@@ -343,6 +345,9 @@ void Plugin::Private::removeInvisibleToolbarActions( Plugin *plugin )
 
   const QString newAppFile =
     QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kontact/default-") + QLatin1String(pluginName) + QLatin1String(".rc") ;
+  QFileInfo fileInfo(newAppFile);
+  QDir().mkpath(fileInfo.absolutePath());
+
   QFile file( newAppFile );
   if ( !file.open( QFile::WriteOnly ) ) {
     qWarning() << "error writing to" << newAppFile;
