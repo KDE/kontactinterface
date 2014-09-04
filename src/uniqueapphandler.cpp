@@ -89,47 +89,47 @@ using namespace KontactInterface;
 //@cond PRIVATE
 class UniqueAppHandler::Private
 {
-  public:
+public:
     Plugin *mPlugin;
 };
 //@endcond
 
-UniqueAppHandler::UniqueAppHandler( Plugin *plugin )
- : QObject( plugin ), d( new Private )
+UniqueAppHandler::UniqueAppHandler(Plugin *plugin)
+    : QObject(plugin), d(new Private)
 {
-  //qDebug() << "plugin->objectName():" << plugin->objectName();
+    //qDebug() << "plugin->objectName():" << plugin->objectName();
 
-  d->mPlugin = plugin;
-  QDBusConnection session = QDBusConnection::sessionBus();
-  const QString appName = plugin->objectName();
-  session.registerService( QLatin1String("org.kde.") + appName );
-  const QString objectName = QLatin1Char( '/' ) + appName + QLatin1String("_PimApplication");
-  session.registerObject( objectName, this, QDBusConnection::ExportAllSlots );
+    d->mPlugin = plugin;
+    QDBusConnection session = QDBusConnection::sessionBus();
+    const QString appName = plugin->objectName();
+    session.registerService(QLatin1String("org.kde.") + appName);
+    const QString objectName = QLatin1Char('/') + appName + QLatin1String("_PimApplication");
+    session.registerObject(objectName, this, QDBusConnection::ExportAllSlots);
 }
 
 UniqueAppHandler::~UniqueAppHandler()
 {
-  QDBusConnection session = QDBusConnection::sessionBus();
-  const QString appName = parent()->objectName();
-  session.unregisterService( QLatin1String("org.kde.") + appName );
-  delete d;
+    QDBusConnection session = QDBusConnection::sessionBus();
+    const QString appName = parent()->objectName();
+    session.unregisterService(QLatin1String("org.kde.") + appName);
+    delete d;
 }
 
 // DBUS call
-int UniqueAppHandler::newInstance( const QByteArray &asn_id, const QByteArray &args )
+int UniqueAppHandler::newInstance(const QByteArray &asn_id, const QByteArray &args)
 {
-  if ( !asn_id.isEmpty() ) {
-    kapp->setStartupId( asn_id );
-  }
+    if (!asn_id.isEmpty()) {
+        kapp->setStartupId(asn_id);
+    }
 
-  KCmdLineArgs::reset(); // forget options defined by other "applications"
-  loadCommandLineOptions(); // implemented by plugin
+    KCmdLineArgs::reset(); // forget options defined by other "applications"
+    loadCommandLineOptions(); // implemented by plugin
 
-  // This bit is duplicated from KUniqueApplicationAdaptor::newInstance()
-  QDataStream ds( args );
-  KCmdLineArgs::loadAppArgs( ds );
+    // This bit is duplicated from KUniqueApplicationAdaptor::newInstance()
+    QDataStream ds(args);
+    KCmdLineArgs::loadAppArgs(ds);
 
-  return newInstance();
+    return newInstance();
 }
 
 static QWidget *s_mainWidget = 0;
@@ -137,117 +137,117 @@ static QWidget *s_mainWidget = 0;
 // Plugin-specific newInstance implementation, called by above method
 int KontactInterface::UniqueAppHandler::newInstance()
 {
-  if ( s_mainWidget ) {
-    s_mainWidget->show();
-    KWindowSystem::forceActiveWindow( s_mainWidget->winId() );
-    KStartupInfo::appStarted();
-  }
+    if (s_mainWidget) {
+        s_mainWidget->show();
+        KWindowSystem::forceActiveWindow(s_mainWidget->winId());
+        KStartupInfo::appStarted();
+    }
 
-  // Then ensure the part appears in kontact
-  d->mPlugin->core()->selectPlugin( d->mPlugin );
-  return 0;
+    // Then ensure the part appears in kontact
+    d->mPlugin->core()->selectPlugin(d->mPlugin);
+    return 0;
 }
 
 Plugin *UniqueAppHandler::plugin() const
 {
-  return d->mPlugin;
+    return d->mPlugin;
 }
 
 bool KontactInterface::UniqueAppHandler::load()
 {
-  (void)d->mPlugin->part(); // load the part without bringing it to front
-  return true;
+    (void)d->mPlugin->part(); // load the part without bringing it to front
+    return true;
 }
 
 //@cond PRIVATE
 class UniqueAppWatcher::Private
 {
-  public:
+public:
     UniqueAppHandlerFactoryBase *mFactory;
     Plugin *mPlugin;
     bool mRunningStandalone;
 };
 //@endcond
 
-UniqueAppWatcher::UniqueAppWatcher( UniqueAppHandlerFactoryBase *factory, Plugin *plugin )
-  : QObject( plugin ), d( new Private )
+UniqueAppWatcher::UniqueAppWatcher(UniqueAppHandlerFactoryBase *factory, Plugin *plugin)
+    : QObject(plugin), d(new Private)
 {
-  d->mFactory = factory;
-  d->mPlugin = plugin;
+    d->mFactory = factory;
+    d->mPlugin = plugin;
 
-  // The app is running standalone if 1) that name is known to D-Bus
-  const QString serviceName = QLatin1String("org.kde.") + plugin->objectName();
-  //Needed for wince build
-  #undef interface
-  d->mRunningStandalone =
-    QDBusConnection::sessionBus().interface()->isServiceRegistered( serviceName );
+    // The app is running standalone if 1) that name is known to D-Bus
+    const QString serviceName = QLatin1String("org.kde.") + plugin->objectName();
+    //Needed for wince build
+#undef interface
+    d->mRunningStandalone =
+        QDBusConnection::sessionBus().interface()->isServiceRegistered(serviceName);
 #ifdef Q_OS_WIN
-  if ( d->mRunningStandalone ) {
-    QList<int> pids;
-    getProcessesIdForName( plugin->objectName(), pids );
-    const int mypid = getpid();
-    bool processExits = false;
-    foreach ( int pid, pids ) {
-      if ( mypid != pid ) {
-        processExits = true;
-        break;
-      }
+    if (d->mRunningStandalone) {
+        QList<int> pids;
+        getProcessesIdForName(plugin->objectName(), pids);
+        const int mypid = getpid();
+        bool processExits = false;
+        foreach (int pid, pids) {
+            if (mypid != pid) {
+                processExits = true;
+                break;
+            }
+        }
+        if (!processExits) {
+            d->mRunningStandalone = false;
+        }
     }
-    if ( !processExits ) {
-      d->mRunningStandalone = false;
-    }
-  }
 #endif
 
-  QString owner = QDBusConnection::sessionBus().interface()->serviceOwner( serviceName );
-  if ( d->mRunningStandalone && ( owner == QDBusConnection::sessionBus().baseService() ) ) {
-    d->mRunningStandalone = false;
-  }
-  //qDebug() << " plugin->objectName()=" << plugin->objectName()
-  //         << " running standalone:" << d->mRunningStandalone;
+    QString owner = QDBusConnection::sessionBus().interface()->serviceOwner(serviceName);
+    if (d->mRunningStandalone && (owner == QDBusConnection::sessionBus().baseService())) {
+        d->mRunningStandalone = false;
+    }
+    //qDebug() << " plugin->objectName()=" << plugin->objectName()
+    //         << " running standalone:" << d->mRunningStandalone;
 
-  if ( d->mRunningStandalone ) {
-    QObject::connect( QDBusConnection::sessionBus().interface(),
-                      SIGNAL(serviceOwnerChanged(QString,QString,QString)),
-                      this, SLOT(slotApplicationRemoved(QString,QString,QString)) );
-  } else {
-    d->mFactory->createHandler( d->mPlugin );
-  }
+    if (d->mRunningStandalone) {
+        QObject::connect(QDBusConnection::sessionBus().interface(),
+                         SIGNAL(serviceOwnerChanged(QString,QString,QString)),
+                         this, SLOT(slotApplicationRemoved(QString,QString,QString)));
+    } else {
+        d->mFactory->createHandler(d->mPlugin);
+    }
 }
 
 UniqueAppWatcher::~UniqueAppWatcher()
 {
-  delete d->mFactory;
-  delete d;
+    delete d->mFactory;
+    delete d;
 }
 
 bool UniqueAppWatcher::isRunningStandalone() const
 {
-  return d->mRunningStandalone;
+    return d->mRunningStandalone;
 }
 
-void KontactInterface::UniqueAppWatcher::slotApplicationRemoved( const QString &name,
-                                                                 const QString &oldOwner,
-                                                                 const QString &newOwner )
+void KontactInterface::UniqueAppWatcher::slotApplicationRemoved(const QString &name,
+        const QString &oldOwner,
+        const QString &newOwner)
 {
-  if ( oldOwner.isEmpty() || !newOwner.isEmpty() ) {
-    return;
-  }
+    if (oldOwner.isEmpty() || !newOwner.isEmpty()) {
+        return;
+    }
 
-  const QString serviceName = QLatin1String("org.kde.") + d->mPlugin->objectName();
-  if ( name == serviceName && d->mRunningStandalone ) {
-    d->mFactory->createHandler( d->mPlugin );
-    d->mRunningStandalone = false;
-  }
+    const QString serviceName = QLatin1String("org.kde.") + d->mPlugin->objectName();
+    if (name == serviceName && d->mRunningStandalone) {
+        d->mFactory->createHandler(d->mPlugin);
+        d->mRunningStandalone = false;
+    }
 }
 
-void KontactInterface::UniqueAppHandler::setMainWidget( QWidget *widget )
+void KontactInterface::UniqueAppHandler::setMainWidget(QWidget *widget)
 {
-  s_mainWidget = widget;
+    s_mainWidget = widget;
 }
 
 QWidget *KontactInterface::UniqueAppHandler::mainWidget()
 {
-  return s_mainWidget;
+    return s_mainWidget;
 }
 

@@ -40,15 +40,15 @@ class KontactInterface::PimUniqueApplication::Private
 //@endcond
 
 PimUniqueApplication::PimUniqueApplication()
-  : KUniqueApplication(), d( new Private() )
+    : KUniqueApplication(), d(new Private())
 {
-  // This object name is used in start(), and also in kontact's UniqueAppHandler.
-  const QString objectName = QLatin1Char( '/' ) + applicationName() + QLatin1String("_PimApplication");
-  QDBusConnection::sessionBus().registerObject(
-    objectName, this,
-    QDBusConnection::ExportScriptableSlots |
-    QDBusConnection::ExportScriptableProperties |
-    QDBusConnection::ExportAdaptors );
+    // This object name is used in start(), and also in kontact's UniqueAppHandler.
+    const QString objectName = QLatin1Char('/') + applicationName() + QLatin1String("_PimApplication");
+    QDBusConnection::sessionBus().registerObject(
+        objectName, this,
+        QDBusConnection::ExportScriptableSlots |
+        QDBusConnection::ExportScriptableProperties |
+        QDBusConnection::ExportAdaptors);
 }
 
 static const char _k_sessionBusName[] = "kdepimapplication_session_bus";
@@ -60,64 +60,64 @@ PimUniqueApplication::~PimUniqueApplication()
 
 static QDBusConnection tryToInitDBusConnection()
 {
-  // Check the D-Bus connection health, and connect - but not using QDBusConnection::sessionBus()
-  // since we can't close that one before forking.
-  QDBusConnection connection = QDBusConnection::connectToBus(
-    QDBusConnection::SessionBus, QLatin1String(_k_sessionBusName) );
-  if ( !connection.isConnected() ) {
-    qCritical() << "Cannot find the D-Bus session server" << endl; //krazy:exclude=kdebug
-    ::exit( 255 );
-  }
-  return connection;
+    // Check the D-Bus connection health, and connect - but not using QDBusConnection::sessionBus()
+    // since we can't close that one before forking.
+    QDBusConnection connection = QDBusConnection::connectToBus(
+                                     QDBusConnection::SessionBus, QLatin1String(_k_sessionBusName));
+    if (!connection.isConnected()) {
+        qCritical() << "Cannot find the D-Bus session server" << endl; //krazy:exclude=kdebug
+        ::exit(255);
+    }
+    return connection;
 }
 
 bool PimUniqueApplication::start()
 {
-  return start( KUniqueApplication::StartFlags() );
+    return start(KUniqueApplication::StartFlags());
 }
 
-bool PimUniqueApplication::start( KUniqueApplication::StartFlags flags )
+bool PimUniqueApplication::start(KUniqueApplication::StartFlags flags)
 {
-  const QString appName = KCmdLineArgs::aboutData()->appName();
-  // Try talking to /appName_PimApplication in org.kde.appName,
-  // (which could be kontact or the standalone application),
-  // otherwise fall back to standard KUniqueApplication behavior (start appName).
+    const QString appName = KCmdLineArgs::aboutData()->appName();
+    // Try talking to /appName_PimApplication in org.kde.appName,
+    // (which could be kontact or the standalone application),
+    // otherwise fall back to standard KUniqueApplication behavior (start appName).
 
-  const QString serviceName = QLatin1String("org.kde.") + appName;
-  if ( tryToInitDBusConnection().interface()->isServiceRegistered( serviceName ) ) {
-    QByteArray saved_args;
-    QDataStream ds( &saved_args, QIODevice::WriteOnly );
-    KCmdLineArgs::saveAppArgs( ds );
+    const QString serviceName = QLatin1String("org.kde.") + appName;
+    if (tryToInitDBusConnection().interface()->isServiceRegistered(serviceName)) {
+        QByteArray saved_args;
+        QDataStream ds(&saved_args, QIODevice::WriteOnly);
+        KCmdLineArgs::saveAppArgs(ds);
 
-    QByteArray new_asn_id;
+        QByteArray new_asn_id;
 #if KONTACTINTERFACE_HAVE_X11
-    KStartupInfoId id;
-    if ( kapp ) { // KApplication constructor unsets the env. variable
-      id.initId( kapp->startupId() );
-    } else {
-      id = KStartupInfo::currentStartupIdEnv();
-    }
-    if ( !id.isNull() ) {
-      new_asn_id = id.id();
-    }
+        KStartupInfoId id;
+        if (kapp) {   // KApplication constructor unsets the env. variable
+            id.initId(kapp->startupId());
+        } else {
+            id = KStartupInfo::currentStartupIdEnv();
+        }
+        if (!id.isNull()) {
+            new_asn_id = id.id();
+        }
 #endif
 
-    KWindowSystem::allowExternalProcessWindowActivation();
+        KWindowSystem::allowExternalProcessWindowActivation();
 
-    const QString objectName = QLatin1Char( '/' ) + appName + QLatin1String("_PimApplication");
-    //qDebug() << objectName;
-    QDBusInterface iface(
-      serviceName, objectName, QLatin1String("org.kde.KUniqueApplication"), QDBusConnection::sessionBus() );
-    QDBusReply<int> reply;
-    if ( iface.isValid() &&
-         ( reply = iface.call( QLatin1String("newInstance"), new_asn_id, saved_args ) ).isValid() ) {
-      return false; // success means that main() can exit now.
+        const QString objectName = QLatin1Char('/') + appName + QLatin1String("_PimApplication");
+        //qDebug() << objectName;
+        QDBusInterface iface(
+            serviceName, objectName, QLatin1String("org.kde.KUniqueApplication"), QDBusConnection::sessionBus());
+        QDBusReply<int> reply;
+        if (iface.isValid() &&
+                (reply = iface.call(QLatin1String("newInstance"), new_asn_id, saved_args)).isValid()) {
+            return false; // success means that main() can exit now.
+        }
     }
-  }
 
-  QDBusConnection::disconnectFromBus( QLatin1String(_k_sessionBusName) );
+    QDBusConnection::disconnectFromBus(QLatin1String(_k_sessionBusName));
 
-  //qDebug() << "kontact not running -- start standalone application";
-  // kontact not running -- start standalone application.
-  return KUniqueApplication::start( flags );
+    //qDebug() << "kontact not running -- start standalone application";
+    // kontact not running -- start standalone application.
+    return KUniqueApplication::start(flags);
 }

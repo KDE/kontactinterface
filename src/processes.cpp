@@ -46,178 +46,177 @@ using namespace KontactInterface;
 #include <QDebug>
 
 // Copy from kdelibs/kinit/kinit_win.cpp
-PSID copySid( PSID from )
+PSID copySid(PSID from)
 {
-  if ( !from ) {
+    if (!from) {
+        return 0;
+    }
+
+    int sidLength = GetLengthSid(from);
+    PSID to = (PSID) malloc(sidLength);
+    CopySid(sidLength, to, from);
+    return to;
+}
+
+// Copy from kdelibs/kinit/kinit_win.cpp
+static PSID getProcessOwner(HANDLE hProcess)
+{
+    HANDLE hToken = NULL;
+    PSID sid;
+
+    OpenProcessToken(hProcess, TOKEN_READ, &hToken);
+    if (hToken) {
+        DWORD size;
+        PTOKEN_USER userStruct;
+
+        // check how much space is needed
+        GetTokenInformation(hToken, TokenUser, NULL, 0, &size);
+        if (ERROR_INSUFFICIENT_BUFFER == GetLastError()) {
+            userStruct = reinterpret_cast<PTOKEN_USER>(new BYTE[size]);
+            GetTokenInformation(hToken, TokenUser, userStruct, size, &size);
+
+            sid = copySid(userStruct->User.Sid);
+            CloseHandle(hToken);
+            delete [] userStruct;
+            return sid;
+        }
+    }
     return 0;
-  }
-
-  int sidLength = GetLengthSid( from );
-  PSID to = (PSID) malloc( sidLength );
-  CopySid( sidLength, to, from );
-  return to;
 }
 
 // Copy from kdelibs/kinit/kinit_win.cpp
-static PSID getProcessOwner( HANDLE hProcess )
+static HANDLE getProcessHandle(int processID)
 {
-  HANDLE hToken = NULL;
-  PSID sid;
+    return OpenProcess(SYNCHRONIZE |
+                       PROCESS_QUERY_INFORMATION |
+                       PROCESS_VM_READ |
+                       PROCESS_TERMINATE,
+                       false, processID);
+}
 
-  OpenProcessToken( hProcess, TOKEN_READ, &hToken );
-  if ( hToken ) {
-    DWORD size;
-    PTOKEN_USER userStruct;
+void KPIMUtils::getProcessesIdForName(const QString &processName, QList<int> &pids)
+{
+    HANDLE h;
+    PROCESSENTRY32 pe32;
 
-    // check how much space is needed
-    GetTokenInformation( hToken, TokenUser, NULL, 0, &size );
-    if ( ERROR_INSUFFICIENT_BUFFER == GetLastError() ) {
-      userStruct = reinterpret_cast<PTOKEN_USER>( new BYTE[size] );
-      GetTokenInformation( hToken, TokenUser, userStruct, size, &size );
-
-      sid = copySid( userStruct->User.Sid );
-      CloseHandle( hToken );
-      delete [] userStruct;
-      return sid;
+    h = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+    if (h == INVALID_HANDLE_VALUE) {
+        return;
     }
-  }
-  return 0;
-}
 
-// Copy from kdelibs/kinit/kinit_win.cpp
-static HANDLE getProcessHandle( int processID )
-{
-  return OpenProcess( SYNCHRONIZE |
-                      PROCESS_QUERY_INFORMATION |
-                      PROCESS_VM_READ |
-                      PROCESS_TERMINATE,
-                      false, processID );
-}
-
-void KPIMUtils::getProcessesIdForName( const QString &processName, QList<int> &pids )
-{
-  HANDLE h;
-  PROCESSENTRY32 pe32;
-
-  h = CreateToolhelp32Snapshot( TH32CS_SNAPPROCESS, 0 );
-  if ( h == INVALID_HANDLE_VALUE ) {
-    return;
-  }
-
-  pe32.dwSize = sizeof( PROCESSENTRY32 ); // Necessary according to MSDN
-  if ( !Process32First( h, &pe32 ) ) {
-    return;
-  }
-
-  pids.clear();
-
-  do {
-    if ( QString::fromWCharArray( pe32.szExeFile ) == processName ) {
-      PSID user_sid = getProcessOwner( GetCurrentProcess() );
-      if ( user_sid ) {
-        // Also check that we are the Owner of that process
-        HANDLE hProcess = getProcessHandle( pe32.th32ProcessID );
-        if ( !hProcess ) {
-          continue;
-        }
-
-        PSID sid = getProcessOwner( hProcess );
-        PSID userSid = getProcessOwner( GetCurrentProcess() );
-        if ( !sid || userSid && !EqualSid( userSid, sid ) ) {
-          free ( sid );
-          continue;
-        }
-      }
-      pids.append( (int)pe32.th32ProcessID );
-      qDebug() << "found PID: " << (int)pe32.th32ProcessID;
+    pe32.dwSize = sizeof(PROCESSENTRY32);   // Necessary according to MSDN
+    if (!Process32First(h, &pe32)) {
+        return;
     }
-  } while ( Process32Next( h, &pe32 ) );
-  CloseHandle( h );
+
+    pids.clear();
+
+    do {
+        if (QString::fromWCharArray(pe32.szExeFile) == processName) {
+            PSID user_sid = getProcessOwner(GetCurrentProcess());
+            if (user_sid) {
+                // Also check that we are the Owner of that process
+                HANDLE hProcess = getProcessHandle(pe32.th32ProcessID);
+                if (!hProcess) {
+                    continue;
+                }
+
+                PSID sid = getProcessOwner(hProcess);
+                PSID userSid = getProcessOwner(GetCurrentProcess());
+                if (!sid || userSid && !EqualSid(userSid, sid)) {
+                    free(sid);
+                    continue;
+                }
+            }
+            pids.append((int)pe32.th32ProcessID);
+            qDebug() << "found PID: " << (int)pe32.th32ProcessID;
+        }
+    } while (Process32Next(h, &pe32));
+    CloseHandle(h);
 }
 
-bool KPIMUtils::otherProcessesExist( const QString &processName )
+bool KPIMUtils::otherProcessesExist(const QString &processName)
 {
-  QList<int> pids;
-  getProcessesIdForName( processName, pids );
-  int myPid = getpid();
-  foreach ( int pid, pids ) {
-    if ( myPid != pid ) {
+    QList<int> pids;
+    getProcessesIdForName(processName, pids);
+    int myPid = getpid();
+    foreach (int pid, pids) {
+        if (myPid != pid) {
 //      qDebug() << "Process ID is " << pid;
-      return true;
+            return true;
+        }
     }
-  }
-  return false;
+    return false;
 }
 
-bool KPIMUtils::killProcesses( const QString &processName )
+bool KPIMUtils::killProcesses(const QString &processName)
 {
-  QList<int> pids;
-  getProcessesIdForName( processName, pids );
-  if ( pids.empty() ) {
-    return true;
-  }
+    QList<int> pids;
+    getProcessesIdForName(processName, pids);
+    if (pids.empty()) {
+        return true;
+    }
 
-  qWarning() << "Killing process \"" << processName << " (pid=" << pids[0] << ")..";
-  int overallResult = 0;
-  foreach ( int pid, pids ) {
-    int result;
-    result = kill( pid, SIGTERM );
-    if ( result == 0 ) {
-      continue;
+    qWarning() << "Killing process \"" << processName << " (pid=" << pids[0] << ")..";
+    int overallResult = 0;
+    foreach (int pid, pids) {
+        int result;
+        result = kill(pid, SIGTERM);
+        if (result == 0) {
+            continue;
+        }
+        result = kill(pid, SIGKILL);
+        if (result != 0) {
+            overallResult = result;
+        }
     }
-    result = kill( pid, SIGKILL );
-    if ( result != 0 ) {
-      overallResult = result;
-    }
-  }
-  return overallResult == 0;
+    return overallResult == 0;
 }
 
-struct EnumWindowsStruct
-{
-  EnumWindowsStruct() : windowId( 0 ) {}
-  int pid;
-  HWND windowId;
+struct EnumWindowsStruct {
+    EnumWindowsStruct() : windowId(0) {}
+    int pid;
+    HWND windowId;
 };
 
-BOOL CALLBACK EnumWindowsProc( HWND hwnd, LPARAM lParam )
+BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam)
 {
-  if ( GetWindowLong( hwnd, GWL_STYLE ) & WS_VISIBLE ) {
+    if (GetWindowLong(hwnd, GWL_STYLE) & WS_VISIBLE) {
 
-    DWORD pidwin;
+        DWORD pidwin;
 
-    GetWindowThreadProcessId( hwnd, &pidwin );
-    if ( pidwin == ( (EnumWindowsStruct *)lParam )->pid ) {
-      ( (EnumWindowsStruct *)lParam )->windowId = hwnd;
-      return FALSE;
+        GetWindowThreadProcessId(hwnd, &pidwin);
+        if (pidwin == ((EnumWindowsStruct *)lParam)->pid) {
+            ((EnumWindowsStruct *)lParam)->windowId = hwnd;
+            return FALSE;
+        }
     }
-  }
-  return TRUE;
+    return TRUE;
 }
 
-void KPIMUtils::activateWindowForProcess( const QString &executableName )
+void KPIMUtils::activateWindowForProcess(const QString &executableName)
 {
-  QList<int> pids;
-  KPIMUtils::getProcessesIdForName( executableName, pids );
-  int myPid = getpid();
-  int foundPid = 0;
-  foreach ( int pid, pids ) {
-    if ( myPid != pid ) {
-      qDebug() << "activateWindowForProcess(): PID to activate:" << pid;
-      foundPid = pid;
-      break;
+    QList<int> pids;
+    KPIMUtils::getProcessesIdForName(executableName, pids);
+    int myPid = getpid();
+    int foundPid = 0;
+    foreach (int pid, pids) {
+        if (myPid != pid) {
+            qDebug() << "activateWindowForProcess(): PID to activate:" << pid;
+            foundPid = pid;
+            break;
+        }
     }
-  }
-  if ( foundPid == 0 ) {
-    return;
-  }
-  EnumWindowsStruct winStruct;
-  winStruct.pid = foundPid;
-  EnumWindows( EnumWindowsProc, (LPARAM)&winStruct );
-  if ( winStruct.windowId == 0 ) {
-    return;
-  }
-  SetForegroundWindow( winStruct.windowId );
+    if (foundPid == 0) {
+        return;
+    }
+    EnumWindowsStruct winStruct;
+    winStruct.pid = foundPid;
+    EnumWindows(EnumWindowsProc, (LPARAM)&winStruct);
+    if (winStruct.windowId == 0) {
+        return;
+    }
+    SetForegroundWindow(winStruct.windowId);
 }
 
 #endif // Q_OS_WIN

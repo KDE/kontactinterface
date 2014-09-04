@@ -27,7 +27,8 @@
 #include <kparts/mainwindow.h>
 #include <kparts/part.h>
 #include <KParts/ReadOnlyPart>
-namespace KontactInterface {
+namespace KontactInterface
+{
 
 class Plugin;
 
@@ -38,9 +39,9 @@ class Plugin;
  */
 class KONTACTINTERFACE_EXPORT Core : public KParts::MainWindow
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
+public:
     /**
      * Destroys the core object.
      */
@@ -52,7 +53,7 @@ class KONTACTINTERFACE_EXPORT Core : public KParts::MainWindow
      *
      * @param plugin is a pointer to the Kontact Plugin to select.
      */
-    virtual void selectPlugin( KontactInterface::Plugin *plugin ) = 0;
+    virtual void selectPlugin(KontactInterface::Plugin *plugin) = 0;
 
     /**
      * This is an overloaded member function
@@ -60,12 +61,12 @@ class KONTACTINTERFACE_EXPORT Core : public KParts::MainWindow
      *
      * @param plugin is the name of the Kontact Plugin select.
      */
-    virtual void selectPlugin( const QString &plugin ) = 0;
+    virtual void selectPlugin(const QString &plugin) = 0;
 
     /**
      * Returns the pointer list of available plugins.
      */
-    virtual QList<KontactInterface::Plugin*> pluginList() const = 0;
+    virtual QList<KontactInterface::Plugin *> pluginList() const = 0;
 
     /**
      * @internal (for Plugin)
@@ -73,31 +74,31 @@ class KONTACTINTERFACE_EXPORT Core : public KParts::MainWindow
      * @param library the library to create part from
      * Creates a part from the given @p library.
      */
-    KParts::ReadOnlyPart *createPart( const char *library );
+    KParts::ReadOnlyPart *createPart(const char *library);
 
     /**
      * @internal (for Plugin)
      *
      * Tells the kontact core that a part has been loaded.
      */
-    virtual void partLoaded( Plugin *plugin, KParts::ReadOnlyPart *part ) = 0;
+    virtual void partLoaded(Plugin *plugin, KParts::ReadOnlyPart *part) = 0;
 
-  Q_SIGNALS:
+Q_SIGNALS:
     /**
      * This signal is emitted whenever a new day starts.
      *
      * @param date The date of the new day
      */
-    void dayChanged( const QDate &date );
+    void dayChanged(const QDate &date);
 
-  protected:
+protected:
     /**
      * Creates a new core object.
      *
      * @param parent The parent widget.
      * @param flags The window flags.
      */
-    explicit Core( QWidget *parent = 0, Qt::WindowFlags flags = KDE_DEFAULT_WINDOWFLAGS );
+    explicit Core(QWidget *parent = 0, Qt::WindowFlags flags = KDE_DEFAULT_WINDOWFLAGS);
 
     /**
      * Returns the last error message for problems during
@@ -105,13 +106,13 @@ class KONTACTINTERFACE_EXPORT Core : public KParts::MainWindow
      */
     QString lastErrorMessage() const;
 
-  private:
+private:
     //@cond PRIVATE
     class Private;
     Private *const d;
 
-    Q_PRIVATE_SLOT( d, void slotPartDestroyed( QObject * ) )
-    Q_PRIVATE_SLOT( d, void checkNewDay() )
+    Q_PRIVATE_SLOT(d, void slotPartDestroyed(QObject *))
+    Q_PRIVATE_SLOT(d, void checkNewDay())
     //@endcond
 };
 
@@ -119,4 +120,3 @@ class KONTACTINTERFACE_EXPORT Core : public KParts::MainWindow
 
 #endif
 
-// vim: sw=2 sts=2 et tw=80

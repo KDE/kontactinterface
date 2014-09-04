@@ -25,7 +25,8 @@
 #include "kontactinterface_export.h"
 #include "plugin.h"
 
-namespace KontactInterface {
+namespace KontactInterface
+{
 
 /**
  * D-Bus Object that has the name of the standalone application (e.g. "kmail")
@@ -36,12 +37,12 @@ namespace KontactInterface {
  */
 class KONTACTINTERFACE_EXPORT UniqueAppHandler : public QObject
 {
-  Q_OBJECT
-  // We implement the KUniqueApplication interface
-  Q_CLASSINFO( "D-Bus Interface", "org.kde.KUniqueApplication" )
+    Q_OBJECT
+    // We implement the KUniqueApplication interface
+    Q_CLASSINFO("D-Bus Interface", "org.kde.KUniqueApplication")
 
-  public:
-    UniqueAppHandler( Plugin *plugin );
+public:
+    UniqueAppHandler(Plugin *plugin);
     virtual ~UniqueAppHandler();
 
     /// This must be reimplemented so that app-specific command line options can be parsed
@@ -53,7 +54,7 @@ class KONTACTINTERFACE_EXPORT UniqueAppHandler : public QObject
       Sets the main QWidget @p widget associated with this application.
       @param widget the QWidget to set as main
     */
-    static void setMainWidget( QWidget *widget );
+    static void setMainWidget(QWidget *widget);
 
     /**
       Returns the main widget, which will zero if setMainWidget() has not be called yet.
@@ -61,14 +62,14 @@ class KONTACTINTERFACE_EXPORT UniqueAppHandler : public QObject
     */
     QWidget *mainWidget();
 
-  public Q_SLOTS: // DBUS methods
-    int newInstance( const QByteArray &asn_id, const QByteArray &args );
+public Q_SLOTS: // DBUS methods
+    int newInstance(const QByteArray &asn_id, const QByteArray &args);
     bool load();
 
-  protected:
+protected:
     virtual int newInstance();
 
-  private:
+private:
     class Private;
     Private *const d;
 };
@@ -76,9 +77,9 @@ class KONTACTINTERFACE_EXPORT UniqueAppHandler : public QObject
 /// Base class for UniqueAppHandler
 class UniqueAppHandlerFactoryBase
 {
-  public:
-    virtual ~UniqueAppHandlerFactoryBase(){}
-    virtual UniqueAppHandler *createHandler( Plugin * ) = 0;
+public:
+    virtual ~UniqueAppHandlerFactoryBase() {}
+    virtual UniqueAppHandler *createHandler(Plugin *) = 0;
 };
 
 /**
@@ -89,10 +90,11 @@ class UniqueAppHandlerFactoryBase
  */
 template <class T> class UniqueAppHandlerFactory : public UniqueAppHandlerFactoryBase
 {
-  public:
-    virtual UniqueAppHandler *createHandler( Plugin *plugin ) {
-      plugin->registerClient();
-      return new T( plugin );
+public:
+    virtual UniqueAppHandler *createHandler(Plugin *plugin)
+    {
+        plugin->registerClient();
+        return new T(plugin);
     }
 };
 
@@ -105,9 +107,9 @@ template <class T> class UniqueAppHandlerFactory : public UniqueAppHandlerFactor
  */
 class KONTACTINTERFACE_EXPORT UniqueAppWatcher : public QObject
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
+public:
     /**
      * Create an instance of UniqueAppWatcher, which does everything necessary
      * for the "unique application" behavior: create the UniqueAppHandler as soon
@@ -117,17 +119,17 @@ class KONTACTINTERFACE_EXPORT UniqueAppWatcher : public QObject
      * ...   Note that the watcher takes ownership of the factory.
      * @param plugin is the plugin application
      */
-    UniqueAppWatcher( UniqueAppHandlerFactoryBase *factory, Plugin *plugin );
+    UniqueAppWatcher(UniqueAppHandlerFactoryBase *factory, Plugin *plugin);
 
     virtual ~UniqueAppWatcher();
 
     bool isRunningStandalone() const;
 
-  private Q_SLOTS:
-    void slotApplicationRemoved( const QString &name, const QString &oldOwner,
-                                 const QString &newOwner );
+private Q_SLOTS:
+    void slotApplicationRemoved(const QString &name, const QString &oldOwner,
+                                const QString &newOwner);
 
-  private:
+private:
     class Private;
     Private *const d;
 };

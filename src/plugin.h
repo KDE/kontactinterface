@@ -40,30 +40,32 @@ class QDropEvent;
 class QMimeData;
 class QStringList;
 class QWidget;
-namespace KParts {
-  class ReadOnlyPart;
+namespace KParts
+{
+class ReadOnlyPart;
 }
 
 /**
   Exports Kontact plugin.
  */
 #define EXPORT_KONTACT_PLUGIN( pluginclass, pluginname ) \
-class Instance                                           \
-{                                                        \
-  public:                                                \
-    static QObject *createInstance( QWidget *, QObject *parent, const QVariantList &list ) \
-    { return new pluginclass( static_cast<KontactInterface::Core*>( parent ), list ); } \
-};                                                                    \
-K_PLUGIN_FACTORY( KontactPluginFactory, registerPlugin< pluginclass >   \
-                  ( QString(), Instance::createInstance ); )            \
-K_EXPORT_PLUGIN( KontactPluginFactory( "kontact_" #pluginname "plugin" ) )
+    class Instance                                           \
+    {                                                        \
+    public:                                                \
+        static QObject *createInstance( QWidget *, QObject *parent, const QVariantList &list ) \
+        { return new pluginclass( static_cast<KontactInterface::Core*>( parent ), list ); } \
+    };                                                                    \
+    K_PLUGIN_FACTORY( KontactPluginFactory, registerPlugin< pluginclass >   \
+                      ( QString(), Instance::createInstance ); )            \
+    K_EXPORT_PLUGIN( KontactPluginFactory( "kontact_" #pluginname "plugin" ) )
 
 /**
   Increase this version number whenever you make a change in the API.
  */
 #define KONTACT_PLUGIN_VERSION 10
 
-namespace KontactInterface {
+namespace KontactInterface
+{
 
 class Core;
 class Summary;
@@ -75,9 +77,9 @@ class Summary;
  */
 class KONTACTINTERFACE_EXPORT Plugin : public QObject, virtual public KXMLGUIClient
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
+public:
     /**
      * Creates a new plugin.
      *
@@ -88,7 +90,7 @@ class KONTACTINTERFACE_EXPORT Plugin : public QObject, virtual public KXMLGUICli
      *       It's ok to have several plugins using the same application name.
      * @param pluginName The unique name of the plugin. Defaults to appName if not set.
      */
-    Plugin( Core *core, QObject *parent, const char *appName, const char *pluginName = 0 );
+    Plugin(Core *core, QObject *parent, const char *appName, const char *pluginName = 0);
 
     /**
      * Destroys the plugin.
@@ -98,7 +100,7 @@ class KONTACTINTERFACE_EXPORT Plugin : public QObject, virtual public KXMLGUICli
     /**
      * Sets the @p identifier of the plugin.
      */
-    void setIdentifier( const QString &identifier );
+    void setIdentifier(const QString &identifier);
 
     /**
      * Returns the identifier of the plugin.
@@ -108,7 +110,7 @@ class KONTACTINTERFACE_EXPORT Plugin : public QObject, virtual public KXMLGUICli
     /**
      * Sets the localized @p title of the plugin.
      */
-    void setTitle( const QString &title );
+    void setTitle(const QString &title);
 
     /**
      * Returns the localized title of the plugin.
@@ -118,7 +120,7 @@ class KONTACTINTERFACE_EXPORT Plugin : public QObject, virtual public KXMLGUICli
     /**
      * Sets the @p icon name that is used for the plugin.
      */
-    void setIcon( const QString &icon );
+    void setIcon(const QString &icon);
 
     /**
      * Returns the icon name that is used for the plugin.
@@ -128,7 +130,7 @@ class KONTACTINTERFACE_EXPORT Plugin : public QObject, virtual public KXMLGUICli
     /**
      * Sets the @p name of executable (if existent).
      */
-    void setExecutableName( const QString &name );
+    void setExecutableName(const QString &name);
 
     /**
      * Returns the name of the executable (if existent).
@@ -138,14 +140,14 @@ class KONTACTINTERFACE_EXPORT Plugin : public QObject, virtual public KXMLGUICli
     /**
      * Set @p name of library which contains the KPart used by this plugin.
      */
-    void setPartLibraryName( const QByteArray &name );
+    void setPartLibraryName(const QByteArray &name);
 
     /**
      * Create the D-Bus interface for the given @p serviceType, if this
      * plugin provides it. Returns @c true on success, @c false otherwise.
      * @param serviceType the D-Bus service type to create an interface for
      */
-    virtual bool createDBUSInterface( const QString &serviceType );
+    virtual bool createDBUSInterface(const QString &serviceType);
 
     /**
      * Reimplement this method and return whether a standalone application
@@ -174,11 +176,11 @@ class KONTACTINTERFACE_EXPORT Plugin : public QObject, virtual public KXMLGUICli
      */
     KParts::ReadOnlyPart *part();
 
-     /**
-      * Reimplement this method and return the a path relative to "data" to the tips file.
-      * The tips file contains hints/tips that are displayed at the beginning of the program
-      * as "tip of the day". It has nothing to do with tooltips.
-      */
+    /**
+     * Reimplement this method and return the a path relative to "data" to the tips file.
+     * The tips file contains hints/tips that are displayed at the beginning of the program
+     * as "tip of the day". It has nothing to do with tooltips.
+     */
     virtual QString tipFile() const;
 
     /**
@@ -206,7 +208,7 @@ class KONTACTINTERFACE_EXPORT Plugin : public QObject, virtual public KXMLGUICli
      *
      * @param parent The parent widget of the summary widget.
      */
-    virtual Summary *createSummaryWidget( QWidget *parent );
+    virtual Summary *createSummaryWidget(QWidget *parent);
 
     /**
      * Returns whether the plugin provides a part that should be shown in the sidebar.
@@ -217,7 +219,7 @@ class KONTACTINTERFACE_EXPORT Plugin : public QObject, virtual public KXMLGUICli
      * Set if the plugin provides a part that should be shown in the sidebar.
      * @param hasPart shows part in sidebar if set as @c true
      */
-    void setShowInSideBar( bool hasPart );
+    void setShowInSideBar(bool hasPart);
 
     /**
      * Reimplement this method if you want to add checks before closing the
@@ -242,23 +244,23 @@ class KONTACTINTERFACE_EXPORT Plugin : public QObject, virtual public KXMLGUICli
      * Inserts a custom "New" @p action.
      * @param action the new action to insert
      */
-    void insertNewAction( QAction *action );
+    void insertNewAction(QAction *action);
 
     /**
      * Inserts a custom "Sync" @p action.
      * @param action the custom Sync action to insert
      */
-    void insertSyncAction( QAction *action );
+    void insertSyncAction(QAction *action);
 
     /**
      * Returns the list of custom "New" actions.
      */
-    QList<QAction*> newActions() const;
+    QList<QAction *> newActions() const;
 
     /**
      * Returns the list of custom "Sync" actions.
      */
-    QList<QAction*> syncActions() const;
+    QList<QAction *> syncActions() const;
 
     /**
      * Returns a list of action names that shall be hidden in the main toolbar.
@@ -268,22 +270,22 @@ class KONTACTINTERFACE_EXPORT Plugin : public QObject, virtual public KXMLGUICli
     /**
      * Returns whether the plugin can handle the drag object of the given mime type.
      */
-    virtual bool canDecodeMimeData( const QMimeData *data ) const;
+    virtual bool canDecodeMimeData(const QMimeData *data) const;
 
     /**
      * Process drop event.
      */
-    virtual void processDropEvent( QDropEvent * );
+    virtual void processDropEvent(QDropEvent *);
 
     /**
      * Session management: read properties
      */
-    virtual void readProperties( const KConfigGroup & );
+    virtual void readProperties(const KConfigGroup &);
 
     /**
      * Session management: save properties
      */
-    virtual void saveProperties( KConfigGroup & );
+    virtual void saveProperties(KConfigGroup &);
 
     /**
      * Returns a pointer to the kontact core object.
@@ -293,7 +295,7 @@ class KONTACTINTERFACE_EXPORT Plugin : public QObject, virtual public KXMLGUICli
     /**
      * Sets whether the plugin shall be disabled.
      */
-    void setDisabled( bool value );
+    void setDisabled(bool value);
 
     /**
      * Returns whether the plugin is disabled.
@@ -305,7 +307,7 @@ class KONTACTINTERFACE_EXPORT Plugin : public QObject, virtual public KXMLGUICli
      */
     virtual void shortcutChanged();
 
-  public Q_SLOTS:
+public Q_SLOTS:
     /**
      * @internal usage
      *
@@ -313,7 +315,7 @@ class KONTACTINTERFACE_EXPORT Plugin : public QObject, virtual public KXMLGUICli
      */
     void slotConfigUpdated();
 
-  protected:
+protected:
     /**
      * Reimplement and return the part here. Reimplementing createPart() is
      * mandatory!
@@ -328,14 +330,14 @@ class KONTACTINTERFACE_EXPORT Plugin : public QObject, virtual public KXMLGUICli
     /**
      * Virtual hook for BC extension.
      */
-    virtual void virtual_hook( int id, void *data );
+    virtual void virtual_hook(int id, void *data);
 
-  private:
+private:
     //@cond PRIVATE
     class Private;
     Private *const d;
 
-    Q_PRIVATE_SLOT( d, void partDestroyed() )
+    Q_PRIVATE_SLOT(d, void partDestroyed())
     //@endcond
 };
 

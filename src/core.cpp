@@ -36,99 +36,98 @@ using namespace KontactInterface;
 //@cond PRIVATE
 class KontactInterface::Core::Private
 {
-  Core *const q;
+    Core *const q;
 
-  public:
-    explicit Private( Core *qq );
+public:
+    explicit Private(Core *qq);
 
-    void slotPartDestroyed( QObject * );
+    void slotPartDestroyed(QObject *);
     void checkNewDay();
 
     QString lastErrorMessage;
     QDate mLastDate;
-    QMap<QByteArray,KParts::ReadOnlyPart *> mParts;
+    QMap<QByteArray, KParts::ReadOnlyPart *> mParts;
 };
 
-Core::Private::Private( Core *qq )
-  : q( qq ), mLastDate( QDate::currentDate() )
+Core::Private::Private(Core *qq)
+    : q(qq), mLastDate(QDate::currentDate())
 {
 }
 //@endcond
 
-Core::Core( QWidget *parent, Qt::WindowFlags f )
-  : KParts::MainWindow( parent, f ), d( new Private( this ) )
+Core::Core(QWidget *parent, Qt::WindowFlags f)
+    : KParts::MainWindow(parent, f), d(new Private(this))
 {
-  QTimer *timer = new QTimer( this );
-  connect( timer, SIGNAL(timeout()), SLOT(checkNewDay()) );
-  timer->start( 1000 * 60 );
+    QTimer *timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), SLOT(checkNewDay()));
+    timer->start(1000 * 60);
 }
 
 Core::~Core()
 {
-  delete d;
+    delete d;
 }
 
-KParts::ReadOnlyPart *Core::createPart( const char *libname )
+KParts::ReadOnlyPart *Core::createPart(const char *libname)
 {
-  qDebug() << libname;
+    qDebug() << libname;
 
-  QMap<QByteArray,KParts::ReadOnlyPart *>::ConstIterator it;
-  it = d->mParts.constFind( libname );
-  if ( it != d->mParts.constEnd() ) {
-    return it.value();
-  }
+    QMap<QByteArray, KParts::ReadOnlyPart *>::ConstIterator it;
+    it = d->mParts.constFind(libname);
+    if (it != d->mParts.constEnd()) {
+        return it.value();
+    }
 
-  qDebug() << "Creating new KPart";
+    qDebug() << "Creating new KPart";
 
-  KPluginLoader loader( QString::fromLatin1(libname) );
-  qDebug() << loader.fileName();
-  KPluginFactory *factory = loader.factory();
-  KParts::ReadOnlyPart *part = 0;
-  if ( factory ) {
-    part = factory->create<KParts::ReadOnlyPart>( this );
-  }
+    KPluginLoader loader(QString::fromLatin1(libname));
+    qDebug() << loader.fileName();
+    KPluginFactory *factory = loader.factory();
+    KParts::ReadOnlyPart *part = 0;
+    if (factory) {
+        part = factory->create<KParts::ReadOnlyPart>(this);
+    }
 
-  if ( part ) {
-    d->mParts.insert( libname, part );
-    QObject::connect( part, SIGNAL(destroyed(QObject*)),
-                      SLOT(slotPartDestroyed(QObject*)) );
-  } else {
-    d->lastErrorMessage = loader.errorString();
-    qWarning() << d->lastErrorMessage;
-  }
+    if (part) {
+        d->mParts.insert(libname, part);
+        QObject::connect(part, SIGNAL(destroyed(QObject*)),
+                         SLOT(slotPartDestroyed(QObject*)));
+    } else {
+        d->lastErrorMessage = loader.errorString();
+        qWarning() << d->lastErrorMessage;
+    }
 
-  return part;
+    return part;
 }
 
 //@cond PRIVATE
-void Core::Private::slotPartDestroyed( QObject *obj )
+void Core::Private::slotPartDestroyed(QObject *obj)
 {
-  // the part was deleted, we need to remove it from the part map to not return
-  // a dangling pointer in createPart
-  QMap<QByteArray, KParts::ReadOnlyPart*>::Iterator end = mParts.end();
-  QMap<QByteArray, KParts::ReadOnlyPart*>::Iterator it = mParts.begin();
-  for ( ; it != end; ++it ) {
-    if ( it.value() == obj ) {
-      mParts.erase( it );
-      return;
+    // the part was deleted, we need to remove it from the part map to not return
+    // a dangling pointer in createPart
+    QMap<QByteArray, KParts::ReadOnlyPart *>::Iterator end = mParts.end();
+    QMap<QByteArray, KParts::ReadOnlyPart *>::Iterator it = mParts.begin();
+    for (; it != end; ++it) {
+        if (it.value() == obj) {
+            mParts.erase(it);
+            return;
+        }
     }
-  }
 }
 
 void Core::Private::checkNewDay()
 {
-  if ( mLastDate != QDate::currentDate() ) {
-    emit q->dayChanged( QDate::currentDate() );
-  }
+    if (mLastDate != QDate::currentDate()) {
+        emit q->dayChanged(QDate::currentDate());
+    }
 
-  mLastDate = QDate::currentDate();
+    mLastDate = QDate::currentDate();
 }
 //@endcond
 
 QString Core::lastErrorMessage() const
 {
-  return d->lastErrorMessage;
+    return d->lastErrorMessage;
 }
 
 #include "moc_core.cpp"
-// vim: sw=2 sts=2 et tw=80

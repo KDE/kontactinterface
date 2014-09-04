@@ -39,16 +39,17 @@
 using namespace KontactInterface;
 
 //@cond PRIVATE
-namespace KontactInterface {
+namespace KontactInterface
+{
 class SummaryMimeData : public QMimeData
 {
-  public:
-    virtual bool hasFormat( const QString &format ) const
+public:
+    virtual bool hasFormat(const QString &format) const
     {
-      if ( format == QLatin1String("application/x-kontact-summary") ) {
-        return true;
-      }
-      return false;
+        if (format == QLatin1String("application/x-kontact-summary")) {
+            return true;
+        }
+        return false;
     }
 };
 }
@@ -57,121 +58,121 @@ class SummaryMimeData : public QMimeData
 //@cond PRIVATE
 class Summary::Private
 {
-  public:
+public:
     KStatusBar *mStatusBar;
     QPoint mDragStartPoint;
 };
 //@endcond
 
-Summary::Summary( QWidget *parent )
-  : QWidget( parent ), d( new Private )
+Summary::Summary(QWidget *parent)
+    : QWidget(parent), d(new Private)
 {
-  setFont( QFontDatabase::systemFont(QFontDatabase::GeneralFont) );
-  setAcceptDrops( true );
+    setFont(QFontDatabase::systemFont(QFontDatabase::GeneralFont));
+    setAcceptDrops(true);
 }
 
 Summary::~Summary()
 {
-  delete d;
+    delete d;
 }
 
 int Summary::summaryHeight() const
 {
-  return 1;
+    return 1;
 }
 
-QWidget *Summary::createHeader( QWidget *parent, const QString &iconname, const QString &heading )
+QWidget *Summary::createHeader(QWidget *parent, const QString &iconname, const QString &heading)
 {
-  setStyleSheet( QLatin1String("KHBox {"
-                    "border: 0px;"
-                    "font: bold large;"
-                    "padding: 2px;"
-                    "background: palette(window);"
-                    "color: palette(windowtext);"
-                 "}"
-                 "KHBox > QLabel { font: bold larger; } ") );
+    setStyleSheet(QLatin1String("KHBox {"
+                                "border: 0px;"
+                                "font: bold large;"
+                                "padding: 2px;"
+                                "background: palette(window);"
+                                "color: palette(windowtext);"
+                                "}"
+                                "KHBox > QLabel { font: bold larger; } "));
 
-  QWidget *box = new QWidget(parent);
-  QHBoxLayout *hbox = new QHBoxLayout;
-  hbox->setMargin(0);
-  hbox->setSpacing(0);
-  box->setLayout(hbox);
+    QWidget *box = new QWidget(parent);
+    QHBoxLayout *hbox = new QHBoxLayout;
+    hbox->setMargin(0);
+    hbox->setSpacing(0);
+    box->setLayout(hbox);
 
-  QLabel *label = new QLabel( box );
-  hbox->addWidget(label);
-  label->setPixmap( KIconLoader::global()->loadIcon( iconname, KIconLoader::Toolbar ) );
+    QLabel *label = new QLabel(box);
+    hbox->addWidget(label);
+    label->setPixmap(KIconLoader::global()->loadIcon(iconname, KIconLoader::Toolbar));
 
-  label->setFixedSize( label->sizeHint() );
-  label->setAcceptDrops( true );
+    label->setFixedSize(label->sizeHint());
+    label->setAcceptDrops(true);
 
-  label = new QLabel( heading, box );
-  hbox->addWidget(label);
-  label->setAlignment( Qt::AlignLeft | Qt::AlignVCenter );
+    label = new QLabel(heading, box);
+    hbox->addWidget(label);
+    label->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
 //TODO PORT QT5   label->setIndent( QDialog::spacingHint() );
 
-  box->setMaximumHeight( box->minimumSizeHint().height() );
+    box->setMaximumHeight(box->minimumSizeHint().height());
 
-  return box;
+    return box;
 }
 
 QStringList Summary::configModules() const
 {
-  return QStringList();
+    return QStringList();
 }
 
 void Summary::configChanged()
 {
 }
 
-void Summary::updateSummary( bool force )
+void Summary::updateSummary(bool force)
 {
-  Q_UNUSED( force );
+    Q_UNUSED(force);
 }
 
-void Summary::mousePressEvent( QMouseEvent *event )
+void Summary::mousePressEvent(QMouseEvent *event)
 {
-  d->mDragStartPoint = event->pos();
+    d->mDragStartPoint = event->pos();
 
-  QWidget::mousePressEvent( event );
+    QWidget::mousePressEvent(event);
 }
 
-void Summary::mouseMoveEvent( QMouseEvent *event )
+void Summary::mouseMoveEvent(QMouseEvent *event)
 {
-  if ( ( event->buttons() & Qt::LeftButton ) &&
-       ( event->pos() - d->mDragStartPoint ).manhattanLength() > 4 ) {
+    if ((event->buttons() & Qt::LeftButton) &&
+            (event->pos() - d->mDragStartPoint).manhattanLength() > 4) {
 
-    QDrag *drag = new QDrag( this );
-    drag->setMimeData( new SummaryMimeData() );
-    drag->setObjectName( QLatin1String("SummaryWidgetDrag") );
+        QDrag *drag = new QDrag(this);
+        drag->setMimeData(new SummaryMimeData());
+        drag->setObjectName(QLatin1String("SummaryWidgetDrag"));
 
-    QPixmap pm = QPixmap::grabWidget( this );
-    if ( pm.width() > 300 ) {
-      pm = QPixmap::fromImage(
-        pm.toImage().scaled( 300, 300, Qt::KeepAspectRatio, Qt::SmoothTransformation ) );
+        QPixmap pm = QPixmap::grabWidget(this);
+        if (pm.width() > 300) {
+            pm = QPixmap::fromImage(
+                     pm.toImage().scaled(300, 300, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        }
+
+        QPainter painter;
+        painter.begin(&pm);
+        painter.setPen(QPalette::AlternateBase);
+        painter.drawRect(0, 0, pm.width(), pm.height());
+        painter.end();
+        drag->setPixmap(pm);
+        drag->start(Qt::MoveAction);
+    } else {
+        QWidget::mouseMoveEvent(event);
     }
-
-    QPainter painter;
-    painter.begin( &pm );
-    painter.setPen( QPalette::AlternateBase );
-    painter.drawRect( 0, 0, pm.width(), pm.height() );
-    painter.end();
-    drag->setPixmap( pm );
-    drag->start( Qt::MoveAction );
-  } else {
-    QWidget::mouseMoveEvent( event );
-  }
 }
 
-void Summary::dragEnterEvent( QDragEnterEvent *event )
+void Summary::dragEnterEvent(QDragEnterEvent *event)
 {
-  if ( event->mimeData()->hasFormat( QLatin1String("application/x-kontact-summary") ) ) {
-    event->acceptProposedAction();
-  }
+    if (event->mimeData()->hasFormat(QLatin1String("application/x-kontact-summary"))) {
+        event->acceptProposedAction();
+    }
 }
 
-void Summary::dropEvent( QDropEvent *event )
+void Summary::dropEvent(QDropEvent *event)
 {
-  int alignment = ( event->pos().y() < ( height() / 2 ) ? Qt::AlignTop : Qt::AlignBottom );
-  emit summaryWidgetDropped( this, event->source(), alignment );
+    int alignment = (event->pos().y() < (height() / 2) ? Qt::AlignTop : Qt::AlignBottom);
+    emit summaryWidgetDropped(this, event->source(), alignment);
 }
 

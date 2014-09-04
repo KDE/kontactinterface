@@ -56,11 +56,11 @@ using namespace KontactInterface;
 //@cond PRIVATE
 class Plugin::Private
 {
-  public:
+public:
 
     void partDestroyed();
     void setXmlFiles();
-    void removeInvisibleToolbarActions( Plugin *plugin );
+    void removeInvisibleToolbarActions(Plugin *plugin);
 
     Core *core;
     QList<QAction *> newActions;
@@ -78,215 +78,215 @@ class Plugin::Private
 };
 //@endcond
 
-Plugin::Plugin( Core *core, QObject *parent, const char *appName, const char *pluginName )
-  : KXMLGUIClient( core ), QObject( parent ), d( new Private )
+Plugin::Plugin(Core *core, QObject *parent, const char *appName, const char *pluginName)
+    : KXMLGUIClient(core), QObject(parent), d(new Private)
 {
-  setObjectName( QLatin1String(appName) );
-  core->factory()->addClient( this );
+    setObjectName(QLatin1String(appName));
+    core->factory()->addClient(this);
 #warning port this to the new stuff
 //   KLocalizedString::insertCatalog( appName );
 
-  d->pluginName = pluginName ? pluginName : appName;
-  d->core = core;
-  d->hasPart = true;
-  d->part = 0;
-  d->disabled = false;
+    d->pluginName = pluginName ? pluginName : appName;
+    d->core = core;
+    d->hasPart = true;
+    d->part = 0;
+    d->disabled = false;
 }
 
 Plugin::~Plugin()
 {
-  delete d->part;
-  delete d;
+    delete d->part;
+    delete d;
 }
 
-void Plugin::setIdentifier( const QString &identifier )
+void Plugin::setIdentifier(const QString &identifier)
 {
-  d->identifier = identifier;
+    d->identifier = identifier;
 }
 
 QString Plugin::identifier() const
 {
-  return d->identifier;
+    return d->identifier;
 }
 
-void Plugin::setTitle( const QString &title )
+void Plugin::setTitle(const QString &title)
 {
-  d->title = title;
+    d->title = title;
 }
 
 QString Plugin::title() const
 {
-  return d->title;
+    return d->title;
 }
 
-void Plugin::setIcon( const QString &icon )
+void Plugin::setIcon(const QString &icon)
 {
-  d->icon = icon;
+    d->icon = icon;
 }
 
 QString Plugin::icon() const
 {
-  return d->icon;
+    return d->icon;
 }
 
-void Plugin::setExecutableName( const QString &bin )
+void Plugin::setExecutableName(const QString &bin)
 {
-  d->executableName = bin;
+    d->executableName = bin;
 }
 
 QString Plugin::executableName() const
 {
-  return d->executableName;
+    return d->executableName;
 }
 
-void Plugin::setPartLibraryName( const QByteArray &libName )
+void Plugin::setPartLibraryName(const QByteArray &libName)
 {
-  d->partLibraryName = libName;
+    d->partLibraryName = libName;
 }
 
-bool Plugin::createDBUSInterface( const QString &serviceType )
+bool Plugin::createDBUSInterface(const QString &serviceType)
 {
-  Q_UNUSED( serviceType );
-  return false;
+    Q_UNUSED(serviceType);
+    return false;
 }
 
 bool Plugin::isRunningStandalone() const
 {
-  return false;
+    return false;
 }
 
 KParts::ReadOnlyPart *Plugin::loadPart()
 {
-  return core()->createPart( d->partLibraryName.constData() );
+    return core()->createPart(d->partLibraryName.constData());
 }
 
 const KAboutData *Plugin::aboutData() const
 {
 //QT5 port it.
 #if 0
-  KPluginLoader loader( QString::fromLatin1(d->partLibraryName) );
-  KPluginFactory *factory = loader.factory();
-  qDebug() << "filename:" << loader.pluginName();
-  qDebug() << "libname:" << d->partLibraryName;
+    KPluginLoader loader(QString::fromLatin1(d->partLibraryName));
+    KPluginFactory *factory = loader.factory();
+    qDebug() << "filename:" << loader.pluginName();
+    qDebug() << "libname:" << d->partLibraryName;
 
-  if ( factory ) {
+    if (factory) {
 #warning Figure out how to replace this
-   /* if ( factory->componentData().isValid() ) {
-      qDebug() << "returning factory component aboutdata";
-      return factory->componentData().aboutData();
-    } else */{
-      // If the componentData of the factory is invalid, the likely cause is that
-      // the part has not been ported to use K_PLUGIN_FACTORY/K_EXPORT_PLUGIN yet.
-      // In that case, fallback to the old method of loading component data, which
-      // does only work for old-style parts.
+        /* if ( factory->componentData().isValid() ) {
+           qDebug() << "returning factory component aboutdata";
+           return factory->componentData().aboutData();
+         } else */{
+            // If the componentData of the factory is invalid, the likely cause is that
+            // the part has not been ported to use K_PLUGIN_FACTORY/K_EXPORT_PLUGIN yet.
+            // In that case, fallback to the old method of loading component data, which
+            // does only work for old-style parts.
 
-      qDebug() << "Unable to load component data for" << loader.pluginName()
-               << "trying to use the old style plugin system now.";
-      const KComponentData instance =
-        KParts::Factory::partComponentDataFromLibrary( QString::fromLatin1(d->partLibraryName) );
-      if ( instance.isValid() ) {
-        return instance.aboutData();
-      } else {
-        qDebug() << "Invalid instance, unable to get about information!";
-      }
+            qDebug() << "Unable to load component data for" << loader.pluginName()
+                     << "trying to use the old style plugin system now.";
+            const KComponentData instance =
+                KParts::Factory::partComponentDataFromLibrary(QString::fromLatin1(d->partLibraryName));
+            if (instance.isValid()) {
+                return instance.aboutData();
+            } else {
+                qDebug() << "Invalid instance, unable to get about information!";
+            }
+        }
     }
-  }
 #endif
-  qCritical() << "Cannot load instance for" << title();
-  return 0;
+    qCritical() << "Cannot load instance for" << title();
+    return 0;
 }
 
 KParts::ReadOnlyPart *Plugin::part()
 {
-  if ( !d->part ) {
-    d->part = createPart();
-    if ( d->part ) {
-      connect( d->part, SIGNAL(destroyed()), SLOT(partDestroyed()) );
-      d->removeInvisibleToolbarActions( this );
-      core()->partLoaded( this, d->part );
+    if (!d->part) {
+        d->part = createPart();
+        if (d->part) {
+            connect(d->part, SIGNAL(destroyed()), SLOT(partDestroyed()));
+            d->removeInvisibleToolbarActions(this);
+            core()->partLoaded(this, d->part);
+        }
     }
-  }
-  return d->part;
+    return d->part;
 }
 
 QString Plugin::tipFile() const
 {
-  return QString();
+    return QString();
 }
 
 QString Plugin::registerClient()
 {
-  if ( d->serviceName.isEmpty() ) {
-    d->serviceName = QLatin1String("org.kde.") + QLatin1String(objectName().toLatin1());
+    if (d->serviceName.isEmpty()) {
+        d->serviceName = QLatin1String("org.kde.") + QLatin1String(objectName().toLatin1());
 #ifdef Q_OS_WIN
-    const QString pid = QString::number( getpid() );
-    d->serviceName.append( QLatin1String(".unique-") + pid );
+        const QString pid = QString::number(getpid());
+        d->serviceName.append(QLatin1String(".unique-") + pid);
 #endif
-    QDBusConnection::sessionBus().registerService( d->serviceName );
-  }
-  return d->serviceName;
+        QDBusConnection::sessionBus().registerService(d->serviceName);
+    }
+    return d->serviceName;
 }
 
 int Plugin::weight() const
 {
-  return 0;
+    return 0;
 }
 
-void Plugin::insertNewAction( QAction *action )
+void Plugin::insertNewAction(QAction *action)
 {
-  d->newActions.append( action );
+    d->newActions.append(action);
 }
 
-void Plugin::insertSyncAction( QAction *action )
+void Plugin::insertSyncAction(QAction *action)
 {
-  d->syncActions.append( action );
+    d->syncActions.append(action);
 }
 
 QList<QAction *> Plugin::newActions() const
 {
-  return d->newActions;
+    return d->newActions;
 }
 
 QList<QAction *> Plugin::syncActions() const
 {
-  return d->syncActions;
+    return d->syncActions;
 }
 
 QStringList Plugin::invisibleToolbarActions() const
 {
-  return QStringList();
+    return QStringList();
 }
 
-bool Plugin::canDecodeMimeData( const QMimeData *data ) const
+bool Plugin::canDecodeMimeData(const QMimeData *data) const
 {
-  Q_UNUSED( data );
-  return false;
+    Q_UNUSED(data);
+    return false;
 }
 
-void Plugin::processDropEvent( QDropEvent * )
-{
-}
-
-void Plugin::readProperties( const KConfigGroup & )
+void Plugin::processDropEvent(QDropEvent *)
 {
 }
 
-void Plugin::saveProperties( KConfigGroup & )
+void Plugin::readProperties(const KConfigGroup &)
+{
+}
+
+void Plugin::saveProperties(KConfigGroup &)
 {
 }
 
 Core *Plugin::core() const
 {
-  return d->core;
+    return d->core;
 }
 
 void Plugin::aboutToSelect()
 {
-  // Because the 3 korganizer plugins share the same part, we need to switch
-  // that part's XML files every time we are about to show its GUI...
-  d->setXmlFiles();
+    // Because the 3 korganizer plugins share the same part, we need to switch
+    // that part's XML files every time we are about to show its GUI...
+    d->setXmlFiles();
 
-  select();
+    select();
 }
 
 void Plugin::select()
@@ -300,118 +300,118 @@ void Plugin::configUpdated()
 //@cond PRIVATE
 void Plugin::Private::partDestroyed()
 {
-  part = 0;
+    part = 0;
 }
 
-void Plugin::Private::removeInvisibleToolbarActions( Plugin *plugin )
+void Plugin::Private::removeInvisibleToolbarActions(Plugin *plugin)
 {
-  if ( pluginName.isEmpty() ) {
-    return;
-  }
-
-  // Hide unwanted toolbar action by modifying the XML before createGUI, rather
-  // than doing it by calling removeAction on the toolbar after createGUI. Both
-  // solutions work visually, but only modifying the XML ensures that the
-  // actions don't appear in "edit toolbars". #207296
-  const QStringList hideActions = plugin->invisibleToolbarActions();
-  //qDebug() << "Hiding actions" << hideActions << "from" << pluginName << part;
-  QDomDocument doc = part->domDocument();
-  QDomElement docElem = doc.documentElement();
-  // 1. Iterate over containers
-  for ( QDomElement containerElem = docElem.firstChildElement();
-        !containerElem.isNull(); containerElem = containerElem.nextSiblingElement() ) {
-    if ( QString::compare( containerElem.tagName(), QLatin1String("ToolBar"), Qt::CaseInsensitive ) == 0 ) {
-      // 2. Iterate over actions in toolbars
-      QDomElement actionElem = containerElem.firstChildElement();
-      while ( !actionElem.isNull() ) {
-        QDomElement nextActionElem = actionElem.nextSiblingElement();
-        if ( QString::compare( actionElem.tagName(), QLatin1String("Action"), Qt::CaseInsensitive ) == 0 ) {
-          //qDebug() << "Looking at action" << actionElem.attribute("name");
-          if ( hideActions.contains( actionElem.attribute( QLatin1String("name") ) ) ) {
-            //qDebug() << "REMOVING";
-            containerElem.removeChild( actionElem );
-          }
-        }
-        actionElem = nextActionElem;
-      }
+    if (pluginName.isEmpty()) {
+        return;
     }
-  }
 
-  // Possible optimization: we could do all the above and the writing below
-  // only when (newAppFile does not exist) or (version of domDocument > version of newAppFile)  (*)
-  // This requires parsing newAppFile when it exists, though, and better use
-  // the fast kdeui code for that rather than a full QDomDocument.
-  // (*) or when invisibleToolbarActions() changes :)
+    // Hide unwanted toolbar action by modifying the XML before createGUI, rather
+    // than doing it by calling removeAction on the toolbar after createGUI. Both
+    // solutions work visually, but only modifying the XML ensures that the
+    // actions don't appear in "edit toolbars". #207296
+    const QStringList hideActions = plugin->invisibleToolbarActions();
+    //qDebug() << "Hiding actions" << hideActions << "from" << pluginName << part;
+    QDomDocument doc = part->domDocument();
+    QDomElement docElem = doc.documentElement();
+    // 1. Iterate over containers
+    for (QDomElement containerElem = docElem.firstChildElement();
+            !containerElem.isNull(); containerElem = containerElem.nextSiblingElement()) {
+        if (QString::compare(containerElem.tagName(), QLatin1String("ToolBar"), Qt::CaseInsensitive) == 0) {
+            // 2. Iterate over actions in toolbars
+            QDomElement actionElem = containerElem.firstChildElement();
+            while (!actionElem.isNull()) {
+                QDomElement nextActionElem = actionElem.nextSiblingElement();
+                if (QString::compare(actionElem.tagName(), QLatin1String("Action"), Qt::CaseInsensitive) == 0) {
+                    //qDebug() << "Looking at action" << actionElem.attribute("name");
+                    if (hideActions.contains(actionElem.attribute(QLatin1String("name")))) {
+                        //qDebug() << "REMOVING";
+                        containerElem.removeChild(actionElem);
+                    }
+                }
+                actionElem = nextActionElem;
+            }
+        }
+    }
 
-  const QString newAppFile =
-    QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kontact/default-") + QLatin1String(pluginName) + QLatin1String(".rc") ;
-  QFileInfo fileInfo(newAppFile);
-  QDir().mkpath(fileInfo.absolutePath());
+    // Possible optimization: we could do all the above and the writing below
+    // only when (newAppFile does not exist) or (version of domDocument > version of newAppFile)  (*)
+    // This requires parsing newAppFile when it exists, though, and better use
+    // the fast kdeui code for that rather than a full QDomDocument.
+    // (*) or when invisibleToolbarActions() changes :)
 
-  QFile file( newAppFile );
-  if ( !file.open( QFile::WriteOnly ) ) {
-    qWarning() << "error writing to" << newAppFile;
-    return;
-  }
-  file.write( doc.toString().toUtf8() );
-  file.flush();
+    const QString newAppFile =
+        QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kontact/default-") + QLatin1String(pluginName) + QLatin1String(".rc") ;
+    QFileInfo fileInfo(newAppFile);
+    QDir().mkpath(fileInfo.absolutePath());
 
-  setXmlFiles();
+    QFile file(newAppFile);
+    if (!file.open(QFile::WriteOnly)) {
+        qWarning() << "error writing to" << newAppFile;
+        return;
+    }
+    file.write(doc.toString().toUtf8());
+    file.flush();
+
+    setXmlFiles();
 }
 
 void Plugin::Private::setXmlFiles()
 {
-  const QString newAppFile =
-    QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kontact/default-") + QLatin1String(pluginName) + QLatin1String(".rc") ;
-  const QString localFile =
-    QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kontact/local-") + QLatin1String(pluginName) + QLatin1String(".rc") ;
-  if ( part->xmlFile() != newAppFile || part->localXMLFile() != localFile ) {
-    part->replaceXMLFile( newAppFile, localFile );
-  }
+    const QString newAppFile =
+        QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kontact/default-") + QLatin1String(pluginName) + QLatin1String(".rc") ;
+    const QString localFile =
+        QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kontact/local-") + QLatin1String(pluginName) + QLatin1String(".rc") ;
+    if (part->xmlFile() != newAppFile || part->localXMLFile() != localFile) {
+        part->replaceXMLFile(newAppFile, localFile);
+    }
 }
 //@endcond
 
 void Plugin::slotConfigUpdated()
 {
-  configUpdated();
+    configUpdated();
 }
 
 void Plugin::bringToForeground()
 {
-  if ( d->executableName.isEmpty() ) {
-    return;
-  }
+    if (d->executableName.isEmpty()) {
+        return;
+    }
 #ifdef Q_OS_WIN
-  activateWindowForProcess( d->executableName );
+    activateWindowForProcess(d->executableName);
 #else
-  KRun::runCommand( d->executableName, 0 );
+    KRun::runCommand(d->executableName, 0);
 #endif
 }
 
-Summary *Plugin::createSummaryWidget( QWidget *parent )
+Summary *Plugin::createSummaryWidget(QWidget *parent)
 {
-  Q_UNUSED( parent );
-  return 0;
+    Q_UNUSED(parent);
+    return 0;
 }
 
 bool Plugin::showInSideBar() const
 {
-  return d->hasPart;
+    return d->hasPart;
 }
 
-void Plugin::setShowInSideBar( bool hasPart )
+void Plugin::setShowInSideBar(bool hasPart)
 {
-  d->hasPart = hasPart;
+    d->hasPart = hasPart;
 }
 
 bool Plugin::queryClose() const
 {
-  return true;
+    return true;
 }
 
-void Plugin::setDisabled( bool disabled )
+void Plugin::setDisabled(bool disabled)
 {
-  d->disabled = disabled;
+    d->disabled = disabled;
 }
 
 bool Plugin::disabled() const
@@ -423,11 +423,10 @@ void Plugin::shortcutChanged()
 {
 }
 
-void Plugin::virtual_hook( int, void * )
+void Plugin::virtual_hook(int, void *)
 {
-  //BASE::virtual_hook( id, data );
+    //BASE::virtual_hook( id, data );
 }
 
 #include "moc_plugin.cpp"
 
-// vim: sw=2 et sts=2 tw=80

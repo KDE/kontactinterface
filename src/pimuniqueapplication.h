@@ -24,7 +24,8 @@
 #include "kontactinterface_export.h"
 #include <kuniqueapplication.h>
 
-namespace KontactInterface {
+namespace KontactInterface
+{
 
 /**
  * KDEPIM applications which can be integrated into kontact should use
@@ -35,7 +36,7 @@ namespace KontactInterface {
  */
 class KONTACTINTERFACE_EXPORT PimUniqueApplication : public KUniqueApplication
 {
-  public:
+public:
     explicit PimUniqueApplication();
     ~PimUniqueApplication();
 
@@ -50,9 +51,9 @@ class KONTACTINTERFACE_EXPORT PimUniqueApplication : public KUniqueApplication
      * @param flags the application start flags
      * @since 4.5
      */
-    static bool start( KUniqueApplication::StartFlags flags );
+    static bool start(KUniqueApplication::StartFlags flags);
 
-  private:
+private:
     //@cond PRIVATE
     class Private;
     Private *const d;

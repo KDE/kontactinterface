@@ -30,7 +30,8 @@ class QMouseEvent;
 class QDragEnterEvent;
 class QDropEvent;
 
-namespace KontactInterface {
+namespace KontactInterface
+{
 
 /**
  * @short Base class for summary widgets in Kontact.
@@ -40,15 +41,15 @@ namespace KontactInterface {
  */
 class KONTACTINTERFACE_EXPORT Summary : public QWidget
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
+public:
     /**
      * Creates a new summary widget.
      *
      * @param parent The parent widget.
      */
-    explicit Summary( QWidget *parent );
+    explicit Summary(QWidget *parent);
 
     /**
      * Destroys the summary widget.
@@ -70,7 +71,7 @@ class KONTACTINTERFACE_EXPORT Summary : public QWidget
      * @param icon The name of the icon.
      * @param heading The text of the header.
      */
-    QWidget *createHeader( QWidget *parent, const QString &icon, const QString &heading );
+    QWidget *createHeader(QWidget *parent, const QString &icon, const QString &heading);
 
     /**
      * Returns a list of names identifying configuration modules for this summary widget.
@@ -79,7 +80,7 @@ class KONTACTINTERFACE_EXPORT Summary : public QWidget
      */
     virtual QStringList configModules() const;
 
-  public Q_SLOTS:
+public Q_SLOTS:
     /**
      * This method is called whenever the configuration has been changed.
      */
@@ -90,14 +91,14 @@ class KONTACTINTERFACE_EXPORT Summary : public QWidget
      *
      * @param force true if the update was requested by the user
      */
-    virtual void updateSummary( bool force = false );
+    virtual void updateSummary(bool force = false);
 
-  Q_SIGNALS:
+Q_SIGNALS:
     /**
      * This signal can be emitted to signaling that an action is going on.
      * The @p message will be shown in the status bar.
      */
-    void message( const QString &message );
+    void message(const QString &message);
 
     /**
      * @internal
@@ -105,15 +106,15 @@ class KONTACTINTERFACE_EXPORT Summary : public QWidget
      * This signal is emitted whenever a summary widget has been dropped on
      * this summary widget.
      */
-    void summaryWidgetDropped( QWidget *target, QObject *object, int alignment );
+    void summaryWidgetDropped(QWidget *target, QObject *object, int alignment);
 
-  protected:
-    virtual void mousePressEvent( QMouseEvent * );
-    virtual void mouseMoveEvent( QMouseEvent * );
-    virtual void dragEnterEvent( QDragEnterEvent * );
-    virtual void dropEvent( QDropEvent * );
+protected:
+    virtual void mousePressEvent(QMouseEvent *);
+    virtual void mouseMoveEvent(QMouseEvent *);
+    virtual void dragEnterEvent(QDragEnterEvent *);
+    virtual void dropEvent(QDropEvent *);
 
-  private:
+private:
     //@cond PRIVATE
     class Private;
     Private *const d;
