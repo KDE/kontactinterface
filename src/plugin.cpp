@@ -83,8 +83,6 @@ Plugin::Plugin(Core *core, QObject *parent, const char *appName, const char *plu
 {
     setObjectName(QLatin1String(appName));
     core->factory()->addClient(this);
-#warning port this to the new stuff
-//   KLocalizedString::insertCatalog( appName );
 
     d->pluginName = pluginName ? pluginName : appName;
     d->core = core;
