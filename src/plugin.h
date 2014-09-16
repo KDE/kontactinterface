@@ -167,7 +167,7 @@ public:
      * Reimplement this method if you want to add your credits to the Kontact
      * about dialog.
      */
-    virtual const KAboutData *aboutData() const;
+    virtual const KAboutData aboutData();
 
     /**
      * You can use this method if you need to access the current part. You can be

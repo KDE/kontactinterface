@@ -160,40 +160,9 @@ KParts::ReadOnlyPart *Plugin::loadPart()
     return core()->createPart(d->partLibraryName.constData());
 }
 
-const KAboutData *Plugin::aboutData() const
+const KAboutData Plugin::aboutData()
 {
-//QT5 port it.
-#if 0
-    KPluginLoader loader(QString::fromLatin1(d->partLibraryName));
-    KPluginFactory *factory = loader.factory();
-    qDebug() << "filename:" << loader.pluginName();
-    qDebug() << "libname:" << d->partLibraryName;
-
-    if (factory) {
-#warning Figure out how to replace this
-        /* if ( factory->componentData().isValid() ) {
-           qDebug() << "returning factory component aboutdata";
-           return factory->componentData().aboutData();
-         } else */{
-            // If the componentData of the factory is invalid, the likely cause is that
-            // the part has not been ported to use K_PLUGIN_FACTORY/K_EXPORT_PLUGIN yet.
-            // In that case, fallback to the old method of loading component data, which
-            // does only work for old-style parts.
-
-            qDebug() << "Unable to load component data for" << loader.pluginName()
-                     << "trying to use the old style plugin system now.";
-            const KComponentData instance =
-                KParts::Factory::partComponentDataFromLibrary(QString::fromLatin1(d->partLibraryName));
-            if (instance.isValid()) {
-                return instance.aboutData();
-            } else {
-                qDebug() << "Invalid instance, unable to get about information!";
-            }
-        }
-    }
-#endif
-    qCritical() << "Cannot load instance for" << title();
-    return 0;
+    return part()->componentData();
 }
 
 KParts::ReadOnlyPart *Plugin::part()
