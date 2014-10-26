@@ -20,7 +20,7 @@ include(KDEFrameworkCompilerSettings)
 add_definitions(-DTRANSLATION_DOMAIN=\"kontactinterfaces5\")
 # FIXME: Do we want the same versions in kdepimlibs and kf5?
 set(KF5_VERSION "5.4.0")
-set(KDEPIMLIBS_VERSION "4.71.0")
+set(KDEPIMLIBS_VERSION "4.72.0")
 set(CMAKECONFIG_INSTALL_DIR "${CMAKECONFIG_INSTALL_PREFIX}/KF5KontactInterface")
 
 ecm_setup_version(${KDEPIMLIBS_VERSION} VARIABLE_PREFIX KONTACTINTERFACE
