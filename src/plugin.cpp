@@ -30,7 +30,6 @@
 
 #include <kxmlguifactory.h>
 #include <kaboutdata.h>
-#include <kglobal.h>
 #include <klocalizedstring.h>
 #include <qdebug.h>
 #include <kcomponentdata.h>
