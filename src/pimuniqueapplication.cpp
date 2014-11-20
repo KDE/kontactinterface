@@ -65,7 +65,7 @@ static QDBusConnection tryToInitDBusConnection()
     QDBusConnection connection = QDBusConnection::connectToBus(
                                      QDBusConnection::SessionBus, QLatin1String(_k_sessionBusName));
     if (!connection.isConnected()) {
-        qCritical() << "Cannot find the D-Bus session server" << endl; //krazy:exclude=kdebug
+        qCritical() << "Cannot find the D-Bus session server" << endl;
         ::exit(255);
     }
     return connection;
