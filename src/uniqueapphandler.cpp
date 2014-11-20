@@ -25,7 +25,6 @@
 
 #include "processes.h"
 
-#include <kapplication.h>
 #include <kcmdlineargs.h>
 #include <qdebug.h>
 #include <kstartupinfo.h>
