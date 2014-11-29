@@ -59,7 +59,6 @@ public:
 class Summary::Private
 {
 public:
-    KStatusBar *mStatusBar;
     QPoint mDragStartPoint;
 };
 //@endcond
