@@ -25,7 +25,6 @@
 
 #include <QWidget>
 
-class KStatusBar;
 class QMouseEvent;
 class QDragEnterEvent;
 class QDropEvent;
