@@ -108,10 +108,10 @@ Q_SIGNALS:
     void summaryWidgetDropped(QWidget *target, QObject *object, int alignment);
 
 protected:
-    virtual void mousePressEvent(QMouseEvent *);
-    virtual void mouseMoveEvent(QMouseEvent *);
-    virtual void dragEnterEvent(QDragEnterEvent *);
-    virtual void dropEvent(QDropEvent *);
+    void mousePressEvent(QMouseEvent *) Q_DECL_OVERRIDE;
+    void mouseMoveEvent(QMouseEvent *) Q_DECL_OVERRIDE;
+    void dragEnterEvent(QDragEnterEvent *) Q_DECL_OVERRIDE;
+    void dropEvent(QDropEvent *) Q_DECL_OVERRIDE;
 
 private:
     //@cond PRIVATE
