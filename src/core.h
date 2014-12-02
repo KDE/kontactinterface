@@ -98,7 +98,7 @@ protected:
      * @param parent The parent widget.
      * @param flags The window flags.
      */
-    explicit Core(QWidget *parent = 0, Qt::WindowFlags flags = KDE_DEFAULT_WINDOWFLAGS);
+    explicit Core(QWidget *parent = Q_NULLPTR, Qt::WindowFlags flags = KDE_DEFAULT_WINDOWFLAGS);
 
     /**
      * Returns the last error message for problems during
