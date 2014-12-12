@@ -41,11 +41,6 @@ set(KONTACTINTERFACE_HAVE_X11 ${X11_FOUND})
 configure_file(config-kontactinterface.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kontactinterface.h )
 
 
-if(${CMAKE_SOURCE_DIR} STREQUAL ${KontactInterface_SOURCE_DIR})
-  find_package(KF5PimUtils ${KDEPIMLIBS_VERSION} CONFIG REQUIRED)
-endif()
-
-
 ecm_configure_package_config_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/KF5KontactInterfaceConfig.cmake.in"
   "${CMAKE_CURRENT_BINARY_DIR}/KF5KontactInterfaceConfig.cmake"
