@@ -20,4 +20,3 @@
 #include "kontactinterface_debug.h"
 Q_LOGGING_CATEGORY(KONTACTINTERFACE_LOG, "log_kontactinterface")
 
-
