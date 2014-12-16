@@ -31,7 +31,7 @@
 #include <kxmlguifactory.h>
 #include <kaboutdata.h>
 #include <klocalizedstring.h>
-#include <qdebug.h>
+#include "kontactinterface_debug.h"
 #include <kcomponentdata.h>
 
 #include <krun.h>
@@ -280,7 +280,7 @@ void Plugin::Private::removeInvisibleToolbarActions(Plugin *plugin)
     // solutions work visually, but only modifying the XML ensures that the
     // actions don't appear in "edit toolbars". #207296
     const QStringList hideActions = plugin->invisibleToolbarActions();
-    //qDebug() << "Hiding actions" << hideActions << "from" << pluginName << part;
+    //qCDebug(KONTACTINTERFACE_LOG) << "Hiding actions" << hideActions << "from" << pluginName << part;
     QDomDocument doc = part->domDocument();
     QDomElement docElem = doc.documentElement();
     // 1. Iterate over containers
@@ -292,9 +292,9 @@ void Plugin::Private::removeInvisibleToolbarActions(Plugin *plugin)
             while (!actionElem.isNull()) {
                 QDomElement nextActionElem = actionElem.nextSiblingElement();
                 if (QString::compare(actionElem.tagName(), QLatin1String("Action"), Qt::CaseInsensitive) == 0) {
-                    //qDebug() << "Looking at action" << actionElem.attribute("name");
+                    //qCDebug(KONTACTINTERFACE_LOG) << "Looking at action" << actionElem.attribute("name");
                     if (hideActions.contains(actionElem.attribute(QLatin1String("name")))) {
-                        //qDebug() << "REMOVING";
+                        //qCDebug(KONTACTINTERFACE_LOG) << "REMOVING";
                         containerElem.removeChild(actionElem);
                     }
                 }
@@ -316,7 +316,7 @@ void Plugin::Private::removeInvisibleToolbarActions(Plugin *plugin)
 
     QFile file(newAppFile);
     if (!file.open(QFile::WriteOnly)) {
-        qWarning() << "error writing to" << newAppFile;
+        qCWarning(KONTACTINTERFACE_LOG) << "error writing to" << newAppFile;
         return;
     }
     file.write(doc.toString().toUtf8());

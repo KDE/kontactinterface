@@ -1,4 +1,5 @@
 set(kontactinterface_LIB_SRCS
+    kontactinterface_debug.cpp
     core.cpp
     plugin.cpp
     summary.cpp

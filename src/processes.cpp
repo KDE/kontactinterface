@@ -43,7 +43,7 @@ using namespace KontactInterface;
 #include <QtCore/QList>
 #include <QtCore/QtDebug>
 
-#include <QDebug>
+#include "kontactinterface_debug.h"
 
 // Copy from kdelibs/kinit/kinit_win.cpp
 PSID copySid(PSID from)
@@ -129,7 +129,7 @@ void KPIMUtils::getProcessesIdForName(const QString &processName, QList<int> &pi
                 }
             }
             pids.append((int)pe32.th32ProcessID);
-            qDebug() << "found PID: " << (int)pe32.th32ProcessID;
+            qCDebug(KONTACTINTERFACE_LOG) << "found PID: " << (int)pe32.th32ProcessID;
         }
     } while (Process32Next(h, &pe32));
     CloseHandle(h);
@@ -142,7 +142,7 @@ bool KPIMUtils::otherProcessesExist(const QString &processName)
     int myPid = getpid();
     foreach (int pid, pids) {
         if (myPid != pid) {
-//      qDebug() << "Process ID is " << pid;
+//      qCDebug(KONTACTINTERFACE_LOG) << "Process ID is " << pid;
             return true;
         }
     }
@@ -157,7 +157,7 @@ bool KPIMUtils::killProcesses(const QString &processName)
         return true;
     }
 
-    qWarning() << "Killing process \"" << processName << " (pid=" << pids[0] << ")..";
+    qCWarning(KONTACTINTERFACE_LOG) << "Killing process \"" << processName << " (pid=" << pids[0] << ")..";
     int overallResult = 0;
     foreach (int pid, pids) {
         int result;
@@ -202,7 +202,7 @@ void KPIMUtils::activateWindowForProcess(const QString &executableName)
     int foundPid = 0;
     foreach (int pid, pids) {
         if (myPid != pid) {
-            qDebug() << "activateWindowForProcess(): PID to activate:" << pid;
+            qCDebug(KONTACTINTERFACE_LOG) << "activateWindowForProcess(): PID to activate:" << pid;
             foundPid = pid;
             break;
         }

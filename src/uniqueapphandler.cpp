@@ -26,7 +26,7 @@
 #include "processes.h"
 
 #include <kcmdlineargs.h>
-#include <qdebug.h>
+#include "kontactinterface_debug.h"
 #include <kstartupinfo.h>
 #include <kuniqueapplication.h>
 #include <kwindowsystem.h>
@@ -96,7 +96,7 @@ public:
 UniqueAppHandler::UniqueAppHandler(Plugin *plugin)
     : QObject(plugin), d(new Private)
 {
-    //qDebug() << "plugin->objectName():" << plugin->objectName();
+    //qCDebug(KONTACTINTERFACE_LOG) << "plugin->objectName():" << plugin->objectName();
 
     d->mPlugin = plugin;
     QDBusConnection session = QDBusConnection::sessionBus();
@@ -202,7 +202,7 @@ UniqueAppWatcher::UniqueAppWatcher(UniqueAppHandlerFactoryBase *factory, Plugin 
     if (d->mRunningStandalone && (owner == QDBusConnection::sessionBus().baseService())) {
         d->mRunningStandalone = false;
     }
-    //qDebug() << " plugin->objectName()=" << plugin->objectName()
+    //qCDebug(KONTACTINTERFACE_LOG) << " plugin->objectName()=" << plugin->objectName()
     //         << " running standalone:" << d->mRunningStandalone;
 
     if (d->mRunningStandalone) {

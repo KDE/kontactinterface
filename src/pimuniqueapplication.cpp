@@ -24,7 +24,7 @@
 
 #include <k4aboutdata.h>
 #include <kcmdlineargs.h>
-#include <qdebug.h>
+#include "kontactinterface_debug.h"
 #include <kstartupinfo.h>
 #include <kwindowsystem.h>
 
@@ -105,7 +105,7 @@ bool PimUniqueApplication::start(KUniqueApplication::StartFlags flags)
         KWindowSystem::allowExternalProcessWindowActivation();
 
         const QString objectName = QLatin1Char('/') + appName + QLatin1String("_PimApplication");
-        //qDebug() << objectName;
+        //qCDebug(KONTACTINTERFACE_LOG) << objectName;
         QDBusInterface iface(
             serviceName, objectName, QLatin1String("org.kde.KUniqueApplication"), QDBusConnection::sessionBus());
         QDBusReply<int> reply;
@@ -117,7 +117,7 @@ bool PimUniqueApplication::start(KUniqueApplication::StartFlags flags)
 
     QDBusConnection::disconnectFromBus(QLatin1String(_k_sessionBusName));
 
-    //qDebug() << "kontact not running -- start standalone application";
+    //qCDebug(KONTACTINTERFACE_LOG) << "kontact not running -- start standalone application";
     // kontact not running -- start standalone application.
     return KUniqueApplication::start(flags);
 }

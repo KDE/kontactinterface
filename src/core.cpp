@@ -23,7 +23,7 @@
 
 #include "core.h"
 
-#include <qdebug.h>
+#include "kontactinterface_debug.h"
 #include <kparts/part.h>
 #include <kpluginfactory.h>
 #include <kpluginloader.h>
@@ -70,7 +70,7 @@ Core::~Core()
 
 KParts::ReadOnlyPart *Core::createPart(const char *libname)
 {
-    qDebug() << libname;
+    qCDebug(KONTACTINTERFACE_LOG) << libname;
 
     QMap<QByteArray, KParts::ReadOnlyPart *>::ConstIterator it;
     it = d->mParts.constFind(libname);
@@ -78,10 +78,10 @@ KParts::ReadOnlyPart *Core::createPart(const char *libname)
         return it.value();
     }
 
-    qDebug() << "Creating new KPart";
+    qCDebug(KONTACTINTERFACE_LOG) << "Creating new KPart";
 
     KPluginLoader loader(QString::fromLatin1(libname));
-    qDebug() << loader.fileName();
+    qCDebug(KONTACTINTERFACE_LOG) << loader.fileName();
     KPluginFactory *factory = loader.factory();
     KParts::ReadOnlyPart *part = 0;
     if (factory) {
@@ -94,7 +94,7 @@ KParts::ReadOnlyPart *Core::createPart(const char *libname)
                          SLOT(slotPartDestroyed(QObject*)));
     } else {
         d->lastErrorMessage = loader.errorString();
-        qWarning() << d->lastErrorMessage;
+        qCWarning(KONTACTINTERFACE_LOG) << d->lastErrorMessage;
     }
 
     return part;
