@@ -20,7 +20,7 @@ include(KDEFrameworkCompilerSettings)
 add_definitions(-DTRANSLATION_DOMAIN=\"kontactinterfaces5\")
 set(KF5_VERSION "5.6.0")
 set(KONTACTINTERFACE_LIB_VERSION "4.79.0")
-set(CMAKECONFIG_INSTALL_DIR "${CMAKECONFIG_INSTALL_PREFIX}/KF5KontactInterface")
+set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5KontactInterface")
 
 ecm_setup_version(${KONTACTINTERFACE_LIB_VERSION} VARIABLE_PREFIX KONTACTINTERFACE
                         VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kontactinterface_version.h"
@@ -57,7 +57,7 @@ install(FILES
 
 install(FILES
    ${CMAKE_CURRENT_BINARY_DIR}/kontactinterface_version.h
-   DESTINATION ${KF5_INCLUDE_INSTALL_DIR}
+   DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5}
    COMPONENT Devel
 )
 
