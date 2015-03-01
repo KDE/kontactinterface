@@ -18,7 +18,7 @@ include(KDEFrameworkCompilerSettings)
 
 
 add_definitions(-DTRANSLATION_DOMAIN=\"kontactinterfaces5\")
-set(KF5_VERSION "5.6.0")
+set(KF5_VERSION "5.7.0")
 set(KONTACTINTERFACE_LIB_VERSION "4.79.0")
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5KontactInterface")
 
