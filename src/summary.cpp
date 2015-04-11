@@ -110,7 +110,6 @@ QWidget *Summary::createHeader(QWidget *parent, const QString &iconname, const Q
     label = new QLabel(heading, box);
     hbox->addWidget(label);
     label->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
-//TODO PORT QT5   label->setIndent( QDialog::spacingHint() );
 
     box->setMaximumHeight(box->minimumSizeHint().height());
 
