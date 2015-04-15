@@ -146,7 +146,7 @@ void Summary::mouseMoveEvent(QMouseEvent *event)
         drag->setMimeData(new SummaryMimeData());
         drag->setObjectName(QLatin1String("SummaryWidgetDrag"));
 
-        QPixmap pm = QPixmap::grabWidget(this);
+        QPixmap pm = grab();
         if (pm.width() > 300) {
             pm = QPixmap::fromImage(
                      pm.toImage().scaled(300, 300, Qt::KeepAspectRatio, Qt::SmoothTransformation));
