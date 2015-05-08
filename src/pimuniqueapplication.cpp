@@ -30,6 +30,7 @@
 
 #include <qdbusconnectioninterface.h>
 #include <qdbusinterface.h>
+#include <qdatastream.h>
 
 using namespace KontactInterface;
 
