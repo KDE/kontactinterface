@@ -144,7 +144,7 @@ void Summary::mouseMoveEvent(QMouseEvent *event)
 
         QDrag *drag = new QDrag(this);
         drag->setMimeData(new SummaryMimeData());
-        drag->setObjectName(QLatin1String("SummaryWidgetDrag"));
+        drag->setObjectName(QStringLiteral("SummaryWidgetDrag"));
 
         QPixmap pm = grab();
         if (pm.width() > 300) {
@@ -166,7 +166,7 @@ void Summary::mouseMoveEvent(QMouseEvent *event)
 
 void Summary::dragEnterEvent(QDragEnterEvent *event)
 {
-    if (event->mimeData()->hasFormat(QLatin1String("application/x-kontact-summary"))) {
+    if (event->mimeData()->hasFormat(QStringLiteral("application/x-kontact-summary"))) {
         event->acceptProposedAction();
     }
 }
