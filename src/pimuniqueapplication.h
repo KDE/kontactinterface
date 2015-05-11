@@ -22,7 +22,9 @@
 #define KONTACTINTERFACE_PIMUNIQUEAPPLICATION_H
 
 #include "kontactinterface_export.h"
-#include <kuniqueapplication.h>
+
+#include <QApplication>
+#include <KDBusService>
 
 namespace KontactInterface
 {
@@ -34,24 +36,19 @@ namespace KontactInterface
  * and if kontact is already running, it will load the korganizer part and
  * switch to it.
  */
-class KONTACTINTERFACE_EXPORT PimUniqueApplication : public KUniqueApplication
+class KONTACTINTERFACE_EXPORT PimUniqueApplication : public QApplication
 {
+
+    Q_CLASSINFO("D-Bus Interface", "org.kde.PIMUniqueApplication")
+
 public:
     explicit PimUniqueApplication();
     ~PimUniqueApplication();
 
-    /**
-     * @see KUniqueApplication::start
-     */
-    static bool start();
+    static bool start(KDBusService::StartupOption startupOption = KDBusService::Unique);
 
-    /**
-     * @see KUniqueApplication::start
-     *
-     * @param flags the application start flags
-     * @since 4.5
-     */
-    static bool start(KUniqueApplication::StartFlags flags);
+protected:
+    virtual int newInstance(const QStringList &arguments);
 
 private:
     //@cond PRIVATE

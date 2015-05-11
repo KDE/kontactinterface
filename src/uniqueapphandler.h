@@ -25,6 +25,8 @@
 #include "kontactinterface_export.h"
 #include "plugin.h"
 
+class QCommandLineParser;
+
 namespace KontactInterface
 {
 
@@ -39,14 +41,14 @@ class KONTACTINTERFACE_EXPORT UniqueAppHandler : public QObject
 {
     Q_OBJECT
     // We implement the KUniqueApplication interface
-    Q_CLASSINFO("D-Bus Interface", "org.kde.KUniqueApplication")
+    Q_CLASSINFO("D-Bus Interface", "org.kde.PIMUniqueApplication")
 
 public:
     UniqueAppHandler(Plugin *plugin);
     virtual ~UniqueAppHandler();
 
     /// This must be reimplemented so that app-specific command line options can be parsed
-    virtual void loadCommandLineOptions() = 0;
+    virtual void loadCommandLineOptions(QCommandLineParser *parser) = 0;
 
     Plugin *plugin() const;
 

@@ -25,14 +25,16 @@
 
 #include "processes.h"
 
-#include <kcmdlineargs.h>
 #include "kontactinterface_debug.h"
 #include <kstartupinfo.h>
-#include <kuniqueapplication.h>
 #include <kwindowsystem.h>
 
 #include <QDBusConnection>
 #include <QDBusConnectionInterface>
+
+#include <QCommandLineParser>
+
+#include <QLoggingCategory>
 
 #ifdef Q_OS_WIN
 #  include <process.h>
@@ -76,6 +78,8 @@
 
 */
 
+Q_LOGGING_CATEGORY(PIMUniqueApp, "org.kde.PIMUniqueApp")
+
 using namespace KontactInterface;
 
 //@cond PRIVATE
@@ -89,7 +93,7 @@ public:
 UniqueAppHandler::UniqueAppHandler(Plugin *plugin)
     : QObject(plugin), d(new Private)
 {
-    //qCDebug(KONTACTINTERFACE_LOG) << "plugin->objectName():" << plugin->objectName();
+    qCDebug(KONTACTINTERFACE_LOG) << "plugin->objectName():" << plugin->objectName();
 
     d->mPlugin = plugin;
     QDBusConnection session = QDBusConnection::sessionBus();
@@ -108,18 +112,15 @@ UniqueAppHandler::~UniqueAppHandler()
 }
 
 // DBUS call
-int UniqueAppHandler::newInstance(const QByteArray &asn_id, const QByteArray &args)
+int UniqueAppHandler::newInstance(const QByteArray &asn_id, const QStringList &args)
 {
     if (!asn_id.isEmpty()) {
-        kapp->setStartupId(asn_id);
+        KStartupInfo::setStartupId(asn_id);
     }
 
-    KCmdLineArgs::reset(); // forget options defined by other "applications"
-    loadCommandLineOptions(); // implemented by plugin
-
-    // This bit is duplicated from KUniqueApplicationAdaptor::newInstance()
-    QDataStream ds(args);
-    KCmdLineArgs::loadAppArgs(ds);
+    QCommandLineParser parser;
+    loadCommandLineOptions(&parser); // implemented by plugin
+    parser.process(args);
 
     return newInstance();
 }
@@ -195,8 +196,9 @@ UniqueAppWatcher::UniqueAppWatcher(UniqueAppHandlerFactoryBase *factory, Plugin 
     if (d->mRunningStandalone && (owner == QDBusConnection::sessionBus().baseService())) {
         d->mRunningStandalone = false;
     }
-    //qCDebug(KONTACTINTERFACE_LOG) << " plugin->objectName()=" << plugin->objectName()
-    //         << " running standalone:" << d->mRunningStandalone;
+
+    qCDebug(KONTACTINTERFACE_LOG) << " plugin->objectName()=" << plugin->objectName()
+                                  << " running standalone:" << d->mRunningStandalone;
 
     if (d->mRunningStandalone) {
         QObject::connect(QDBusConnection::sessionBus().interface(),
