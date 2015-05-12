@@ -30,6 +30,7 @@ ecm_setup_version(${KONTACTINTERFACE_LIB_VERSION} VARIABLE_PREFIX KONTACTINTERFA
 
 ########### Find packages ###########
 find_package(KF5KDELibs4Support ${KF5_VERSION} CONFIG REQUIRED)
+find_package(KF5DBusAddons ${KF5_VERSION} CONFIG REQUIRED)
 find_package(KF5Parts ${KF5_VERSION} CONFIG REQUIRED)
 
 if (NOT APPLE)

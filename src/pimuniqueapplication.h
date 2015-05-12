@@ -24,7 +24,6 @@
 #include "kontactinterface_export.h"
 
 #include <QApplication>
-#include <KDBusService>
 
 namespace KontactInterface
 {
@@ -39,16 +38,21 @@ namespace KontactInterface
 class KONTACTINTERFACE_EXPORT PimUniqueApplication : public QApplication
 {
 
+    Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.kde.PIMUniqueApplication")
 
 public:
-    explicit PimUniqueApplication();
+    explicit PimUniqueApplication(int &argc, char **argv[]);
     ~PimUniqueApplication();
 
-    static bool start(KDBusService::StartupOption startupOption = KDBusService::Unique);
+    static bool start(const QStringList &arguments,
+                      bool unique = true);
+
+public Q_SLOTS:
+    int newInstance(const QByteArray &startupId, const QStringList &arguments);
 
 protected:
-    virtual int newInstance(const QStringList &arguments);
+    virtual int activate(const QStringList &arguments);
 
 private:
     //@cond PRIVATE

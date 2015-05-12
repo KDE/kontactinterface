@@ -78,8 +78,6 @@
 
 */
 
-Q_LOGGING_CATEGORY(PIMUniqueApp, "org.kde.PIMUniqueApp")
-
 using namespace KontactInterface;
 
 //@cond PRIVATE
@@ -122,14 +120,16 @@ int UniqueAppHandler::newInstance(const QByteArray &asn_id, const QStringList &a
     loadCommandLineOptions(&parser); // implemented by plugin
     parser.process(args);
 
-    return newInstance();
+    return activate(args);
 }
 
 static QWidget *s_mainWidget = 0;
 
 // Plugin-specific newInstance implementation, called by above method
-int KontactInterface::UniqueAppHandler::newInstance()
+int KontactInterface::UniqueAppHandler::activate(const QStringList &args)
 {
+    Q_UNUSED(args);
+
     if (s_mainWidget) {
         s_mainWidget->show();
         KWindowSystem::forceActiveWindow(s_mainWidget->winId());

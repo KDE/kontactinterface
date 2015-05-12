@@ -19,6 +19,7 @@ target_include_directories(KF5KontactInterface PUBLIC "$<BUILD_INTERFACE:${Konta
 target_link_libraries(KF5KontactInterface
                      PUBLIC
                       KF5::Parts
+                      KF5::DBusAddons
                       KF5::KDELibs4Support
 )
 
