@@ -19,7 +19,7 @@ include(KDEFrameworkCompilerSettings)
 
 add_definitions(-DTRANSLATION_DOMAIN=\"kontactinterfaces5\")
 set(KF5_VERSION "5.10.0")
-set(KONTACTINTERFACE_LIB_VERSION "4.79.0")
+set(KONTACTINTERFACE_LIB_VERSION "4.80.0")
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5KontactInterface")
 
 ecm_setup_version(${KONTACTINTERFACE_LIB_VERSION} VARIABLE_PREFIX KONTACTINTERFACE
@@ -29,9 +29,14 @@ ecm_setup_version(${KONTACTINTERFACE_LIB_VERSION} VARIABLE_PREFIX KONTACTINTERFA
 )
 
 ########### Find packages ###########
-find_package(KF5KDELibs4Support ${KF5_VERSION} CONFIG REQUIRED)
-find_package(KF5DBusAddons ${KF5_VERSION} CONFIG REQUIRED)
-find_package(KF5Parts ${KF5_VERSION} CONFIG REQUIRED)
+find_package(KF5 ${KF5_VERSION} REQUIRED COMPONENTS
+    CoreAddons
+    Parts
+    WindowSystem
+    I18n
+    XmlGui
+    IconThemes
+)
 
 if (NOT APPLE)
     find_package(X11)

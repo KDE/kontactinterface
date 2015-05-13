@@ -24,9 +24,10 @@
 #include "core.h"
 
 #include "kontactinterface_debug.h"
-#include <kparts/part.h>
-#include <kpluginfactory.h>
-#include <kpluginloader.h>
+
+#include <KParts/Part>
+#include <KPluginFactory>
+#include <KPluginLoader>
 
 #include <QDateTime>
 #include <QTimer>
