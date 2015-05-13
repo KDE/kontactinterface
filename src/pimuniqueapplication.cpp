@@ -25,6 +25,7 @@
 
 #include <KStartupInfo>
 #include <KWindowSystem>
+#include <KAboutData>
 
 #include <QCommandLineParser>
 #include <QLoggingCategory>
@@ -40,25 +41,48 @@ using namespace KontactInterface;
 //@cond PRIVATE
 class KontactInterface::PimUniqueApplication::Private
 {
+public:
+    Private()
+        : cmdArgs(Q_NULLPTR)
+    {}
+
+    ~Private()
+    {
+        delete cmdArgs;
+    }
+
+    QCommandLineParser *cmdArgs;
 };
 //@endcond
 
-PimUniqueApplication::PimUniqueApplication(int &argc, char **argv[])
+PimUniqueApplication::PimUniqueApplication(int &argc, char **argv[],
+                                           KAboutData &aboutData)
     : QApplication(argc, *argv)
     , d(new Private())
 {
+    d->cmdArgs = new QCommandLineParser();
+
+    KAboutData::setApplicationData(aboutData);
+    aboutData.setupCommandLine(d->cmdArgs);
+
     // This object name is used in start(), and also in kontact's UniqueAppHandler.
-    const QString objectName = QLatin1Char('/') + applicationName() + QLatin1String("_PimApplication");
+    const QString objectName = QLatin1Char('/') + QApplication::applicationName() + QLatin1String("_PimApplication");
     QDBusConnection::sessionBus().registerObject(
         objectName, this,
         QDBusConnection::ExportAllSlots |
         QDBusConnection::ExportScriptableProperties |
         QDBusConnection::ExportAdaptors);
+
 }
 
 PimUniqueApplication::~PimUniqueApplication()
 {
     delete d;
+}
+
+QCommandLineParser* PimUniqueApplication::cmdArgs() const
+{
+    return d->cmdArgs;
 }
 
 bool PimUniqueApplication::start(const QStringList &arguments, bool unique)

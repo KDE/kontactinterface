@@ -25,6 +25,9 @@
 
 #include <QApplication>
 
+class KAboutData;
+class QCommandLineParser;
+
 namespace KontactInterface
 {
 
@@ -42,11 +45,13 @@ class KONTACTINTERFACE_EXPORT PimUniqueApplication : public QApplication
     Q_CLASSINFO("D-Bus Interface", "org.kde.PIMUniqueApplication")
 
 public:
-    explicit PimUniqueApplication(int &argc, char **argv[]);
+    explicit PimUniqueApplication(int &argc, char **argv[], KAboutData &aboutData);
     ~PimUniqueApplication();
 
     static bool start(const QStringList &arguments,
                       bool unique = true);
+
+    QCommandLineParser* cmdArgs() const;
 
 public Q_SLOTS:
     int newInstance(const QByteArray &startupId, const QStringList &arguments);
