@@ -69,7 +69,7 @@ PimUniqueApplication::PimUniqueApplication(int &argc, char **argv[],
     const QString objectName = QLatin1Char('/') + QApplication::applicationName() + QLatin1String("_PimApplication");
     QDBusConnection::sessionBus().registerObject(
         objectName, this,
-        QDBusConnection::ExportAllSlots |
+        QDBusConnection::ExportScriptableSlots |
         QDBusConnection::ExportScriptableProperties |
         QDBusConnection::ExportAdaptors);
 
@@ -146,8 +146,10 @@ int PimUniqueApplication::newInstance(const QByteArray &startupId,
     for (QWidget *win : tlws) {
         if (qobject_cast<QMainWindow*>(win)) {
             win->show();
-            KWindowSystem::forceActiveWindow(win->winId());
             KStartupInfo::setNewStartupId(win, startupId);
+#ifdef Q_OS_WIN
+            KWindowSystem::forceActiveWindow(win->winId());
+#endif
             break;
         }
     }

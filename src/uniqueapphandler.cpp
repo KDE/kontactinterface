@@ -132,7 +132,9 @@ int KontactInterface::UniqueAppHandler::activate(const QStringList &args)
 
     if (s_mainWidget) {
         s_mainWidget->show();
+#ifdef Q_OS_WIN
         KWindowSystem::forceActiveWindow(s_mainWidget->winId());
+#endif
         KStartupInfo::appStarted();
     }
 

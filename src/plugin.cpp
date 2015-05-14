@@ -338,7 +338,6 @@ void Plugin::slotConfigUpdated()
 
 void Plugin::bringToForeground()
 {
-    qDebug() << d->executableName;
     if (d->executableName.isEmpty()) {
         return;
     }
