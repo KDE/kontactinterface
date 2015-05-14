@@ -54,6 +54,7 @@ public:
     QCommandLineParser* cmdArgs() const;
 
 public Q_SLOTS:
+    Q_SCRIPTABLE int newInstance();
     Q_SCRIPTABLE int newInstance(const QByteArray &startupId, const QStringList &arguments);
 
 protected:

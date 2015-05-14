@@ -135,6 +135,11 @@ bool PimUniqueApplication::start(const QStringList &arguments, bool unique)
     return true;
 }
 
+int PimUniqueApplication::newInstance()
+{
+    return newInstance(KStartupInfo::startupId(), QStringList() << QApplication::applicationName());
+}
+
 // This is called via DBus either by another instance that has just been
 // started or by Kontact when the module is activated
 int PimUniqueApplication::newInstance(const QByteArray &startupId,
