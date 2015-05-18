@@ -24,9 +24,10 @@
 #define KONTACTINTERFACE_CORE_H
 
 #include "kontactinterface_export.h"
-#include <kparts/mainwindow.h>
-#include <kparts/part.h>
+
+#include <KParts/MainWindow>
 #include <KParts/ReadOnlyPart>
+
 namespace KontactInterface
 {
 

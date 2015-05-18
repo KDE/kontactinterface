@@ -26,8 +26,8 @@
 
 #include "kontactinterface_export.h"
 
-#include <kpluginfactory.h>
-#include <kxmlguiclient.h>
+#include <KPluginFactory>
+#include <KXMLGUIClient>
 
 #include <QtCore/QList>
 #include <QtCore/QObject>

@@ -21,80 +21,84 @@
 
 #include "config-kontactinterface.h"
 #include "pimuniqueapplication.h"
-
-#include <k4aboutdata.h>
-#include <kcmdlineargs.h>
 #include "kontactinterface_debug.h"
-#include <kstartupinfo.h>
-#include <kwindowsystem.h>
 
-#include <qdbusconnectioninterface.h>
-#include <qdbusinterface.h>
-#include <qdatastream.h>
+#include <KStartupInfo>
+#include <KWindowSystem>
+#include <KAboutData>
+
+#include <QCommandLineParser>
+#include <QLoggingCategory>
+
+#include <QWidget>
+#include <QMainWindow>
+
+#include <QDBusInterface>
+#include <QDBusConnectionInterface>
 
 using namespace KontactInterface;
 
 //@cond PRIVATE
 class KontactInterface::PimUniqueApplication::Private
 {
+public:
+    Private()
+        : cmdArgs(Q_NULLPTR)
+    {}
+
+    ~Private()
+    {
+        delete cmdArgs;
+    }
+
+    QCommandLineParser *cmdArgs;
 };
 //@endcond
 
-PimUniqueApplication::PimUniqueApplication()
-    : KUniqueApplication(), d(new Private())
+PimUniqueApplication::PimUniqueApplication(int &argc, char **argv[],
+                                           KAboutData &aboutData)
+    : QApplication(argc, *argv)
+    , d(new Private())
 {
+    d->cmdArgs = new QCommandLineParser();
+
+    KAboutData::setApplicationData(aboutData);
+    aboutData.setupCommandLine(d->cmdArgs);
+
     // This object name is used in start(), and also in kontact's UniqueAppHandler.
-    const QString objectName = QLatin1Char('/') + applicationName() + QLatin1String("_PimApplication");
+    const QString objectName = QLatin1Char('/') + QApplication::applicationName() + QLatin1String("_PimApplication");
     QDBusConnection::sessionBus().registerObject(
         objectName, this,
         QDBusConnection::ExportScriptableSlots |
         QDBusConnection::ExportScriptableProperties |
         QDBusConnection::ExportAdaptors);
-}
 
-static const char _k_sessionBusName[] = "kdepimapplication_session_bus";
+}
 
 PimUniqueApplication::~PimUniqueApplication()
 {
     delete d;
 }
 
-static QDBusConnection tryToInitDBusConnection()
+QCommandLineParser* PimUniqueApplication::cmdArgs() const
 {
-    // Check the D-Bus connection health, and connect - but not using QDBusConnection::sessionBus()
-    // since we can't close that one before forking.
-    QDBusConnection connection = QDBusConnection::connectToBus(
-                                     QDBusConnection::SessionBus, QLatin1String(_k_sessionBusName));
-    if (!connection.isConnected()) {
-        qCritical() << "Cannot find the D-Bus session server" << endl;
-        ::exit(255);
-    }
-    return connection;
+    return d->cmdArgs;
 }
 
-bool PimUniqueApplication::start()
+bool PimUniqueApplication::start(const QStringList &arguments, bool unique)
 {
-    return start(KUniqueApplication::StartFlags());
-}
-
-bool PimUniqueApplication::start(KUniqueApplication::StartFlags flags)
-{
-    const QString appName = KCmdLineArgs::aboutData()->appName();
+    const QString appName = QApplication::applicationName();
     // Try talking to /appName_PimApplication in org.kde.appName,
     // (which could be kontact or the standalone application),
-    // otherwise fall back to standard KUniqueApplication behavior (start appName).
+    // otherwise fall back to starting a new app
 
     const QString serviceName = QLatin1String("org.kde.") + appName;
-    if (tryToInitDBusConnection().interface()->isServiceRegistered(serviceName)) {
-        QByteArray saved_args;
-        QDataStream ds(&saved_args, QIODevice::WriteOnly);
-        KCmdLineArgs::saveAppArgs(ds);
-
+    if (QDBusConnection::sessionBus().interface()->isServiceRegistered(serviceName)) {
         QByteArray new_asn_id;
 #if KONTACTINTERFACE_HAVE_X11
         KStartupInfoId id;
-        if (kapp) {   // KApplication constructor unsets the env. variable
-            id.initId(kapp->startupId());
+        if (!KStartupInfo::startupId().isEmpty()) {
+            id.initId(KStartupInfo::startupId());
         } else {
             id = KStartupInfo::currentStartupIdEnv();
         }
@@ -106,19 +110,62 @@ bool PimUniqueApplication::start(KUniqueApplication::StartFlags flags)
         KWindowSystem::allowExternalProcessWindowActivation();
 
         const QString objectName = QLatin1Char('/') + appName + QLatin1String("_PimApplication");
-        //qCDebug(KONTACTINTERFACE_LOG) << objectName;
-        QDBusInterface iface(
-            serviceName, objectName, QLatin1String("org.kde.KUniqueApplication"), QDBusConnection::sessionBus());
-        QDBusReply<int> reply;
-        if (iface.isValid() &&
-                (reply = iface.call(QLatin1String("newInstance"), new_asn_id, saved_args)).isValid()) {
-            return false; // success means that main() can exit now.
+        qCDebug(KONTACTINTERFACE_LOG) << objectName;
+        QDBusInterface iface(serviceName,
+                             objectName,
+                             QLatin1String("org.kde.PIMUniqueApplication"),
+                             QDBusConnection::sessionBus());
+        if (iface.isValid()) {
+            QDBusReply<int> reply = iface.call(QLatin1String("newInstance"),
+                                               new_asn_id,
+                                               arguments);
+            if (reply.isValid()) {
+                return false; // success means that main() can exist now.
+            }
         }
     }
 
-    QDBusConnection::disconnectFromBus(QLatin1String(_k_sessionBusName));
+    qCDebug(KONTACTINTERFACE_LOG) << "kontact not running -- start standalone application";
 
-    //qCDebug(KONTACTINTERFACE_LOG) << "kontact not running -- start standalone application";
-    // kontact not running -- start standalone application.
-    return KUniqueApplication::start(flags);
+    if (unique) {
+        QDBusConnection::sessionBus().registerService(serviceName);
+    }
+
+    static_cast<PimUniqueApplication*>(qApp)->activate(arguments);
+    return true;
+}
+
+int PimUniqueApplication::newInstance()
+{
+    return newInstance(KStartupInfo::startupId(), QStringList() << QApplication::applicationName());
+}
+
+// This is called via DBus either by another instance that has just been
+// started or by Kontact when the module is activated
+int PimUniqueApplication::newInstance(const QByteArray &startupId,
+                                      const QStringList &arguments)
+{
+    KStartupInfo::setStartupId(startupId);
+
+    const QWidgetList tlws = topLevelWidgets();
+    for (QWidget *win : tlws) {
+        if (qobject_cast<QMainWindow*>(win)) {
+            win->show();
+            KStartupInfo::setNewStartupId(win, startupId);
+#ifdef Q_OS_WIN
+            KWindowSystem::forceActiveWindow(win->winId());
+#endif
+            break;
+        }
+    }
+
+    activate(arguments);
+    return 0;
+}
+
+
+int PimUniqueApplication::activate(const QStringList &arguments)
+{
+    Q_UNUSED(arguments);
+    return 0;
 }

@@ -22,7 +22,11 @@
 #define KONTACTINTERFACE_PIMUNIQUEAPPLICATION_H
 
 #include "kontactinterface_export.h"
-#include <kuniqueapplication.h>
+
+#include <QApplication>
+
+class KAboutData;
+class QCommandLineParser;
 
 namespace KontactInterface
 {
@@ -34,24 +38,27 @@ namespace KontactInterface
  * and if kontact is already running, it will load the korganizer part and
  * switch to it.
  */
-class KONTACTINTERFACE_EXPORT PimUniqueApplication : public KUniqueApplication
+class KONTACTINTERFACE_EXPORT PimUniqueApplication : public QApplication
 {
+
+    Q_OBJECT
+    Q_CLASSINFO("D-Bus Interface", "org.kde.PIMUniqueApplication")
+
 public:
-    explicit PimUniqueApplication();
+    explicit PimUniqueApplication(int &argc, char **argv[], KAboutData &aboutData);
     ~PimUniqueApplication();
 
-    /**
-     * @see KUniqueApplication::start
-     */
-    static bool start();
+    static bool start(const QStringList &arguments,
+                      bool unique = true);
 
-    /**
-     * @see KUniqueApplication::start
-     *
-     * @param flags the application start flags
-     * @since 4.5
-     */
-    static bool start(KUniqueApplication::StartFlags flags);
+    QCommandLineParser* cmdArgs() const;
+
+public Q_SLOTS:
+    Q_SCRIPTABLE int newInstance();
+    Q_SCRIPTABLE int newInstance(const QByteArray &startupId, const QStringList &arguments);
+
+protected:
+    virtual int activate(const QStringList &arguments);
 
 private:
     //@cond PRIVATE

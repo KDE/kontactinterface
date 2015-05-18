@@ -21,21 +21,15 @@
 */
 
 #include "plugin.h"
-#include <QFile>
 #include "core.h"
-
 #include "processes.h"
-#include <kparts/factory.h>
-#include <kpluginloader.h>
-
-#include <kxmlguifactory.h>
-#include <kaboutdata.h>
-#include <klocalizedstring.h>
 #include "kontactinterface_debug.h"
-#include <kcomponentdata.h>
 
-#include <krun.h>
-#include <kaboutdata.h>
+#include <KPluginLoader>
+#include <KXMLGUIFactory>
+#include <KAboutData>
+#include <KLocalizedString>
+#include <KRun>
 
 #include <QObject>
 #include <QDBusConnection>

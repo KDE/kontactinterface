@@ -32,6 +32,7 @@
 #include <QMimeData>
 #include <QDropEvent>
 #include <QHBoxLayout>
+#include <QIcon>
 
 #include <KIconLoader>
 #include <QFontDatabase>
@@ -100,9 +101,11 @@ QWidget *Summary::createHeader(QWidget *parent, const QString &iconname, const Q
     hbox->setSpacing(0);
     box->setLayout(hbox);
 
+    QIcon icon = QIcon::fromTheme(iconname);
+
     QLabel *label = new QLabel(box);
     hbox->addWidget(label);
-    label->setPixmap(KIconLoader::global()->loadIcon(iconname, KIconLoader::Toolbar));
+    label->setPixmap(icon.pixmap(IconSize(KIconLoader::Toolbar), IconSize(KIconLoader::Toolbar)));
 
     label->setFixedSize(label->sizeHint());
     label->setAcceptDrops(true);

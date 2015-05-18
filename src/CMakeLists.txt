@@ -18,8 +18,13 @@ target_include_directories(KF5KontactInterface PUBLIC "$<BUILD_INTERFACE:${Konta
 
 target_link_libraries(KF5KontactInterface
                      PUBLIC
+                      KF5::CoreAddons
                       KF5::Parts
-                      KF5::KDELibs4Support
+                      KF5::XmlGui
+                     PRIVATE
+                      KF5::WindowSystem
+                      KF5::I18n
+                      KF5::IconThemes
 )
 
 set_target_properties(KF5KontactInterface PROPERTIES
