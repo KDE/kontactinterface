@@ -33,7 +33,7 @@ namespace KontactInterface
 
 /**
  * KDEPIM applications which can be integrated into kontact should use
- * PimUniqueApplication instead of KUniqueApplication.
+ * PimUniqueApplication instead of Qapplication + Dbus unique.
  * This makes command-line handling work, i.e. you can launch "korganizer"
  * and if kontact is already running, it will load the korganizer part and
  * switch to it.
