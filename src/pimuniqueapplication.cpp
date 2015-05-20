@@ -113,10 +113,10 @@ bool PimUniqueApplication::start(const QStringList &arguments, bool unique)
         qCDebug(KONTACTINTERFACE_LOG) << objectName;
         QDBusInterface iface(serviceName,
                              objectName,
-                             QLatin1String("org.kde.PIMUniqueApplication"),
+                             QStringLiteral("org.kde.PIMUniqueApplication"),
                              QDBusConnection::sessionBus());
         if (iface.isValid()) {
-            QDBusReply<int> reply = iface.call(QLatin1String("newInstance"),
+            QDBusReply<int> reply = iface.call(QStringLiteral("newInstance"),
                                                new_asn_id,
                                                arguments);
             if (reply.isValid()) {
@@ -169,3 +169,4 @@ int PimUniqueApplication::activate(const QStringList &arguments)
     Q_UNUSED(arguments);
     return 0;
 }
+
