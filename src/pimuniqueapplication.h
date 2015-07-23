@@ -45,9 +45,10 @@ class KONTACTINTERFACE_EXPORT PimUniqueApplication : public QApplication
     Q_CLASSINFO("D-Bus Interface", "org.kde.PIMUniqueApplication")
 
 public:
-    explicit PimUniqueApplication(int &argc, char **argv[], KAboutData &aboutData);
+    explicit PimUniqueApplication(int &argc, char **argv[]);
     ~PimUniqueApplication();
 
+    void setAboutData(KAboutData &aboutData);
     static bool start(const QStringList &arguments,
                       bool unique = true);
 

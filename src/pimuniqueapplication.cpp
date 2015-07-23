@@ -55,23 +55,12 @@ public:
 };
 //@endcond
 
-PimUniqueApplication::PimUniqueApplication(int &argc, char **argv[],
-                                           KAboutData &aboutData)
+PimUniqueApplication::PimUniqueApplication(int &argc, char **argv[]
+                                           )
     : QApplication(argc, *argv)
     , d(new Private())
 {
     d->cmdArgs = new QCommandLineParser();
-
-    KAboutData::setApplicationData(aboutData);
-    aboutData.setupCommandLine(d->cmdArgs);
-
-    // This object name is used in start(), and also in kontact's UniqueAppHandler.
-    const QString objectName = QLatin1Char('/') + QApplication::applicationName() + QLatin1String("_PimApplication");
-    QDBusConnection::sessionBus().registerObject(
-        objectName, this,
-        QDBusConnection::ExportScriptableSlots |
-        QDBusConnection::ExportScriptableProperties |
-        QDBusConnection::ExportAdaptors);
 
 }
 
@@ -83,6 +72,19 @@ PimUniqueApplication::~PimUniqueApplication()
 QCommandLineParser* PimUniqueApplication::cmdArgs() const
 {
     return d->cmdArgs;
+}
+
+void PimUniqueApplication::setAboutData(KAboutData &aboutData)
+{
+    KAboutData::setApplicationData(aboutData);
+    aboutData.setupCommandLine(d->cmdArgs);
+    // This object name is used in start(), and also in kontact's UniqueAppHandler.
+    const QString objectName = QLatin1Char('/') + QApplication::applicationName() + QLatin1String("_PimApplication");
+    QDBusConnection::sessionBus().registerObject(
+        objectName, this,
+        QDBusConnection::ExportScriptableSlots |
+        QDBusConnection::ExportScriptableProperties |
+        QDBusConnection::ExportAdaptors);
 }
 
 bool PimUniqueApplication::start(const QStringList &arguments, bool unique)
