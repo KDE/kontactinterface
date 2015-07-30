@@ -169,11 +169,6 @@ KParts::ReadOnlyPart *Plugin::part()
     return d->part;
 }
 
-QString Plugin::tipFile() const
-{
-    return QString();
-}
-
 QString Plugin::registerClient()
 {
     if (d->serviceName.isEmpty()) {

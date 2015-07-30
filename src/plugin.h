@@ -177,13 +177,6 @@ public:
     KParts::ReadOnlyPart *part();
 
     /**
-     * Reimplement this method and return the a path relative to "data" to the tips file.
-     * The tips file contains hints/tips that are displayed at the beginning of the program
-     * as "tip of the day". It has nothing to do with tooltips.
-     */
-    virtual QString tipFile() const;
-
-    /**
      * This function is called when the plugin is selected by the user before the
      * widget of the KPart belonging to the plugin is raised.
      */
