@@ -93,7 +93,7 @@ public:
 template <class T> class UniqueAppHandlerFactory : public UniqueAppHandlerFactoryBase
 {
 public:
-    virtual UniqueAppHandler *createHandler(Plugin *plugin)
+    UniqueAppHandler *createHandler(Plugin *plugin) Q_DECL_OVERRIDE
     {
         plugin->registerClient();
         return new T(plugin);

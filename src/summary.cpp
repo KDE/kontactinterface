@@ -45,7 +45,7 @@ namespace KontactInterface
 class SummaryMimeData : public QMimeData
 {
 public:
-    virtual bool hasFormat(const QString &format) const
+    bool hasFormat(const QString &format) const Q_DECL_OVERRIDE
     {
         if (format == QLatin1String("application/x-kontact-summary")) {
             return true;
