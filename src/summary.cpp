@@ -57,7 +57,7 @@ public:
 //@endcond
 
 //@cond PRIVATE
-class Summary::Private
+class Q_DECL_HIDDEN Summary::Private
 {
 public:
     QPoint mDragStartPoint;

@@ -39,7 +39,7 @@
 using namespace KontactInterface;
 
 //@cond PRIVATE
-class KontactInterface::PimUniqueApplication::Private
+class Q_DECL_HIDDEN KontactInterface::PimUniqueApplication::Private
 {
 public:
     Private()

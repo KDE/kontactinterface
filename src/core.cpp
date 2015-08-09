@@ -35,7 +35,7 @@
 using namespace KontactInterface;
 
 //@cond PRIVATE
-class KontactInterface::Core::Private
+class Q_DECL_HIDDEN KontactInterface::Core::Private
 {
     Core *const q;
 

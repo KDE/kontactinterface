@@ -47,7 +47,7 @@ using namespace KontactInterface;
   @internal
 */
 //@cond PRIVATE
-class Plugin::Private
+class Q_DECL_HIDDEN Plugin::Private
 {
 public:
 

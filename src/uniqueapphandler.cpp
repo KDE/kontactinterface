@@ -155,7 +155,7 @@ bool KontactInterface::UniqueAppHandler::load()
 }
 
 //@cond PRIVATE
-class UniqueAppWatcher::Private
+class Q_DECL_HIDDEN UniqueAppWatcher::Private
 {
 public:
     UniqueAppHandlerFactoryBase *mFactory;
