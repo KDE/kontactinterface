@@ -282,7 +282,7 @@ void Plugin::Private::removeInvisibleToolbarActions(Plugin *plugin)
                 QDomElement nextActionElem = actionElem.nextSiblingElement();
                 if (QString::compare(actionElem.tagName(), QLatin1String("Action"), Qt::CaseInsensitive) == 0) {
                     //qCDebug(KONTACTINTERFACE_LOG) << "Looking at action" << actionElem.attribute("name");
-                    if (hideActions.contains(actionElem.attribute(QLatin1String("name")))) {
+                    if (hideActions.contains(actionElem.attribute(QStringLiteral("name")))) {
                         //qCDebug(KONTACTINTERFACE_LOG) << "REMOVING";
                         containerElem.removeChild(actionElem);
                     }
