@@ -29,6 +29,7 @@
 
 #include <QCommandLineParser>
 #include <QLoggingCategory>
+#include <QDir>
 
 #include <QWidget>
 #include <QMainWindow>
@@ -120,7 +121,8 @@ bool PimUniqueApplication::start(const QStringList &arguments, bool unique)
         if (iface.isValid()) {
             QDBusReply<int> reply = iface.call(QStringLiteral("newInstance"),
                                                new_asn_id,
-                                               arguments);
+                                               arguments,
+                                               QDir::currentPath());
             if (reply.isValid()) {
                 return false; // success means that main() can exist now.
             }
@@ -133,19 +135,20 @@ bool PimUniqueApplication::start(const QStringList &arguments, bool unique)
         QDBusConnection::sessionBus().registerService(serviceName);
     }
 
-    static_cast<PimUniqueApplication*>(qApp)->activate(arguments);
+    static_cast<PimUniqueApplication*>(qApp)->activate(arguments, QDir::currentPath());
     return true;
 }
 
 int PimUniqueApplication::newInstance()
 {
-    return newInstance(KStartupInfo::startupId(), QStringList() << QApplication::applicationName());
+    return newInstance(KStartupInfo::startupId(), QStringList() << QApplication::applicationName(), QDir::currentPath());
 }
 
 // This is called via DBus either by another instance that has just been
 // started or by Kontact when the module is activated
 int PimUniqueApplication::newInstance(const QByteArray &startupId,
-                                      const QStringList &arguments)
+                                      const QStringList &arguments,
+                                      const QString &workingDirectory)
 {
     KStartupInfo::setStartupId(startupId);
 
@@ -161,14 +164,15 @@ int PimUniqueApplication::newInstance(const QByteArray &startupId,
         }
     }
 
-    activate(arguments);
+    activate(arguments, workingDirectory);
     return 0;
 }
 
 
-int PimUniqueApplication::activate(const QStringList &arguments)
+int PimUniqueApplication::activate(const QStringList &arguments, const QString &workingDirectory)
 {
     Q_UNUSED(arguments);
+    Q_UNUSED(workingDirectory);
     return 0;
 }
 

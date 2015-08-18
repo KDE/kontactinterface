@@ -65,11 +65,11 @@ public:
     QWidget *mainWidget();
 
 public Q_SLOTS: // DBUS methods
-    int newInstance(const QByteArray &asn_id, const QStringList &args);
+    int newInstance(const QByteArray &asn_id, const QStringList &args, const QString &workingDirectory);
     bool load();
 
 protected:
-    virtual int activate(const QStringList &args);
+    virtual int activate(const QStringList &args, const QString &workingDirectory);
 
 private:
     class Private;

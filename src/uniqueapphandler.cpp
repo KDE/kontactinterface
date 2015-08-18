@@ -110,7 +110,7 @@ UniqueAppHandler::~UniqueAppHandler()
 }
 
 // DBUS call
-int UniqueAppHandler::newInstance(const QByteArray &asn_id, const QStringList &args)
+int UniqueAppHandler::newInstance(const QByteArray &asn_id, const QStringList &args, const QString &workingDirectory)
 {
     if (!asn_id.isEmpty()) {
         KStartupInfo::setStartupId(asn_id);
@@ -120,15 +120,16 @@ int UniqueAppHandler::newInstance(const QByteArray &asn_id, const QStringList &a
     loadCommandLineOptions(&parser); // implemented by plugin
     parser.process(args);
 
-    return activate(args);
+    return activate(args, workingDirectory);
 }
 
 static QWidget *s_mainWidget = 0;
 
 // Plugin-specific newInstance implementation, called by above method
-int KontactInterface::UniqueAppHandler::activate(const QStringList &args)
+int KontactInterface::UniqueAppHandler::activate(const QStringList &args, const QString &workingDirectory)
 {
     Q_UNUSED(args);
+    Q_UNUSED(workingDirectory);
 
     if (s_mainWidget) {
         s_mainWidget->show();

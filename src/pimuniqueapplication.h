@@ -56,10 +56,10 @@ public:
 
 public Q_SLOTS:
     Q_SCRIPTABLE int newInstance();
-    Q_SCRIPTABLE int newInstance(const QByteArray &startupId, const QStringList &arguments);
+    Q_SCRIPTABLE int newInstance(const QByteArray &startupId, const QStringList &arguments, const QString &workingDirectory);
 
 protected:
-    virtual int activate(const QStringList &arguments);
+    virtual int activate(const QStringList &arguments, const QString &workingDirectory);
 
 private:
     //@cond PRIVATE
