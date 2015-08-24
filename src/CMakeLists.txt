@@ -1,11 +1,12 @@
 set(kontactinterface_LIB_SRCS
-    kontactinterface_debug.cpp
     core.cpp
     plugin.cpp
     summary.cpp
     processes.cpp
     uniqueapphandler.cpp
     pimuniqueapplication.cpp)
+
+ecm_qt_declare_logging_category(kontactinterface_LIB_SRCS HEADER kontactinterface_debug.h IDENTIFIER KONTACTINTERFACE_LOG CATEGORY_NAME log_kontactinterface)
 
 add_library(KF5KontactInterface ${kontactinterface_LIB_SRCS})
 
