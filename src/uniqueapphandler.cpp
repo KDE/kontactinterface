@@ -205,8 +205,8 @@ UniqueAppWatcher::UniqueAppWatcher(UniqueAppHandlerFactoryBase *factory, Plugin 
 
     if (d->mRunningStandalone) {
         QObject::connect(QDBusConnection::sessionBus().interface(),
-                         SIGNAL(serviceOwnerChanged(QString,QString,QString)),
-                         this, SLOT(slotApplicationRemoved(QString,QString,QString)));
+                         &QDBusConnectionInterface::serviceOwnerChanged,
+                         this, &UniqueAppWatcher::slotApplicationRemoved);
     } else {
         d->mFactory->createHandler(d->mPlugin);
     }
