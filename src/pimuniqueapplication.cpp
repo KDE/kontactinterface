@@ -44,7 +44,7 @@ class Q_DECL_HIDDEN KontactInterface::PimUniqueApplication::Private
 {
 public:
     Private()
-        : cmdArgs(Q_NULLPTR)
+        : cmdArgs(new QCommandLineParser())
     {}
 
     ~Private()
@@ -52,17 +52,14 @@ public:
         delete cmdArgs;
     }
 
-    QCommandLineParser *cmdArgs;
+    QCommandLineParser *const cmdArgs;
 };
 //@endcond
 
-PimUniqueApplication::PimUniqueApplication(int &argc, char **argv[]
-                                           )
+PimUniqueApplication::PimUniqueApplication(int &argc, char **argv[])
     : QApplication(argc, *argv)
     , d(new Private())
 {
-    d->cmdArgs = new QCommandLineParser();
-
 }
 
 PimUniqueApplication::~PimUniqueApplication()
