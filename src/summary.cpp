@@ -44,6 +44,7 @@ namespace KontactInterface
 {
 class SummaryMimeData : public QMimeData
 {
+    Q_OBJECT
 public:
     bool hasFormat(const QString &format) const Q_DECL_OVERRIDE
     {
@@ -180,3 +181,4 @@ void Summary::dropEvent(QDropEvent *event)
     emit summaryWidgetDropped(this, event->source(), alignment);
 }
 
+#include <summary.moc>
