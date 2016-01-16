@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.8.12)
 project(KontactInterface)
 
 # ECM setup
-find_package(ECM 5.14.0 CONFIG REQUIRED)
+find_package(ECM 5.17.0 CONFIG REQUIRED)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 
 include(GenerateExportHeader)
@@ -19,8 +19,8 @@ include(ECMQtDeclareLoggingCategory)
 
 
 add_definitions(-DTRANSLATION_DOMAIN=\"kontactinterfaces5\")
-set(KF5_VERSION "5.14.0")
-set(KONTACTINTERFACE_LIB_VERSION "4.82.0")
+set(KF5_VERSION "5.17.0")
+set(KONTACTINTERFACE_LIB_VERSION "5.0.40")
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5KontactInterface")
 
 ecm_setup_version(${KONTACTINTERFACE_LIB_VERSION} VARIABLE_PREFIX KONTACTINTERFACE
