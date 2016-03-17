@@ -299,7 +299,7 @@ void Plugin::Private::removeInvisibleToolbarActions(Plugin *plugin)
     // (*) or when invisibleToolbarActions() changes :)
 
     const QString newAppFile =
-        QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kontact/default-") + QLatin1String(pluginName) + QLatin1String(".rc") ;
+        QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kontact/default-") + QLatin1String(pluginName) + QLatin1String(".rc");
     QFileInfo fileInfo(newAppFile);
     QDir().mkpath(fileInfo.absolutePath());
 
@@ -317,9 +317,9 @@ void Plugin::Private::removeInvisibleToolbarActions(Plugin *plugin)
 void Plugin::Private::setXmlFiles()
 {
     const QString newAppFile =
-        QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kontact/default-") + QLatin1String(pluginName) + QLatin1String(".rc") ;
+        QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kontact/default-") + QLatin1String(pluginName) + QLatin1String(".rc");
     const QString localFile =
-        QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kontact/local-") + QLatin1String(pluginName) + QLatin1String(".rc") ;
+        QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kontact/local-") + QLatin1String(pluginName) + QLatin1String(".rc");
     if (part->xmlFile() != newAppFile || part->localXMLFile() != localFile) {
         part->replaceXMLFile(newAppFile, localFile);
     }

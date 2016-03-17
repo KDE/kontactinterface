@@ -67,7 +67,7 @@ PimUniqueApplication::~PimUniqueApplication()
     delete d;
 }
 
-QCommandLineParser* PimUniqueApplication::cmdArgs() const
+QCommandLineParser *PimUniqueApplication::cmdArgs() const
 {
     return d->cmdArgs;
 }
@@ -132,7 +132,7 @@ bool PimUniqueApplication::start(const QStringList &arguments, bool unique)
         QDBusConnection::sessionBus().registerService(serviceName);
     }
 
-    static_cast<PimUniqueApplication*>(qApp)->activate(arguments, QDir::currentPath());
+    static_cast<PimUniqueApplication *>(qApp)->activate(arguments, QDir::currentPath());
     return true;
 }
 
@@ -151,7 +151,7 @@ int PimUniqueApplication::newInstance(const QByteArray &startupId,
 
     const QWidgetList tlws = topLevelWidgets();
     for (QWidget *win : tlws) {
-        if (qobject_cast<QMainWindow*>(win)) {
+        if (qobject_cast<QMainWindow *>(win)) {
             win->show();
             KStartupInfo::setNewStartupId(win, startupId);
 #ifdef Q_OS_WIN
@@ -164,7 +164,6 @@ int PimUniqueApplication::newInstance(const QByteArray &startupId,
     activate(arguments, workingDirectory);
     return 0;
 }
-
 
 int PimUniqueApplication::activate(const QStringList &arguments, const QString &workingDirectory)
 {
