@@ -6,7 +6,7 @@ set(kontactinterface_LIB_SRCS
     uniqueapphandler.cpp
     pimuniqueapplication.cpp)
 
-ecm_qt_declare_logging_category(kontactinterface_LIB_SRCS HEADER kontactinterface_debug.h IDENTIFIER KONTACTINTERFACE_LOG CATEGORY_NAME log_kontactinterface)
+ecm_qt_declare_logging_category(kontactinterface_LIB_SRCS HEADER kontactinterface_debug.h IDENTIFIER KONTACTINTERFACE_LOG CATEGORY_NAME org.kde.pim.kontactinterface)
 
 add_library(KF5KontactInterface ${kontactinterface_LIB_SRCS})
 
