@@ -20,7 +20,7 @@ include(ECMQtDeclareLoggingCategory)
 
 
 add_definitions(-DTRANSLATION_DOMAIN=\"kontactinterfaces5\")
-set(PIM_VERSION "5.3.90")
+set(PIM_VERSION "5.4.0")
 
 set(KONTACTINTERFACE_LIB_VERSION ${PIM_VERSION})
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5KontactInterface")
