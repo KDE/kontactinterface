@@ -1,6 +1,7 @@
-cmake_minimum_required(VERSION 2.8.12)
+cmake_minimum_required(VERSION 3.0)
+set(PIM_VERSION "5.4.40")
 
-project(KontactInterface)
+project(KontactInterface VERSION ${PIM_VERSION})
 
 # ECM setup
 set(KF5_VERSION "5.28.0")
@@ -22,12 +23,11 @@ include(ECMCoverageOption)
 
 
 add_definitions(-DTRANSLATION_DOMAIN=\"kontactinterfaces5\")
-set(PIM_VERSION "5.4.40")
 
 set(KONTACTINTERFACE_LIB_VERSION ${PIM_VERSION})
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5KontactInterface")
 
-ecm_setup_version(${KONTACTINTERFACE_LIB_VERSION} VARIABLE_PREFIX KONTACTINTERFACE
+ecm_setup_version(PROJECT VARIABLE_PREFIX KONTACTINTERFACE
                         VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kontactinterface_version.h"
                         PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5KontactInterfaceConfigVersion.cmake"
                         SOVERSION 5
