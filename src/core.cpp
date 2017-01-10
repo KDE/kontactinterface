@@ -84,7 +84,7 @@ KParts::ReadOnlyPart *Core::createPart(const char *libname)
     KPluginLoader loader(QString::fromLatin1(libname));
     qCDebug(KONTACTINTERFACE_LOG) << loader.fileName();
     KPluginFactory *factory = loader.factory();
-    KParts::ReadOnlyPart *part = 0;
+    KParts::ReadOnlyPart *part = nullptr;
     if (factory) {
         part = factory->create<KParts::ReadOnlyPart>(this);
     }

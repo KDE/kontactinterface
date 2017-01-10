@@ -123,7 +123,7 @@ int UniqueAppHandler::newInstance(const QByteArray &asn_id, const QStringList &a
     return activate(args, workingDirectory);
 }
 
-static QWidget *s_mainWidget = 0;
+static QWidget *s_mainWidget = nullptr;
 
 // Plugin-specific newInstance implementation, called by above method
 int KontactInterface::UniqueAppHandler::activate(const QStringList &args, const QString &workingDirectory)

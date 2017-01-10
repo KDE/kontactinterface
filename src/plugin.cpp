@@ -80,7 +80,7 @@ Plugin::Plugin(Core *core, QObject *parent, const char *appName, const char *plu
     d->pluginName = pluginName ? pluginName : appName;
     d->core = core;
     d->hasPart = true;
-    d->part = 0;
+    d->part = nullptr;
     d->disabled = false;
 }
 
@@ -255,7 +255,7 @@ void Plugin::configUpdated()
 //@cond PRIVATE
 void Plugin::Private::partDestroyed()
 {
-    part = 0;
+    part = nullptr;
 }
 
 void Plugin::Private::removeInvisibleToolbarActions(Plugin *plugin)
@@ -339,14 +339,14 @@ void Plugin::bringToForeground()
 #ifdef Q_OS_WIN
     activateWindowForProcess(d->executableName);
 #else
-    KRun::runCommand(d->executableName, 0);
+    KRun::runCommand(d->executableName, nullptr);
 #endif
 }
 
 Summary *Plugin::createSummaryWidget(QWidget *parent)
 {
     Q_UNUSED(parent);
-    return 0;
+    return nullptr;
 }
 
 bool Plugin::showInSideBar() const
