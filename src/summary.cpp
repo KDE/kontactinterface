@@ -81,18 +81,6 @@ int Summary::summaryHeight() const
 
 QWidget *Summary::createHeader(QWidget *parent, const QString &iconname, const QString &heading)
 {
-//PORT TO QT5
-    /*
-        setStyleSheet(QLatin1String("KHBox {"
-                                    "border: 0px;"
-                                    "font: bold large;"
-                                    "padding: 2px;"
-                                    "background: palette(window);"
-                                    "color: palette(windowtext);"
-                                    "}"
-                                    "KHBox > QLabel { font: bold larger; } "));
-
-    */
     QWidget *box = new QWidget(parent);
     QHBoxLayout *hbox = new QHBoxLayout;
     hbox->setMargin(0);

@@ -320,8 +320,10 @@ void Plugin::Private::setXmlFiles()
         QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kontact/default-") + QLatin1String(pluginName) + QLatin1String(".rc");
     const QString localFile =
         QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kontact/local-") + QLatin1String(pluginName) + QLatin1String(".rc");
-    if (part->xmlFile() != newAppFile || part->localXMLFile() != localFile) {
-        part->replaceXMLFile(newAppFile, localFile);
+    if (!localFile.isEmpty() && !newAppFile.isEmpty()) {
+        if (part->xmlFile() != newAppFile || part->localXMLFile() != localFile) {
+            part->replaceXMLFile(newAppFile, localFile);
+        }
     }
 }
 //@endcond

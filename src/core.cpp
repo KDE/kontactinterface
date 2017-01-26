@@ -106,7 +106,7 @@ void Core::Private::slotPartDestroyed(QObject *obj)
 {
     // the part was deleted, we need to remove it from the part map to not return
     // a dangling pointer in createPart
-    QMap<QByteArray, KParts::ReadOnlyPart *>::Iterator end = mParts.end();
+    const QMap<QByteArray, KParts::ReadOnlyPart *>::Iterator end = mParts.end();
     QMap<QByteArray, KParts::ReadOnlyPart *>::Iterator it = mParts.begin();
     for (; it != end; ++it) {
         if (it.value() == obj) {
