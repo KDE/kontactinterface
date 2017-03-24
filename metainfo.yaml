@@ -10,5 +10,5 @@ release: false
 libraries:
  - qmake: KontactInterface
    cmake: "KF5::KontactInterface"
-cmakename: KF5KontactInterface
+   cmakename: KF5KontactInterface
 
