@@ -76,6 +76,7 @@ install(FILES
 install(EXPORT KF5KontactInterfaceTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE KF5KontactInterfaceTargets.cmake NAMESPACE KF5::)
 
 add_definitions("-DQT_NO_CAST_FROM_ASCII -DQT_NO_CAST_TO_ASCII")
+add_definitions( -DQT_NO_NARROWING_CONVERSIONS_IN_CONNECT )
 
 add_subdirectory(src)
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
