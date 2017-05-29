@@ -90,7 +90,7 @@ public:
      *       It's ok to have several plugins using the same application name.
      * @param pluginName The unique name of the plugin. Defaults to appName if not set.
      */
-    Plugin(Core *core, QObject *parent, const char *appName, const char *pluginName = 0);
+    Plugin(Core *core, QObject *parent, const char *appName, const char *pluginName = nullptr);
 
     /**
      * Destroys the plugin.
