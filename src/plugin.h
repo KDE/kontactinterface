@@ -323,7 +323,7 @@ protected:
     /**
      * Virtual hook for BC extension.
      */
-    void virtual_hook(int id, void *data) Q_DECL_OVERRIDE;
+    void virtual_hook(int id, void *data) override;
 
 private:
     //@cond PRIVATE
