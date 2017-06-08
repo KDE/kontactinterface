@@ -40,8 +40,8 @@ using namespace KontactInterface;
 #include <signal.h>
 #include <unistd.h>
 
-#include <QtCore/QList>
-#include <QtCore/QtDebug>
+#include <QList>
+#include <QtDebug>
 
 #include "kontactinterface_debug.h"
 

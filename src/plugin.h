@@ -29,8 +29,8 @@
 #include <KPluginFactory>
 #include <KXMLGUIClient>
 
-#include <QtCore/QList>
-#include <QtCore/QObject>
+#include <QList>
+#include <QObject>
 
 class KAboutData;
 class QAction;

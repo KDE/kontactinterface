@@ -34,7 +34,7 @@
 
 #include "kontactinterface_export.h"
 
-#include <QtCore/QList>
+#include <QList>
 
 class QString;
 
