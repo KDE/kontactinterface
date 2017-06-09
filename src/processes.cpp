@@ -43,6 +43,7 @@ using namespace KontactInterface;
 #include <QList>
 #include <QtDebug>
 
+#include <QCoreApplication>
 #include "kontactinterface_debug.h"
 
 // Copy from kdelibs/kinit/kinit_win.cpp
@@ -139,7 +140,7 @@ bool KPIMUtils::otherProcessesExist(const QString &processName)
 {
     QList<int> pids;
     getProcessesIdForName(processName, pids);
-    int myPid = getpid();
+    int myPid = QCoreApplication::applicationPid();
     foreach (int pid, pids) {
         if (myPid != pid) {
 //      qCDebug(KONTACTINTERFACE_LOG) << "Process ID is " << pid;
@@ -198,7 +199,7 @@ void KPIMUtils::activateWindowForProcess(const QString &executableName)
 {
     QList<int> pids;
     KPIMUtils::getProcessesIdForName(executableName, pids);
-    int myPid = getpid();
+    int myPid = QCoreApplication::applicationPid();
     int foundPid = 0;
     foreach (int pid, pids) {
         if (myPid != pid) {
