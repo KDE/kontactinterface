@@ -37,8 +37,8 @@
 #include <QFileInfo>
 #include <QDir>
 
-#include <unistd.h>
 #include <QStandardPaths>
+#include <QCoreApplication>
 
 using namespace KontactInterface;
 
@@ -174,7 +174,7 @@ QString Plugin::registerClient()
     if (d->serviceName.isEmpty()) {
         d->serviceName = QLatin1String("org.kde.") + QLatin1String(objectName().toLatin1());
 #ifdef Q_OS_WIN
-        const QString pid = QString::number(getpid());
+        const QString pid = QString::number(QCoreApplication::applicationPid());
         d->serviceName.append(QLatin1String(".unique-") + pid);
 #endif
         QDBusConnection::sessionBus().registerService(d->serviceName);
