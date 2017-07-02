@@ -94,7 +94,7 @@ static HANDLE getProcessHandle(int processID)
                        false, processID);
 }
 
-void KPIMUtils::getProcessesIdForName(const QString &processName, QList<int> &pids)
+void KontactInterface::getProcessesIdForName(const QString &processName, QList<int> &pids)
 {
     HANDLE h;
     PROCESSENTRY32 pe32;
@@ -135,7 +135,7 @@ void KPIMUtils::getProcessesIdForName(const QString &processName, QList<int> &pi
     CloseHandle(h);
 }
 
-bool KPIMUtils::otherProcessesExist(const QString &processName)
+bool KontactInterface::otherProcessesExist(const QString &processName)
 {
     QList<int> pids;
     getProcessesIdForName(processName, pids);
@@ -149,7 +149,7 @@ bool KPIMUtils::otherProcessesExist(const QString &processName)
     return false;
 }
 
-bool KPIMUtils::killProcesses(const QString &processName)
+bool KontactInterface::killProcesses(const QString &processName)
 {
     QList<int> pids;
     getProcessesIdForName(processName, pids);
@@ -194,7 +194,7 @@ BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam)
     return TRUE;
 }
 
-void KPIMUtils::activateWindowForProcess(const QString &executableName)
+void KontactInterface::activateWindowForProcess(const QString &executableName)
 {
     QList<int> pids;
     KPIMUtils::getProcessesIdForName(executableName, pids);
