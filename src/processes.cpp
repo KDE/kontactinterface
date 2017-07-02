@@ -38,7 +38,6 @@ using namespace KontactInterface;
 #include <tlhelp32.h>
 #include <psapi.h>
 #include <signal.h>
-#include <unistd.h>
 
 #include <QList>
 #include <QtDebug>
