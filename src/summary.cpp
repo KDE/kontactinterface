@@ -86,6 +86,7 @@ QWidget *Summary::createHeader(QWidget *parent, const QString &iconname, const Q
     hbox->setMargin(0);
     hbox->setSpacing(0);
     box->setLayout(hbox);
+    box->setAutoFillBackground(true);
 
     QIcon icon = QIcon::fromTheme(iconname);
 
