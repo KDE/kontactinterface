@@ -60,7 +60,7 @@ Core::Core(QWidget *parent, Qt::WindowFlags f)
     : KParts::MainWindow(parent, f), d(new Private(this))
 {
     QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), SLOT(checkNewDay()));
+    connect(timer, &QTimer::timeout, this, [this]() { d->checkNewDay(); });
     timer->start(1000 * 60);
 }
 

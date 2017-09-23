@@ -113,7 +113,6 @@ private:
     Private *const d;
 
     Q_PRIVATE_SLOT(d, void slotPartDestroyed(QObject *))
-    Q_PRIVATE_SLOT(d, void checkNewDay())
     //@endcond
 };
 
