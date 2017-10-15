@@ -56,8 +56,7 @@ class ReadOnlyPart;
         { return new pluginclass( static_cast<KontactInterface::Core*>( parent ), list ); } \
     };                                                                    \
     K_PLUGIN_FACTORY( KontactPluginFactory, registerPlugin< pluginclass >   \
-                      ( QString(), Instance::createInstance ); )            \
-    K_EXPORT_PLUGIN( KontactPluginFactory( "kontact_" #pluginname "plugin" ) )
+                      ( QString(), Instance::createInstance ); )
 
 /**
   Increase this version number whenever you make a change in the API.
