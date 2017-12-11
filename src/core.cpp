@@ -91,8 +91,8 @@ KParts::ReadOnlyPart *Core::createPart(const char *libname)
 
     if (part) {
         d->mParts.insert(libname, part);
-        QObject::connect(part, SIGNAL(destroyed(QObject*)),
-                         SLOT(slotPartDestroyed(QObject*)));
+        QObject::connect(part, &KParts::ReadOnlyPart::destroyed,
+                         this, [this](QObject* obj) { d->slotPartDestroyed(obj);});
     } else {
         d->lastErrorMessage = loader.errorString();
         qCWarning(KONTACTINTERFACE_LOG) << d->lastErrorMessage;
