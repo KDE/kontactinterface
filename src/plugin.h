@@ -94,7 +94,7 @@ public:
     /**
      * Destroys the plugin.
      */
-    virtual ~Plugin();
+    ~Plugin() override;
 
     /**
      * Sets the @p identifier of the plugin.

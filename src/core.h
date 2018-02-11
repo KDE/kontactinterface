@@ -46,7 +46,7 @@ public:
     /**
      * Destroys the core object.
      */
-    virtual ~Core();
+    ~Core() override;
 
     /**
      * Selects the given plugin and raises the associated part.

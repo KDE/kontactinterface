@@ -45,7 +45,7 @@ class KONTACTINTERFACE_EXPORT UniqueAppHandler : public QObject
 
 public:
     UniqueAppHandler(Plugin *plugin);
-    virtual ~UniqueAppHandler();
+    ~UniqueAppHandler() override;
 
     /// This must be reimplemented so that app-specific command line options can be parsed
     virtual void loadCommandLineOptions(QCommandLineParser *parser) = 0;
@@ -122,7 +122,7 @@ public:
      */
     UniqueAppWatcher(UniqueAppHandlerFactoryBase *factory, Plugin *plugin);
 
-    virtual ~UniqueAppWatcher();
+    ~UniqueAppWatcher() override;
 
     bool isRunningStandalone() const;
 

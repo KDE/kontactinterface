@@ -53,7 +53,7 @@ public:
     /**
      * Destroys the summary widget.
      */
-    virtual ~Summary();
+    ~Summary() override;
 
     /**
      * Returns the logical height of summary widget.
