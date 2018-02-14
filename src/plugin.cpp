@@ -55,7 +55,7 @@ public:
     void setXmlFiles();
     void removeInvisibleToolbarActions(Plugin *plugin);
 
-    Core *core;
+    Core *core = nullptr;
     QList<QAction *> newActions;
     QList<QAction *> syncActions;
     QString identifier;
@@ -65,7 +65,7 @@ public:
     QString serviceName;
     QByteArray partLibraryName;
     QByteArray pluginName;
-    KParts::ReadOnlyPart *part;
+    KParts::ReadOnlyPart *part = nullptr;
     bool hasPart;
     bool disabled;
 };

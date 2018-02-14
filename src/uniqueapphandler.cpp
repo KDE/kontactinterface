@@ -159,8 +159,8 @@ bool KontactInterface::UniqueAppHandler::load()
 class Q_DECL_HIDDEN UniqueAppWatcher::Private
 {
 public:
-    UniqueAppHandlerFactoryBase *mFactory;
-    Plugin *mPlugin;
+    UniqueAppHandlerFactoryBase *mFactory = nullptr;
+    Plugin *mPlugin = nullptr;
     bool mRunningStandalone;
 };
 //@endcond
