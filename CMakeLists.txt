@@ -82,5 +82,9 @@ add_definitions(-DQT_NO_NARROWING_CONVERSIONS_IN_CONNECT)
 add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
 
 add_subdirectory(src)
+
+install( FILES kontactinterface.renamecategories kontactinterface.categories DESTINATION ${KDE_INSTALL_CONFDIR} )
+
+
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
