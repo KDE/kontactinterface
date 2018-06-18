@@ -50,7 +50,7 @@ public:
     /// This must be reimplemented so that app-specific command line options can be parsed
     virtual void loadCommandLineOptions(QCommandLineParser *parser) = 0;
 
-    Plugin *plugin() const;
+    Q_REQUIRED_RESULT Plugin *plugin() const;
 
     /**
       Sets the main QWidget @p widget associated with this application.
@@ -62,7 +62,7 @@ public:
       Returns the main widget, which will zero if setMainWidget() has not be called yet.
       @since 4.6
     */
-    QWidget *mainWidget();
+    Q_REQUIRED_RESULT QWidget *mainWidget();
 
 public Q_SLOTS: // DBUS methods
     int newInstance(const QByteArray &asn_id, const QStringList &args, const QString &workingDirectory);

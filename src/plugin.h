@@ -104,7 +104,7 @@ public:
     /**
      * Returns the identifier of the plugin.
      */
-    QString identifier() const;
+    Q_REQUIRED_RESULT QString identifier() const;
 
     /**
      * Sets the localized @p title of the plugin.
@@ -114,7 +114,7 @@ public:
     /**
      * Returns the localized title of the plugin.
      */
-    QString title() const;
+    Q_REQUIRED_RESULT QString title() const;
 
     /**
      * Sets the @p icon name that is used for the plugin.
@@ -124,7 +124,7 @@ public:
     /**
      * Returns the icon name that is used for the plugin.
      */
-    QString icon() const;
+    Q_REQUIRED_RESULT QString icon() const;
 
     /**
      * Sets the @p name of executable (if existent).
@@ -134,7 +134,7 @@ public:
     /**
      * Returns the name of the executable (if existent).
      */
-    QString executableName() const;
+    Q_REQUIRED_RESULT QString executableName() const;
 
     /**
      * Set @p name of library which contains the KPart used by this plugin.
@@ -146,14 +146,14 @@ public:
      * plugin provides it. Returns @c true on success, @c false otherwise.
      * @param serviceType the D-Bus service type to create an interface for
      */
-    virtual bool createDBUSInterface(const QString &serviceType);
+    Q_REQUIRED_RESULT virtual bool createDBUSInterface(const QString &serviceType);
 
     /**
      * Reimplement this method and return whether a standalone application
      * is still running. This is only required if your part is also available
      * as standalone application.
      */
-    virtual bool isRunningStandalone() const;
+    Q_REQUIRED_RESULT virtual bool isRunningStandalone() const;
 
     /**
      * Reimplement this method if your application needs a different approach to be brought
@@ -166,14 +166,14 @@ public:
      * Reimplement this method if you want to add your credits to the Kontact
      * about dialog.
      */
-    virtual const KAboutData aboutData();
+    Q_REQUIRED_RESULT virtual const KAboutData aboutData();
 
     /**
      * You can use this method if you need to access the current part. You can be
      * sure that you always get the same pointer as long as the part has not been
      * deleted.
      */
-    KParts::ReadOnlyPart *part();
+    Q_REQUIRED_RESULT KParts::ReadOnlyPart *part();
 
     /**
      * This function is called when the plugin is selected by the user before the
@@ -200,12 +200,12 @@ public:
      *
      * @param parent The parent widget of the summary widget.
      */
-    virtual Summary *createSummaryWidget(QWidget *parent);
+    Q_REQUIRED_RESULT virtual Summary *createSummaryWidget(QWidget *parent);
 
     /**
      * Returns whether the plugin provides a part that should be shown in the sidebar.
      */
-    virtual bool showInSideBar() const;
+    Q_REQUIRED_RESULT virtual bool showInSideBar() const;
 
     /**
      * Set if the plugin provides a part that should be shown in the sidebar.
@@ -219,12 +219,12 @@ public:
      * If any loaded plugin returns false from this method, then the
      * main kontact window will not close.
      */
-    virtual bool queryClose() const;
+    Q_REQUIRED_RESULT virtual bool queryClose() const;
 
     /**
      * Registers the client at DBus and returns the dbus identifier.
      */
-    QString registerClient();
+    Q_REQUIRED_RESULT QString registerClient();
 
     /**
      * Return the weight of the plugin. The higher the weight the lower it will
@@ -247,22 +247,22 @@ public:
     /**
      * Returns the list of custom "New" actions.
      */
-    QList<QAction *> newActions() const;
+    Q_REQUIRED_RESULT QList<QAction *> newActions() const;
 
     /**
      * Returns the list of custom "Sync" actions.
      */
-    QList<QAction *> syncActions() const;
+    Q_REQUIRED_RESULT QList<QAction *> syncActions() const;
 
     /**
      * Returns a list of action names that shall be hidden in the main toolbar.
      */
-    virtual QStringList invisibleToolbarActions() const;
+    Q_REQUIRED_RESULT virtual QStringList invisibleToolbarActions() const;
 
     /**
      * Returns whether the plugin can handle the drag object of the given mime type.
      */
-    virtual bool canDecodeMimeData(const QMimeData *data) const;
+    Q_REQUIRED_RESULT virtual bool canDecodeMimeData(const QMimeData *data) const;
 
     /**
      * Process drop event.
@@ -282,7 +282,7 @@ public:
     /**
      * Returns a pointer to the kontact core object.
      */
-    Core *core() const;
+    Q_REQUIRED_RESULT Core *core() const;
 
     /**
      * Sets whether the plugin shall be disabled.
@@ -292,7 +292,7 @@ public:
     /**
      * Returns whether the plugin is disabled.
      */
-    bool disabled() const;
+    Q_REQUIRED_RESULT bool disabled() const;
 
     /**
      * @since 4.13

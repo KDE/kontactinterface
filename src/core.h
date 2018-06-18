@@ -75,7 +75,7 @@ public:
      * @param library the library to create part from
      * Creates a part from the given @p library.
      */
-    KParts::ReadOnlyPart *createPart(const char *library);
+    Q_REQUIRED_RESULT KParts::ReadOnlyPart *createPart(const char *library);
 
     /**
      * @internal (for Plugin)

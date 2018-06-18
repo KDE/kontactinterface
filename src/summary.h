@@ -61,7 +61,7 @@ public:
      * This is used to calculate how much vertical space relative
      * to other summary widgets this widget will use in the summary view.
      */
-    virtual int summaryHeight() const;
+    Q_REQUIRED_RESULT virtual int summaryHeight() const;
 
     /**
      * Creates a heading for a typical summary view with an icon and a heading.
@@ -70,14 +70,14 @@ public:
      * @param icon The name of the icon.
      * @param heading The text of the header.
      */
-    QWidget *createHeader(QWidget *parent, const QString &icon, const QString &heading);
+    Q_REQUIRED_RESULT QWidget *createHeader(QWidget *parent, const QString &icon, const QString &heading);
 
     /**
      * Returns a list of names identifying configuration modules for this summary widget.
      *
      * @note The names have to be suitable for being passed to KCMultiDialog::addModule().
      */
-    virtual QStringList configModules() const;
+    Q_REQUIRED_RESULT virtual QStringList configModules() const;
 
 public Q_SLOTS:
     /**

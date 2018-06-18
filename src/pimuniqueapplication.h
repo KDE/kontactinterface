@@ -52,7 +52,7 @@ public:
     static bool start(const QStringList &arguments,
                       bool unique = true);
 
-    QCommandLineParser *cmdArgs() const;
+    Q_REQUIRED_RESULT QCommandLineParser *cmdArgs() const;
 
 public Q_SLOTS:
     Q_SCRIPTABLE int newInstance();
