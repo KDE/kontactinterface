@@ -39,6 +39,13 @@
 
 using namespace KontactInterface;
 
+namespace {
+
+const char kChromiumFlagsEnv[] = "QTWEBENGINE_CHROMIUM_FLAGS";
+const char kDisableInProcessStackTraces[] = "--disable-in-process-stack-traces";
+
+}
+
 //@cond PRIVATE
 class Q_DECL_HIDDEN KontactInterface::PimUniqueApplication::Private
 {
@@ -50,6 +57,15 @@ public:
     ~Private()
     {
         delete cmdArgs;
+    }
+
+    static void disableChromiumCrashHandler()
+    {
+        // Disable Chromium's own crash handler, which overrides DrKonqi.
+        auto flags = qgetenv(kChromiumFlagsEnv);
+        if (!flags.contains(kDisableInProcessStackTraces)) {
+            qputenv(kChromiumFlagsEnv, flags + " " + kDisableInProcessStackTraces);
+        }
     }
 
     QCommandLineParser *const cmdArgs;
@@ -131,6 +147,9 @@ bool PimUniqueApplication::start(const QStringList &arguments, bool unique)
     if (unique) {
         QDBusConnection::sessionBus().registerService(serviceName);
     }
+
+    // Make sure we have DrKonqi
+    Private::disableChromiumCrashHandler();
 
     static_cast<PimUniqueApplication *>(qApp)->activate(arguments, QDir::currentPath());
     return true;
