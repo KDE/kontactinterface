@@ -3,7 +3,6 @@ Type=ServiceType
 X-KDE-ServiceType=Kontact/Plugin
 Name=Kontact Plugin
 Name[ar]=ملحقة «متراسلك»
-Name[ast]=Complementu de Kontact
 Name[bs]=Priključak za kontakt
 Name[ca]=Connector pel Kontact
 Name[ca@valencia]=Connector pel Kontact
