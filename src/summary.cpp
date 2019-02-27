@@ -83,7 +83,7 @@ QWidget *Summary::createHeader(QWidget *parent, const QString &iconname, const Q
 {
     QWidget *box = new QWidget(parent);
     QHBoxLayout *hbox = new QHBoxLayout;
-    hbox->setMargin(0);
+    hbox->setContentsMargins(0, 0, 0, 0);
     hbox->setSpacing(0);
     box->setLayout(hbox);
     box->setAutoFillBackground(true);
@@ -148,7 +148,7 @@ void Summary::mouseMoveEvent(QMouseEvent *event)
         painter.drawRect(0, 0, pm.width(), pm.height());
         painter.end();
         drag->setPixmap(pm);
-        drag->start(Qt::MoveAction);
+        drag->exec(Qt::MoveAction);
     } else {
         QWidget::mouseMoveEvent(event);
     }
