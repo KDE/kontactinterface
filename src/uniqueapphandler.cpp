@@ -20,7 +20,7 @@
 */
 
 #include "uniqueapphandler.h"
-#include <qdbusabstractadaptor.h>
+#include <QDBusAbstractAdaptor>
 #include "core.h"
 
 #include "processes.h"
