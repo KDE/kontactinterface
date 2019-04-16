@@ -11,4 +11,4 @@ libraries:
  - qmake: KontactInterface
    cmake: "KF5::KontactInterface"
    cmakename: KF5KontactInterface
-
+group: kdepim
