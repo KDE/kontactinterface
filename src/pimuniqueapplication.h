@@ -33,7 +33,7 @@ namespace KontactInterface
 
 /**
  * KDEPIM applications which can be integrated into kontact should use
- * PimUniqueApplication instead of Qapplication + Dbus unique.
+ * PimUniqueApplication instead of QApplication + Dbus unique.
  * This makes command-line handling work, i.e. you can launch "korganizer"
  * and if kontact is already running, it will load the korganizer part and
  * switch to it.
@@ -49,8 +49,19 @@ public:
     ~PimUniqueApplication();
 
     void setAboutData(KAboutData &aboutData);
-    static bool start(const QStringList &arguments,
-                      bool unique = true);
+
+    /**
+     * Register this process as a unique application, if not already running.
+     * Typically called in main().
+     * @param arguments should start with the appname, as QCoreApplication::arguments() does.
+     */
+    static bool start(const QStringList &arguments);
+
+    /**
+     * Ensure that another PIM application is running.
+     */
+    static bool activateApplication(const QString &application,
+                                    const QStringList &additionalArguments = {});
 
     Q_REQUIRED_RESULT QCommandLineParser *cmdArgs() const;
 
