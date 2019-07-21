@@ -40,7 +40,7 @@ namespace KontactInterface
 class KONTACTINTERFACE_EXPORT UniqueAppHandler : public QObject
 {
     Q_OBJECT
-    // We implement the KUniqueApplication interface
+    // We implement the PIMUniqueApplication interface
     Q_CLASSINFO("D-Bus Interface", "org.kde.PIMUniqueApplication")
 
 public:

@@ -101,12 +101,38 @@ void PimUniqueApplication::setAboutData(KAboutData &aboutData)
         QDBusConnection::ExportAdaptors);
 }
 
-bool PimUniqueApplication::start(const QStringList &arguments, bool unique)
+static bool callNewInstance(const QString &appName, const QString &serviceName, const QByteArray &asn_id, const QStringList &arguments)
+{
+    const QString objectName = QLatin1Char('/') + appName + QLatin1String("_PimApplication");
+    QDBusInterface iface(serviceName,
+            objectName,
+            QStringLiteral("org.kde.PIMUniqueApplication"),
+            QDBusConnection::sessionBus());
+    if (iface.isValid()) {
+        QDBusReply<int> reply = iface.call(QStringLiteral("newInstance"),
+                asn_id,
+                arguments,
+                QDir::currentPath());
+        if (reply.isValid()) {
+            return true;
+        }
+    }
+    return false;
+}
+
+int PimUniqueApplication::newInstance()
+{
+    return newInstance(KStartupInfo::startupId(), QStringList() << QApplication::applicationName(), QDir::currentPath());
+}
+
+
+bool PimUniqueApplication::start(const QStringList &arguments)
 {
     const QString appName = QApplication::applicationName();
+
     // Try talking to /appName_PimApplication in org.kde.appName,
     // (which could be kontact or the standalone application),
-    // otherwise fall back to starting a new app
+    // otherwise the current app being started will register to DBus.
 
     const QString serviceName = QLatin1String("org.kde.") + appName;
     if (QDBusConnection::sessionBus().interface()->isServiceRegistered(serviceName)) {
@@ -125,28 +151,14 @@ bool PimUniqueApplication::start(const QStringList &arguments, bool unique)
 
         KWindowSystem::allowExternalProcessWindowActivation();
 
-        const QString objectName = QLatin1Char('/') + appName + QLatin1String("_PimApplication");
-        qCDebug(KONTACTINTERFACE_LOG) << objectName;
-        QDBusInterface iface(serviceName,
-                             objectName,
-                             QStringLiteral("org.kde.PIMUniqueApplication"),
-                             QDBusConnection::sessionBus());
-        if (iface.isValid()) {
-            QDBusReply<int> reply = iface.call(QStringLiteral("newInstance"),
-                                               new_asn_id,
-                                               arguments,
-                                               QDir::currentPath());
-            if (reply.isValid()) {
-                return false; // success means that main() can exist now.
-            }
+        if (callNewInstance(appName, serviceName, new_asn_id, arguments)) {
+            return false;  // success means that main() can exit now.
         }
     }
 
     qCDebug(KONTACTINTERFACE_LOG) << "kontact not running -- start standalone application";
 
-    if (unique) {
-        QDBusConnection::sessionBus().registerService(serviceName);
-    }
+    QDBusConnection::sessionBus().registerService(serviceName);
 
     // Make sure we have DrKonqi
     Private::disableChromiumCrashHandler();
@@ -155,9 +167,15 @@ bool PimUniqueApplication::start(const QStringList &arguments, bool unique)
     return true;
 }
 
-int PimUniqueApplication::newInstance()
+bool PimUniqueApplication::activateApplication(const QString &appName, const QStringList &additionalArguments)
 {
-    return newInstance(KStartupInfo::startupId(), QStringList() << QApplication::applicationName(), QDir::currentPath());
+    const QString serviceName = QLatin1String("org.kde.") + appName;
+    QStringList arguments{ appName };
+    arguments += additionalArguments;
+    // Start it standalone if not already running (if kontact is running, then this will do nothing)
+    QDBusConnection::sessionBus().interface()->startService(serviceName);
+    return callNewInstance(appName, serviceName, KStartupInfo::createNewStartupId(), arguments);
+
 }
 
 // This is called via DBus either by another instance that has just been
