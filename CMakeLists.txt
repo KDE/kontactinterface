@@ -42,7 +42,6 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
     WindowSystem
     I18n
     XmlGui
-    IconThemes
 )
 
 if (NOT APPLE)

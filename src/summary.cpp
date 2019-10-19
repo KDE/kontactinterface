@@ -33,8 +33,7 @@
 #include <QDropEvent>
 #include <QHBoxLayout>
 #include <QIcon>
-
-#include <KIconLoader>
+#include <QStyle>
 #include <QFontDatabase>
 
 using namespace KontactInterface;
@@ -92,7 +91,7 @@ QWidget *Summary::createHeader(QWidget *parent, const QString &iconname, const Q
 
     QLabel *label = new QLabel(box);
     hbox->addWidget(label);
-    label->setPixmap(icon.pixmap(IconSize(KIconLoader::Toolbar), IconSize(KIconLoader::Toolbar)));
+    label->setPixmap(icon.pixmap(style()->pixelMetric(QStyle::PM_ToolBarIconSize)));
 
     label->setFixedSize(label->sizeHint());
     label->setAcceptDrops(true);

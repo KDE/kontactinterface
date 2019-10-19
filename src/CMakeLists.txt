@@ -25,7 +25,6 @@ target_link_libraries(KF5KontactInterface
                      PRIVATE
                       KF5::WindowSystem
                       KF5::I18n
-                      KF5::IconThemes
 )
 
 set_target_properties(KF5KontactInterface PROPERTIES
