@@ -190,7 +190,8 @@ int PimUniqueApplication::newInstance(const QByteArray &startupId,
     for (QWidget *win : tlws) {
         if (qobject_cast<QMainWindow *>(win)) {
             win->show();
-            KStartupInfo::setNewStartupId(win, startupId); // this moves 'win' to the current desktop
+            win->setAttribute(Qt::WA_NativeWindow, true);
+            KStartupInfo::setNewStartupId(win->windowHandle(), startupId); // this moves 'win' to the current desktop
 #ifdef Q_OS_WIN
             KWindowSystem::forceActiveWindow(win->winId());
 #endif
