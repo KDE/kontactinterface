@@ -142,13 +142,6 @@ public:
     void setPartLibraryName(const QByteArray &name);
 
     /**
-     * Create the D-Bus interface for the given @p serviceType, if this
-     * plugin provides it. Returns @c true on success, @c false otherwise.
-     * @param serviceType the D-Bus service type to create an interface for
-     */
-    Q_REQUIRED_RESULT virtual bool createDBUSInterface(const QString &serviceType);
-
-    /**
      * Reimplement this method and return whether a standalone application
      * is still running. This is only required if your part is also available
      * as standalone application.

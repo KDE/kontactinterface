@@ -135,12 +135,6 @@ void Plugin::setPartLibraryName(const QByteArray &libName)
     d->partLibraryName = libName;
 }
 
-bool Plugin::createDBUSInterface(const QString &serviceType)
-{
-    Q_UNUSED(serviceType);
-    return false;
-}
-
 bool Plugin::isRunningStandalone() const
 {
     return false;
