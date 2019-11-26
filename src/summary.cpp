@@ -81,10 +81,9 @@ int Summary::summaryHeight() const
 QWidget *Summary::createHeader(QWidget *parent, const QString &iconname, const QString &heading)
 {
     QWidget *box = new QWidget(parent);
-    QHBoxLayout *hbox = new QHBoxLayout;
+    QHBoxLayout *hbox = new QHBoxLayout(box);
     hbox->setContentsMargins(0, 0, 0, 0);
     hbox->setSpacing(0);
-    box->setLayout(hbox);
     box->setAutoFillBackground(true);
 
     QIcon icon = QIcon::fromTheme(iconname);
