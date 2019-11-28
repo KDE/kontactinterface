@@ -134,6 +134,7 @@ bool PimUniqueApplication::start(const QStringList &arguments)
     // (which could be kontact or the standalone application),
     // otherwise the current app being started will register to DBus.
 
+    qDebug() << "bool PimUniqueApplication::start(const QStringList &arguments)  " << arguments;
     const QString serviceName = QLatin1String("org.kde.") + appName;
     if (QDBusConnection::sessionBus().interface()->isServiceRegistered(serviceName)) {
         QByteArray new_asn_id;

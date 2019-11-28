@@ -165,12 +165,14 @@ KParts::ReadOnlyPart *Plugin::part()
 
 QString Plugin::registerClient()
 {
+    qDebug() << " QString Plugin::registerClient()";
     if (d->serviceName.isEmpty()) {
         d->serviceName = QLatin1String("org.kde.") + QLatin1String(objectName().toLatin1());
 #ifdef Q_OS_WIN
         const QString pid = QString::number(QCoreApplication::applicationPid());
         d->serviceName.append(QLatin1String(".unique-") + pid);
 #endif
+        qDebug() << " QString Plugin::registerClient() " << d->serviceName;
         QDBusConnection::sessionBus().registerService(d->serviceName);
     }
     return d->serviceName;
