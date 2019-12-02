@@ -26,7 +26,7 @@
 #include "processes.h"
 
 #include "kontactinterface_debug.h"
-#include <kstartupinfo.h>
+#include <KStartupInfo>
 #include <kwindowsystem.h>
 
 #include <QDBusConnection>
