@@ -6,13 +6,9 @@ set(kontactinterface_LIB_SRCS
     uniqueapphandler.cpp
     pimuniqueapplication.cpp)
 
-if (ECM_VERSION VERSION_LESS "5.68.0")
-    ecm_qt_declare_logging_category(kontactinterface_LIB_SRCS HEADER kontactinterface_debug.h IDENTIFIER KONTACTINTERFACE_LOG CATEGORY_NAME org.kde.pim.kontactinterface)
-else()
-    ecm_qt_declare_logging_category(kontactinterface_LIB_SRCS HEADER kontactinterface_debug.h IDENTIFIER KONTACTINTERFACE_LOG CATEGORY_NAME org.kde.pim.kontactinterface
+ecm_qt_declare_logging_category(kontactinterface_LIB_SRCS HEADER kontactinterface_debug.h IDENTIFIER KONTACTINTERFACE_LOG CATEGORY_NAME org.kde.pim.kontactinterface
         OLD_CATEGORY_NAMES log_kontactinterface
         DESCRIPTION "kontactinterface (pim lib)" EXPORT KONTACTINTERFACE)
-endif()
 
 add_library(KF5KontactInterface ${kontactinterface_LIB_SRCS})
 
@@ -75,6 +71,4 @@ install(FILES kontactplugin.desktop DESTINATION ${KDE_INSTALL_KSERVICETYPES5DIR}
 ecm_generate_pri_file(BASE_NAME KontactInterface LIB_NAME KF5KontactInterface DEPS "Parts CoreAddons XmlGui" FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF5}/KontactInterface)
 install(FILES ${PRI_FILENAME} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
 
-if (NOT ECM_VERSION VERSION_LESS "5.68.0")
-   ecm_qt_install_logging_categories(EXPORT KONTACTINTERFACE FILE kontactinterface.categories DESTINATION ${KDE_INSTALL_LOGGINGCATEGORIESDIR})
-endif()
+ecm_qt_install_logging_categories(EXPORT KONTACTINTERFACE FILE kontactinterface.categories DESTINATION ${KDE_INSTALL_LOGGINGCATEGORIESDIR})
