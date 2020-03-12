@@ -77,8 +77,8 @@ install(FILES
 install(EXPORT KF5KontactInterfaceTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE KF5KontactInterfaceTargets.cmake NAMESPACE KF5::)
 
 if (EXISTS "${CMAKE_SOURCE_DIR}/.git")
-   add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x060000)
-   add_definitions(-DKF_DISABLE_DEPRECATED_BEFORE_AND_AT=0x060000)
+   add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050e00)
+   add_definitions(-DKF_DISABLE_DEPRECATED_BEFORE_AND_AT=0x058000)
 endif()
 
 add_definitions(-DQT_NO_FOREACH)
