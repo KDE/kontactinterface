@@ -26,7 +26,7 @@
 #include "kontactinterface_export.h"
 
 #include <KParts/MainWindow>
-#include <KParts/ReadOnlyPart>
+#include <KParts/Part>
 
 namespace KontactInterface
 {
@@ -75,14 +75,14 @@ public:
      * @param library the library to create part from
      * Creates a part from the given @p library.
      */
-    Q_REQUIRED_RESULT KParts::ReadOnlyPart *createPart(const char *library);
+    Q_REQUIRED_RESULT KParts::Part *createPart(const char *library);
 
     /**
      * @internal (for Plugin)
      *
      * Tells the kontact core that a part has been loaded.
      */
-    virtual void partLoaded(Plugin *plugin, KParts::ReadOnlyPart *part) = 0;
+    virtual void partLoaded(Plugin *plugin, KParts::Part *part) = 0;
 
 Q_SIGNALS:
     /**

@@ -65,7 +65,7 @@ public:
     QString serviceName;
     QByteArray partLibraryName;
     QByteArray pluginName;
-    KParts::ReadOnlyPart *part = nullptr;
+    KParts::Part *part = nullptr;
     bool hasPart;
     bool disabled;
 };
@@ -140,7 +140,7 @@ bool Plugin::isRunningStandalone() const
     return false;
 }
 
-KParts::ReadOnlyPart *Plugin::loadPart()
+KParts::Part *Plugin::loadPart()
 {
     return core()->createPart(d->partLibraryName.constData());
 }
@@ -150,12 +150,12 @@ const KAboutData Plugin::aboutData()
     return part()->componentData();
 }
 
-KParts::ReadOnlyPart *Plugin::part()
+KParts::Part *Plugin::part()
 {
     if (!d->part) {
         d->part = createPart();
         if (d->part) {
-            connect(d->part, &KParts::ReadOnlyPart::destroyed, this, [this]() { d->partDestroyed(); });
+            connect(d->part, &KParts::Part::destroyed, this, [this]() { d->partDestroyed(); });
             d->removeInvisibleToolbarActions(this);
             core()->partLoaded(this, d->part);
         }

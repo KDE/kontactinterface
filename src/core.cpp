@@ -47,7 +47,7 @@ public:
 
     QString lastErrorMessage;
     QDate mLastDate;
-    QMap<QByteArray, KParts::ReadOnlyPart *> mParts;
+    QMap<QByteArray, KParts::Part *> mParts;
 };
 
 Core::Private::Private(Core *qq)
@@ -69,11 +69,11 @@ Core::~Core()
     delete d;
 }
 
-KParts::ReadOnlyPart *Core::createPart(const char *libname)
+KParts::Part *Core::createPart(const char *libname)
 {
     qCDebug(KONTACTINTERFACE_LOG) << libname;
 
-    QMap<QByteArray, KParts::ReadOnlyPart *>::ConstIterator it;
+    QMap<QByteArray, KParts::Part *>::ConstIterator it;
     it = d->mParts.constFind(libname);
     if (it != d->mParts.constEnd()) {
         return it.value();
@@ -84,14 +84,14 @@ KParts::ReadOnlyPart *Core::createPart(const char *libname)
     KPluginLoader loader(QString::fromLatin1(libname));
     qCDebug(KONTACTINTERFACE_LOG) << loader.fileName();
     KPluginFactory *factory = loader.factory();
-    KParts::ReadOnlyPart *part = nullptr;
+    KParts::Part *part = nullptr;
     if (factory) {
-        part = factory->create<KParts::ReadOnlyPart>(this);
+        part = factory->create<KParts::Part>(this);
     }
 
     if (part) {
         d->mParts.insert(libname, part);
-        QObject::connect(part, &KParts::ReadOnlyPart::destroyed,
+        QObject::connect(part, &KParts::Part::destroyed,
                          this, [this](QObject* obj) { d->slotPartDestroyed(obj);});
     } else {
         d->lastErrorMessage = loader.errorString();
@@ -106,8 +106,8 @@ void Core::Private::slotPartDestroyed(QObject *obj)
 {
     // the part was deleted, we need to remove it from the part map to not return
     // a dangling pointer in createPart
-    const QMap<QByteArray, KParts::ReadOnlyPart *>::Iterator end = mParts.end();
-    QMap<QByteArray, KParts::ReadOnlyPart *>::Iterator it = mParts.begin();
+    const QMap<QByteArray, KParts::Part *>::Iterator end = mParts.end();
+    QMap<QByteArray, KParts::Part *>::Iterator it = mParts.begin();
     for (; it != end; ++it) {
         if (it.value() == obj) {
             mParts.erase(it);

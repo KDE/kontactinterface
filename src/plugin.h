@@ -42,7 +42,7 @@ class QStringList;
 class QWidget;
 namespace KParts
 {
-class ReadOnlyPart;
+class Part;
 }
 
 /**
@@ -166,7 +166,7 @@ public:
      * sure that you always get the same pointer as long as the part has not been
      * deleted.
      */
-    Q_REQUIRED_RESULT KParts::ReadOnlyPart *part();
+    Q_REQUIRED_RESULT KParts::Part *part();
 
     /**
      * This function is called when the plugin is selected by the user before the
@@ -305,12 +305,12 @@ protected:
      * Reimplement and return the part here. Reimplementing createPart() is
      * mandatory!
      */
-    virtual KParts::ReadOnlyPart *createPart() = 0;
+    virtual KParts::Part *createPart() = 0;
 
     /**
      * Returns the loaded part.
      */
-    KParts::ReadOnlyPart *loadPart();
+    KParts::Part *loadPart();
 
     /**
      * Virtual hook for BC extension.
