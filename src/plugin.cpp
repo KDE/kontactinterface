@@ -310,6 +310,9 @@ void Plugin::Private::removeInvisibleToolbarActions(Plugin *plugin)
 
 void Plugin::Private::setXmlFiles()
 {
+    if (pluginName.isEmpty()) {
+        return;
+    }
     const QString newAppFile =
         QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kontact/default-") + QLatin1String(pluginName) + QLatin1String(".rc");
     const QString localFile =
