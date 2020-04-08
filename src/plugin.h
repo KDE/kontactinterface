@@ -46,7 +46,12 @@ class Part;
 }
 
 /**
-  Exports Kontact plugin.
+  Increase this version number whenever you make a change in the API.
+ */
+#define KONTACT_PLUGIN_VERSION 10
+
+/**
+  Exports Kontact plugin. Deprecated in favour of EXPORT_KONTACT_PLUGIN_WITH_JSON
  */
 #define EXPORT_KONTACT_PLUGIN( pluginclass, pluginname ) \
     class Instance                                           \
@@ -59,9 +64,20 @@ class Part;
                       ( QString(), Instance::createInstance ); )
 
 /**
-  Increase this version number whenever you make a change in the API.
+  Exports Kontact plugin.
+  @param pluginclass the class to instanciate (must derive from KontactInterface::Plugin
+  @param jsonFile filename of the JSON file, generated from a .desktop file
  */
-#define KONTACT_PLUGIN_VERSION 10
+#define EXPORT_KONTACT_PLUGIN_WITH_JSON( pluginclass, jsonFile ) \
+    class Instance                                           \
+    {                                                        \
+    public:                                                \
+        static QObject *createInstance( QWidget *, QObject *parent, const QVariantList &list ) \
+        { return new pluginclass( static_cast<KontactInterface::Core*>( parent ), list ); } \
+    };                                                                    \
+    K_PLUGIN_FACTORY_WITH_JSON( KontactPluginFactory, jsonFile, registerPlugin< pluginclass >   \
+                              ( QString(), Instance::createInstance ); ) \
+    K_EXPORT_PLUGIN_VERSION(KONTACT_PLUGIN_VERSION)
 
 namespace KontactInterface
 {

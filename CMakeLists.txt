@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-set(PIM_VERSION "5.14.41")
+set(PIM_VERSION "5.14.42")
 
 project(KontactInterface VERSION ${PIM_VERSION})
 
@@ -20,7 +20,7 @@ include(ECMGeneratePriFile)
 include(ECMSetupVersion)
 include(FeatureSummary)
 include(ECMQtDeclareLoggingCategory)
-
+include(ECMSetupQtPluginMacroNames)
 
 
 
@@ -33,6 +33,15 @@ ecm_setup_version(PROJECT VARIABLE_PREFIX KONTACTINTERFACE
                         VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kontactinterface_version.h"
                         PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5KontactInterfaceConfigVersion.cmake"
                         SOVERSION 5
+)
+
+ecm_setup_qtplugin_macro_names(
+    JSON_NONE
+        EXPORT_KONTACT_PLUGIN
+    JSON_ARG3
+        EXPORT_KONTACT_PLUGIN_WITH_JSON
+    CONFIG_CODE_VARIABLE
+        PACKAGE_SETUP_AUTOMOC_VARIABLES
 )
 
 ########### Find packages ###########

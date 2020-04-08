@@ -2,11 +2,6 @@
 include(CMakeFindDependencyMacro)
 find_dependency(KF5Parts "@KF5_MIN_VERSION@")
 
-if(NOT CMAKE_VERSION VERSION_LESS "3.10.0")
-  # CMake 3.9+ warns about automoc on files without Q_OBJECT, and doesn't know about other macros.
-  # 3.10+ lets us provide more macro names that require automoc.
-  # KF5 >= 5.42 takes care itself of adding its macros in its cmake config files
-  list(APPEND CMAKE_AUTOMOC_MACRO_NAMES "EXPORT_KONTACT_PLUGIN")
-endif()
+@PACKAGE_SETUP_AUTOMOC_VARIABLES@
 
 include("${CMAKE_CURRENT_LIST_DIR}/KF5KontactInterfaceTargets.cmake")
