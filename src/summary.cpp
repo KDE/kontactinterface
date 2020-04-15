@@ -162,7 +162,7 @@ void Summary::dragEnterEvent(QDragEnterEvent *event)
 void Summary::dropEvent(QDropEvent *event)
 {
     const int alignment = (event->pos().y() < (height() / 2) ? Qt::AlignTop : Qt::AlignBottom);
-    emit summaryWidgetDropped(this, event->source(), alignment);
+    Q_EMIT summaryWidgetDropped(this, event->source(), alignment);
 }
 
 #include <summary.moc>

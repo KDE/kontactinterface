@@ -119,7 +119,7 @@ void Core::Private::slotPartDestroyed(QObject *obj)
 void Core::Private::checkNewDay()
 {
     if (mLastDate != QDate::currentDate()) {
-        emit q->dayChanged(QDate::currentDate());
+        Q_EMIT q->dayChanged(QDate::currentDate());
     }
 
     mLastDate = QDate::currentDate();
