@@ -29,7 +29,7 @@
 #include <KXMLGUIFactory>
 #include <KAboutData>
 #include <KLocalizedString>
-#include <KRun>
+#include <KIO/CommandLauncherJob>
 
 #include <QObject>
 #include <QDBusConnection>
@@ -338,7 +338,8 @@ void Plugin::bringToForeground()
 #ifdef Q_OS_WIN
     activateWindowForProcess(d->executableName);
 #else
-    KRun::runCommand(d->executableName, nullptr);
+    KIO::CommandLauncherJob *job = new KIO::CommandLauncherJob(d->executableName);
+    job->start();
 #endif
 }
 
