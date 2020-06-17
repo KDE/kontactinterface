@@ -56,6 +56,8 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
 if (NOT APPLE)
     find_package(X11)
 endif()
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(KONTACTINTERFACE_HAVE_X11 ${X11_FOUND})
 configure_file(config-kontactinterface.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kontactinterface.h )
