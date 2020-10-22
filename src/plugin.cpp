@@ -18,7 +18,6 @@
 #include <KLocalizedString>
 #include <KIO/CommandLauncherJob>
 
-#include <QObject>
 #include <QDBusConnection>
 #include <QDomDocument>
 #include <QFileInfo>

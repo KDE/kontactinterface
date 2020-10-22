@@ -26,7 +26,6 @@ using namespace KontactInterface;
 #include <psapi.h>
 #include <signal.h>
 
-#include <QList>
 #include <QtDebug>
 
 #include <QCoreApplication>

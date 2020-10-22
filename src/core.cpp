@@ -12,7 +12,6 @@
 
 #include "kontactinterface_debug.h"
 
-#include <KParts/Part>
 #include <KPluginFactory>
 #include <KPluginLoader>
 
