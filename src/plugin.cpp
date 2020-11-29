@@ -14,7 +14,6 @@
 
 #include <KXMLGUIFactory>
 #include <KAboutData>
-#include <KLocalizedString>
 #include <KIO/CommandLauncherJob>
 
 #include <QDBusConnection>

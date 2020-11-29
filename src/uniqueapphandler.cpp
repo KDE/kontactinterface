@@ -7,7 +7,6 @@
 */
 
 #include "uniqueapphandler.h"
-#include <QDBusAbstractAdaptor>
 #include "core.h"
 
 #include "processes.h"
@@ -21,7 +20,6 @@
 
 #include <QCommandLineParser>
 
-#include <QLoggingCategory>
 
 #ifdef Q_OS_WIN
 #  include <process.h>

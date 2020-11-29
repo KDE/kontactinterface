@@ -14,7 +14,6 @@
 #include <KAboutData>
 
 #include <QCommandLineParser>
-#include <QLoggingCategory>
 #include <QDir>
 
 #include <QWidget>
