@@ -12,7 +12,6 @@
 #include "processes.h"
 #include "kontactinterface_debug.h"
 
-#include <KPluginLoader>
 #include <KXMLGUIFactory>
 #include <KAboutData>
 #include <KLocalizedString>
