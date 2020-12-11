@@ -25,7 +25,7 @@ class KConfig;
 class KConfigGroup;
 class QDropEvent;
 class QMimeData;
-class QStringList;
+#include <QStringList>
 class QWidget;
 namespace KParts
 {
