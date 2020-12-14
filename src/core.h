@@ -86,7 +86,7 @@ protected:
      * @param parent The parent widget.
      * @param flags The window flags.
      */
-    explicit Core(QWidget *parent = nullptr, Qt::WindowFlags flags = {});
+    explicit Core(QWidget *parent = nullptr, Qt::WindowFlags flags = Qt::Widget);
 
     /**
      * Returns the last error message for problems during
