@@ -11,7 +11,7 @@ ecm_qt_declare_logging_category(kontactinterface_LIB_SRCS HEADER kontactinterfac
         DESCRIPTION "kontactinterface (pim lib)" EXPORT KONTACTINTERFACE)
 
 add_library(KF5KontactInterface ${kontactinterface_LIB_SRCS})
-if (COMPILE_WITH_CMAKE_SUPPORT)
+if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
     set_target_properties(KF5KontactInterface PROPERTIES UNITY_BUILD ON)
 endif()
 
