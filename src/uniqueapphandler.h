@@ -31,7 +31,7 @@ class KONTACTINTERFACE_EXPORT UniqueAppHandler : public QObject
     Q_CLASSINFO("D-Bus Interface", "org.kde.PIMUniqueApplication")
 
 public:
-    UniqueAppHandler(Plugin *plugin);
+    explicit UniqueAppHandler(Plugin *plugin);
     ~UniqueAppHandler() override;
 
     /// This must be reimplemented so that app-specific command line options can be parsed

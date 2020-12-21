@@ -220,7 +220,7 @@ public:
     /**
      * Registers the client at DBus and returns the dbus identifier.
      */
-    Q_REQUIRED_RESULT QString registerClient();
+    QString registerClient();
 
     /**
      * Return the weight of the plugin. The higher the weight the lower it will

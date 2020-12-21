@@ -32,7 +32,7 @@ class KONTACTINTERFACE_EXPORT PimUniqueApplication : public QApplication
 
 public:
     explicit PimUniqueApplication(int &argc, char **argv[]);
-    ~PimUniqueApplication();
+    ~PimUniqueApplication() override;
 
     void setAboutData(KAboutData &aboutData);
 
