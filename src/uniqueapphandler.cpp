@@ -113,8 +113,8 @@ static QWidget *s_mainWidget = nullptr;
 // Plugin-specific newInstance implementation, called by above method
 int KontactInterface::UniqueAppHandler::activate(const QStringList &args, const QString &workingDirectory)
 {
-    Q_UNUSED(args);
-    Q_UNUSED(workingDirectory);
+    Q_UNUSED(args)
+    Q_UNUSED(workingDirectory)
 
     if (s_mainWidget) {
         s_mainWidget->show();

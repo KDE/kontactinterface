@@ -190,8 +190,8 @@ int PimUniqueApplication::newInstance(const QByteArray &startupId,
 
 int PimUniqueApplication::activate(const QStringList &arguments, const QString &workingDirectory)
 {
-    Q_UNUSED(arguments);
-    Q_UNUSED(workingDirectory);
+    Q_UNUSED(arguments)
+    Q_UNUSED(workingDirectory)
     return 0;
 }
 

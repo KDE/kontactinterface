@@ -102,7 +102,7 @@ void Summary::configChanged()
 
 void Summary::updateSummary(bool force)
 {
-    Q_UNUSED(force);
+    Q_UNUSED(force)
 }
 
 void Summary::mousePressEvent(QMouseEvent *event)

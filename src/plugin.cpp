@@ -192,7 +192,7 @@ QStringList Plugin::invisibleToolbarActions() const
 
 bool Plugin::canDecodeMimeData(const QMimeData *data) const
 {
-    Q_UNUSED(data);
+    Q_UNUSED(data)
     return false;
 }
 
@@ -329,7 +329,7 @@ void Plugin::bringToForeground()
 
 Summary *Plugin::createSummaryWidget(QWidget *parent)
 {
-    Q_UNUSED(parent);
+    Q_UNUSED(parent)
     return nullptr;
 }
 
