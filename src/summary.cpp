@@ -9,19 +9,19 @@
 
 #include "summary.h"
 
-#include <QFont>
-#include <QLabel>
 #include <QDrag>
-#include <QPainter>
-#include <QPixmap>
-#include <QMouseEvent>
 #include <QDragEnterEvent>
-#include <QMimeData>
 #include <QDropEvent>
+#include <QFont>
+#include <QFontDatabase>
 #include <QHBoxLayout>
 #include <QIcon>
+#include <QLabel>
+#include <QMimeData>
+#include <QMouseEvent>
+#include <QPainter>
+#include <QPixmap>
 #include <QStyle>
-#include <QFontDatabase>
 
 using namespace KontactInterface;
 
@@ -49,7 +49,8 @@ public:
 //@endcond
 
 Summary::Summary(QWidget *parent)
-    : QWidget(parent), d(new Private)
+    : QWidget(parent)
+    , d(new Private)
 {
     setFont(QFontDatabase::systemFont(QFontDatabase::GeneralFont));
     setAcceptDrops(true);
@@ -114,17 +115,14 @@ void Summary::mousePressEvent(QMouseEvent *event)
 
 void Summary::mouseMoveEvent(QMouseEvent *event)
 {
-    if ((event->buttons() & Qt::LeftButton) &&
-            (event->pos() - d->mDragStartPoint).manhattanLength() > 4) {
-
+    if ((event->buttons() & Qt::LeftButton) && (event->pos() - d->mDragStartPoint).manhattanLength() > 4) {
         QDrag *drag = new QDrag(this);
         drag->setMimeData(new SummaryMimeData());
         drag->setObjectName(QStringLiteral("SummaryWidgetDrag"));
 
         QPixmap pm = grab();
         if (pm.width() > 300) {
-            pm = QPixmap::fromImage(
-                     pm.toImage().scaled(300, 300, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+            pm = QPixmap::fromImage(pm.toImage().scaled(300, 300, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         }
 
         QPainter painter;

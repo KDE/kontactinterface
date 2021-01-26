@@ -16,7 +16,6 @@ class QCommandLineParser;
 
 namespace KontactInterface
 {
-
 /**
  * D-Bus Object that has the name of the standalone application (e.g. "kmail")
  * and implements newInstance() so that running the separate application does
@@ -67,7 +66,9 @@ private:
 class UniqueAppHandlerFactoryBase
 {
 public:
-    virtual ~UniqueAppHandlerFactoryBase() {}
+    virtual ~UniqueAppHandlerFactoryBase()
+    {
+    }
     virtual UniqueAppHandler *createHandler(Plugin *) = 0;
 };
 
@@ -77,10 +78,11 @@ public:
  * The template argument is the UniqueAppHandler-derived class.
  * This allows to remove the need to subclass UniqueAppWatcher.
  */
-template <class T> class UniqueAppHandlerFactory : public UniqueAppHandlerFactoryBase
+template<class T> class UniqueAppHandlerFactory : public UniqueAppHandlerFactoryBase
 {
 public:
-    UniqueAppHandler *createHandler(Plugin *plugin) override {
+    UniqueAppHandler *createHandler(Plugin *plugin) override
+    {
         plugin->registerClient();
         return new T(plugin);
     }
@@ -114,8 +116,7 @@ public:
     bool isRunningStandalone() const;
 
 private Q_SLOTS:
-    void slotApplicationRemoved(const QString &name, const QString &oldOwner,
-                                const QString &newOwner);
+    void slotApplicationRemoved(const QString &name, const QString &oldOwner, const QString &newOwner);
 
 private:
     class Private;
@@ -125,4 +126,3 @@ private:
 } // namespace
 
 #endif
-

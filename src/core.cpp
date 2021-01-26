@@ -37,16 +37,20 @@ public:
 };
 
 Core::Private::Private(Core *qq)
-    : q(qq), mLastDate(QDate::currentDate())
+    : q(qq)
+    , mLastDate(QDate::currentDate())
 {
 }
 //@endcond
 
 Core::Core(QWidget *parent, Qt::WindowFlags f)
-    : KParts::MainWindow(parent, f), d(new Private(this))
+    : KParts::MainWindow(parent, f)
+    , d(new Private(this))
 {
     QTimer *timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, this, [this]() { d->checkNewDay(); });
+    connect(timer, &QTimer::timeout, this, [this]() {
+        d->checkNewDay();
+    });
     timer->start(1000 * 60);
 }
 
@@ -77,8 +81,9 @@ KParts::Part *Core::createPart(const char *libname)
 
     if (part) {
         d->mParts.insert(libname, part);
-        QObject::connect(part, &KParts::Part::destroyed,
-                         this, [this](QObject* obj) { d->slotPartDestroyed(obj);});
+        QObject::connect(part, &KParts::Part::destroyed, this, [this](QObject *obj) {
+            d->slotPartDestroyed(obj);
+        });
     } else {
         d->lastErrorMessage = loader.errorString();
         qCWarning(KONTACTINTERFACE_LOG) << d->lastErrorMessage;

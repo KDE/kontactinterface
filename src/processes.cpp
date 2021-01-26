@@ -14,22 +14,22 @@
   @author Jarosław Staniek \<staniek@kde.org\>
 */
 
-//krazy:excludeall=captruefalse,null
+// krazy:excludeall=captruefalse,null
 
 #include "processes.h"
 using namespace KontactInterface;
 
 #ifdef Q_OS_WIN
 
-#include <windows.h>
-#include <tlhelp32.h>
 #include <psapi.h>
 #include <signal.h>
+#include <tlhelp32.h>
+#include <windows.h>
 
 #include <QtDebug>
 
-#include <QCoreApplication>
 #include "kontactinterface_debug.h"
+#include <QCoreApplication>
 
 // Copy from kdelibs/kinit/kinit_win.cpp
 PSID copySid(PSID from)
@@ -39,7 +39,7 @@ PSID copySid(PSID from)
     }
 
     int sidLength = GetLengthSid(from);
-    PSID to = (PSID) malloc(sidLength);
+    PSID to = (PSID)malloc(sidLength);
     CopySid(sidLength, to, from);
     return to;
 }
@@ -63,7 +63,7 @@ static PSID getProcessOwner(HANDLE hProcess)
 
             sid = copySid(userStruct->User.Sid);
             CloseHandle(hToken);
-            delete [] userStruct;
+            delete[] userStruct;
             return sid;
         }
     }
@@ -73,11 +73,7 @@ static PSID getProcessOwner(HANDLE hProcess)
 // Copy from kdelibs/kinit/kinit_win.cpp
 static HANDLE getProcessHandle(int processID)
 {
-    return OpenProcess(SYNCHRONIZE |
-                       PROCESS_QUERY_INFORMATION |
-                       PROCESS_VM_READ |
-                       PROCESS_TERMINATE,
-                       false, processID);
+    return OpenProcess(SYNCHRONIZE | PROCESS_QUERY_INFORMATION | PROCESS_VM_READ | PROCESS_TERMINATE, false, processID);
 }
 
 void KontactInterface::getProcessesIdForName(const QString &processName, QList<int> &pids)
@@ -90,7 +86,7 @@ void KontactInterface::getProcessesIdForName(const QString &processName, QList<i
         return;
     }
 
-    pe32.dwSize = sizeof(PROCESSENTRY32);   // Necessary according to MSDN
+    pe32.dwSize = sizeof(PROCESSENTRY32); // Necessary according to MSDN
     if (!Process32First(h, &pe32)) {
         return;
     }
@@ -128,7 +124,7 @@ bool KontactInterface::otherProcessesExist(const QString &processName)
     int myPid = QCoreApplication::applicationPid();
     for (int pid : qAsConst(pids)) {
         if (myPid != pid) {
-            //qCDebug(KONTACTINTERFACE_LOG) << "Process ID is " << pid;
+            // qCDebug(KONTACTINTERFACE_LOG) << "Process ID is " << pid;
             return true;
         }
     }
@@ -163,7 +159,10 @@ bool KontactInterface::killProcesses(const QString &processName)
 }
 
 struct EnumWindowsStruct {
-    EnumWindowsStruct() : windowId(0) {}
+    EnumWindowsStruct()
+        : windowId(0)
+    {
+    }
     int pid;
     HWND windowId;
 };
@@ -171,7 +170,6 @@ struct EnumWindowsStruct {
 BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam)
 {
     if (GetWindowLong(hwnd, GWL_STYLE) & WS_VISIBLE) {
-
         DWORD pidwin;
 
         GetWindowThreadProcessId(hwnd, &pidwin);

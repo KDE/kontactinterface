@@ -9,20 +9,20 @@
 
 #include "plugin.h"
 #include "core.h"
-#include "processes.h"
 #include "kontactinterface_debug.h"
+#include "processes.h"
 
-#include <KXMLGUIFactory>
 #include <KAboutData>
 #include <KIO/CommandLauncherJob>
+#include <KXMLGUIFactory>
 
 #include <QDBusConnection>
+#include <QDir>
 #include <QDomDocument>
 #include <QFileInfo>
-#include <QDir>
 
-#include <QStandardPaths>
 #include <QCoreApplication>
+#include <QStandardPaths>
 
 using namespace KontactInterface;
 
@@ -34,7 +34,6 @@ using namespace KontactInterface;
 class Q_DECL_HIDDEN Plugin::Private
 {
 public:
-
     void partDestroyed();
     void setXmlFiles();
     void removeInvisibleToolbarActions(Plugin *plugin);
@@ -56,7 +55,9 @@ public:
 //@endcond
 
 Plugin::Plugin(Core *core, QObject *parent, const char *appName, const char *pluginName)
-    : KXMLGUIClient(core), QObject(parent), d(new Private)
+    : KXMLGUIClient(core)
+    , QObject(parent)
+    , d(new Private)
 {
     setObjectName(QLatin1String(appName));
     core->factory()->addClient(this);
@@ -139,7 +140,9 @@ KParts::Part *Plugin::part()
     if (!d->part) {
         d->part = createPart();
         if (d->part) {
-            connect(d->part, &KParts::Part::destroyed, this, [this]() { d->partDestroyed(); });
+            connect(d->part, &KParts::Part::destroyed, this, [this]() {
+                d->partDestroyed();
+            });
             d->removeInvisibleToolbarActions(this);
             core()->partLoaded(this, d->part);
         }
@@ -247,21 +250,20 @@ void Plugin::Private::removeInvisibleToolbarActions(Plugin *plugin)
     // solutions work visually, but only modifying the XML ensures that the
     // actions don't appear in "edit toolbars". #207296
     const QStringList hideActions = plugin->invisibleToolbarActions();
-    //qCDebug(KONTACTINTERFACE_LOG) << "Hiding actions" << hideActions << "from" << pluginName << part;
+    // qCDebug(KONTACTINTERFACE_LOG) << "Hiding actions" << hideActions << "from" << pluginName << part;
     QDomDocument doc = part->domDocument();
     QDomElement docElem = doc.documentElement();
     // 1. Iterate over containers
-    for (QDomElement containerElem = docElem.firstChildElement();
-            !containerElem.isNull(); containerElem = containerElem.nextSiblingElement()) {
+    for (QDomElement containerElem = docElem.firstChildElement(); !containerElem.isNull(); containerElem = containerElem.nextSiblingElement()) {
         if (QString::compare(containerElem.tagName(), QLatin1String("ToolBar"), Qt::CaseInsensitive) == 0) {
             // 2. Iterate over actions in toolbars
             QDomElement actionElem = containerElem.firstChildElement();
             while (!actionElem.isNull()) {
                 QDomElement nextActionElem = actionElem.nextSiblingElement();
                 if (QString::compare(actionElem.tagName(), QLatin1String("Action"), Qt::CaseInsensitive) == 0) {
-                    //qCDebug(KONTACTINTERFACE_LOG) << "Looking at action" << actionElem.attribute("name");
+                    // qCDebug(KONTACTINTERFACE_LOG) << "Looking at action" << actionElem.attribute("name");
                     if (hideActions.contains(actionElem.attribute(QStringLiteral("name")))) {
-                        //qCDebug(KONTACTINTERFACE_LOG) << "REMOVING";
+                        // qCDebug(KONTACTINTERFACE_LOG) << "REMOVING";
                         containerElem.removeChild(actionElem);
                     }
                 }
@@ -276,8 +278,8 @@ void Plugin::Private::removeInvisibleToolbarActions(Plugin *plugin)
     // the fast kdeui code for that rather than a full QDomDocument.
     // (*) or when invisibleToolbarActions() changes :)
 
-    const QString newAppFile =
-        QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kontact/default-") + QLatin1String(pluginName) + QLatin1String(".rc");
+    const QString newAppFile = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kontact/default-")
+        + QLatin1String(pluginName) + QLatin1String(".rc");
     QFileInfo fileInfo(newAppFile);
     QDir().mkpath(fileInfo.absolutePath());
 
@@ -297,10 +299,10 @@ void Plugin::Private::setXmlFiles()
     if (pluginName.isEmpty()) {
         return;
     }
-    const QString newAppFile =
-        QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kontact/default-") + QLatin1String(pluginName) + QLatin1String(".rc");
-    const QString localFile =
-        QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kontact/local-") + QLatin1String(pluginName) + QLatin1String(".rc");
+    const QString newAppFile = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kontact/default-")
+        + QLatin1String(pluginName) + QLatin1String(".rc");
+    const QString localFile = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kontact/local-")
+        + QLatin1String(pluginName) + QLatin1String(".rc");
     if (!localFile.isEmpty() && !newAppFile.isEmpty()) {
         if (part->xmlFile() != newAppFile || part->localXMLFile() != localFile) {
             part->replaceXMLFile(newAppFile, localFile);
@@ -364,8 +366,7 @@ void Plugin::shortcutChanged()
 
 void Plugin::virtual_hook(int, void *)
 {
-    //BASE::virtual_hook( id, data );
+    // BASE::virtual_hook( id, data );
 }
 
 #include "moc_plugin.cpp"
-

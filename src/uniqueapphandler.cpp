@@ -20,9 +20,8 @@
 
 #include <QCommandLineParser>
 
-
 #ifdef Q_OS_WIN
-#  include <process.h>
+#include <process.h>
 #endif
 
 /*
@@ -74,7 +73,8 @@ public:
 //@endcond
 
 UniqueAppHandler::UniqueAppHandler(Plugin *plugin)
-    : QObject(plugin), d(new Private)
+    : QObject(plugin)
+    , d(new Private)
 {
     qCDebug(KONTACTINTERFACE_LOG) << "plugin->objectName():" << plugin->objectName();
 
@@ -151,17 +151,17 @@ public:
 //@endcond
 
 UniqueAppWatcher::UniqueAppWatcher(UniqueAppHandlerFactoryBase *factory, Plugin *plugin)
-    : QObject(plugin), d(new Private)
+    : QObject(plugin)
+    , d(new Private)
 {
     d->mFactory = factory;
     d->mPlugin = plugin;
 
     // The app is running standalone if 1) that name is known to D-Bus
     const QString serviceName = QLatin1String("org.kde.") + plugin->objectName();
-    //Needed for wince build
+    // Needed for wince build
 #undef interface
-    d->mRunningStandalone =
-        QDBusConnection::sessionBus().interface()->isServiceRegistered(serviceName);
+    d->mRunningStandalone = QDBusConnection::sessionBus().interface()->isServiceRegistered(serviceName);
 #ifdef Q_OS_WIN
     if (d->mRunningStandalone) {
         QList<int> pids;
@@ -185,13 +185,13 @@ UniqueAppWatcher::UniqueAppWatcher(UniqueAppHandlerFactoryBase *factory, Plugin 
         d->mRunningStandalone = false;
     }
 
-    qCDebug(KONTACTINTERFACE_LOG) << " plugin->objectName()=" << plugin->objectName()
-                                  << " running standalone:" << d->mRunningStandalone;
+    qCDebug(KONTACTINTERFACE_LOG) << " plugin->objectName()=" << plugin->objectName() << " running standalone:" << d->mRunningStandalone;
 
     if (d->mRunningStandalone) {
         QObject::connect(QDBusConnection::sessionBus().interface(),
                          &QDBusConnectionInterface::serviceOwnerChanged,
-                         this, &UniqueAppWatcher::slotApplicationRemoved);
+                         this,
+                         &UniqueAppWatcher::slotApplicationRemoved);
     } else {
         d->mFactory->createHandler(d->mPlugin);
     }
@@ -208,9 +208,7 @@ bool UniqueAppWatcher::isRunningStandalone() const
     return d->mRunningStandalone;
 }
 
-void KontactInterface::UniqueAppWatcher::slotApplicationRemoved(const QString &name,
-        const QString &oldOwner,
-        const QString &newOwner)
+void KontactInterface::UniqueAppWatcher::slotApplicationRemoved(const QString &name, const QString &oldOwner, const QString &newOwner)
 {
     if (oldOwner.isEmpty() || !newOwner.isEmpty()) {
         return;
@@ -232,4 +230,3 @@ QWidget *KontactInterface::UniqueAppHandler::mainWidget()
 {
     return s_mainWidget;
 }
-

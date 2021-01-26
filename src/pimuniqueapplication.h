@@ -16,7 +16,6 @@ class QCommandLineParser;
 
 namespace KontactInterface
 {
-
 /**
  * KDEPIM applications which can be integrated into kontact should use
  * PimUniqueApplication instead of QApplication + Dbus unique.
@@ -26,7 +25,6 @@ namespace KontactInterface
  */
 class KONTACTINTERFACE_EXPORT PimUniqueApplication : public QApplication
 {
-
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.kde.PIMUniqueApplication")
 
@@ -46,8 +44,7 @@ public:
     /**
      * Ensure that another PIM application is running.
      */
-    static bool activateApplication(const QString &application,
-                                    const QStringList &additionalArguments = {});
+    static bool activateApplication(const QString &application, const QStringList &additionalArguments = {});
 
     Q_REQUIRED_RESULT QCommandLineParser *cmdArgs() const;
 

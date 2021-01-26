@@ -17,7 +17,6 @@
 
 namespace KontactInterface
 {
-
 class Plugin;
 
 /**
@@ -104,4 +103,3 @@ private:
 }
 
 #endif
-
