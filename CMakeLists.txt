@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
-set(PIM_VERSION "5.16.80")
+set(PIM_VERSION "5.17.40")
 
 project(KontactInterface VERSION ${PIM_VERSION})
 
 # ECM setup
-set(KF5_MIN_VERSION "5.79.0")
+set(KF5_MIN_VERSION "5.80.0")
 
 find_package(ECM ${KF5_MIN_VERSION} CONFIG REQUIRED)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
