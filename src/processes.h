@@ -16,8 +16,7 @@
   @author Jarosław Staniek \<staniek@kde.org\>
 */
 
-#ifndef KONTACTINTERFACE_PROCESSES_H
-#define KONTACTINTERFACE_PROCESSES_H
+#pragma once
 
 #include "kontactinterface_export.h"
 
@@ -56,4 +55,3 @@ KONTACTINTERFACE_EXPORT void activateWindowForProcess(const QString &executableN
 
 }
 
-#endif

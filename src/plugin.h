@@ -8,8 +8,7 @@
   SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#ifndef KONTACTINTERFACE_PLUGIN_H
-#define KONTACTINTERFACE_PLUGIN_H
+#pragma once
 
 #include "kontactinterface_export.h"
 
@@ -330,4 +329,3 @@ private:
 
 }
 
-#endif
