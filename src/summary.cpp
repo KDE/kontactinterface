@@ -68,15 +68,15 @@ int Summary::summaryHeight() const
 
 QWidget *Summary::createHeader(QWidget *parent, const QString &iconname, const QString &heading)
 {
-    QWidget *box = new QWidget(parent);
-    QHBoxLayout *hbox = new QHBoxLayout(box);
+    auto box = new QWidget(parent);
+    auto hbox = new QHBoxLayout(box);
     hbox->setContentsMargins(0, 0, 0, 0);
     hbox->setSpacing(0);
     box->setAutoFillBackground(true);
 
     QIcon icon = QIcon::fromTheme(iconname);
 
-    QLabel *label = new QLabel(box);
+    auto label = new QLabel(box);
     hbox->addWidget(label);
     label->setPixmap(icon.pixmap(style()->pixelMetric(QStyle::PM_ToolBarIconSize)));
 
@@ -116,7 +116,7 @@ void Summary::mousePressEvent(QMouseEvent *event)
 void Summary::mouseMoveEvent(QMouseEvent *event)
 {
     if ((event->buttons() & Qt::LeftButton) && (event->pos() - d->mDragStartPoint).manhattanLength() > 4) {
-        QDrag *drag = new QDrag(this);
+        auto drag = new QDrag(this);
         drag->setMimeData(new SummaryMimeData());
         drag->setObjectName(QStringLiteral("SummaryWidgetDrag"));
 

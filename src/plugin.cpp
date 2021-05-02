@@ -324,7 +324,7 @@ void Plugin::bringToForeground()
 #ifdef Q_OS_WIN
     activateWindowForProcess(d->executableName);
 #else
-    KIO::CommandLauncherJob *job = new KIO::CommandLauncherJob(d->executableName);
+    auto job = new KIO::CommandLauncherJob(d->executableName);
     job->start();
 #endif
 }
