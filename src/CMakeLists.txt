@@ -33,7 +33,7 @@ target_link_libraries(KF5KontactInterface
 )
 
 set_target_properties(KF5KontactInterface PROPERTIES
-    VERSION ${KONTACTINTERFACE_VERSION_STRING}
+    VERSION ${KONTACTINTERFACE_VERSION}
     SOVERSION ${KONTACTINTERFACE_SOVERSION}
     EXPORT_NAME KontactInterface
 )
