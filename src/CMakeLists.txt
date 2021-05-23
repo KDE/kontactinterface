@@ -1,4 +1,6 @@
-set(kontactinterface_LIB_SRCS
+add_library(KF5KontactInterface)
+add_library(KF5::KontactInterface ALIAS KF5KontactInterface)
+set(KF5KontactInterface
     core.cpp
     plugin.cpp
     summary.cpp
@@ -6,18 +8,15 @@ set(kontactinterface_LIB_SRCS
     uniqueapphandler.cpp
     pimuniqueapplication.cpp)
 
-ecm_qt_declare_logging_category(kontactinterface_LIB_SRCS HEADER kontactinterface_debug.h IDENTIFIER KONTACTINTERFACE_LOG CATEGORY_NAME org.kde.pim.kontactinterface
+ecm_qt_declare_logging_category(KF5KontactInterface HEADER kontactinterface_debug.h IDENTIFIER KONTACTINTERFACE_LOG CATEGORY_NAME org.kde.pim.kontactinterface
         OLD_CATEGORY_NAMES log_kontactinterface
         DESCRIPTION "kontactinterface (pim lib)" EXPORT KONTACTINTERFACE)
 
-add_library(KF5KontactInterface ${kontactinterface_LIB_SRCS})
 if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
     set_target_properties(KF5KontactInterface PROPERTIES UNITY_BUILD ON)
 endif()
 
 generate_export_header(KF5KontactInterface BASE_NAME kontactinterface)
-
-add_library(KF5::KontactInterface ALIAS KF5KontactInterface)
 
 target_include_directories(KF5KontactInterface INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF5}/KontactInterface>")
 target_include_directories(KF5KontactInterface PUBLIC "$<BUILD_INTERFACE:${KontactInterface_SOURCE_DIR}/src;${KontactInterface_BINARY_DIR}/src;${KontactInterface_BINARY_DIR}>")
