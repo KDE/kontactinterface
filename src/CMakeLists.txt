@@ -1,6 +1,6 @@
 add_library(KF5KontactInterface)
 add_library(KF5::KontactInterface ALIAS KF5KontactInterface)
-set(KF5KontactInterface
+target_sources(KF5KontactInterface PRIVATE
     core.cpp
     plugin.cpp
     summary.cpp
