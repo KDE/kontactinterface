@@ -64,8 +64,7 @@ class Part;
             return new pluginclass(static_cast<KontactInterface::Core *>(parent), list);                                                                       \
         }                                                                                                                                                      \
     };                                                                                                                                                         \
-    K_PLUGIN_FACTORY_WITH_JSON(KontactPluginFactory, jsonFile, registerPlugin<pluginclass>(QString(), Instance::createInstance);)                              \
-    K_EXPORT_PLUGIN_VERSION(KONTACT_PLUGIN_VERSION)
+    K_PLUGIN_FACTORY_WITH_JSON(KontactPluginFactory, jsonFile, registerPlugin<pluginclass>(QString(), Instance::createInstance);)
 
 namespace KontactInterface
 {
