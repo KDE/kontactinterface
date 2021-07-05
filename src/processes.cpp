@@ -122,7 +122,7 @@ bool KontactInterface::otherProcessesExist(const QString &processName)
     QList<int> pids;
     getProcessesIdForName(processName, pids);
     int myPid = QCoreApplication::applicationPid();
-    for (int pid : qAsConst(pids)) {
+    for (int pid : std::as_const(pids)) {
         if (myPid != pid) {
             // qCDebug(KONTACTINTERFACE_LOG) << "Process ID is " << pid;
             return true;
@@ -143,7 +143,7 @@ bool KontactInterface::killProcesses(const QString &processName)
     int overallResult = 0;
     qDebug() << "NEED TO PORT KILL PROCESS ON WINDOWS";
 #if 0
-    for (int pid : qAsConst(pids)) {
+    for (int pid : std::as_const(pids)) {
         int result;
         result = kill(pid, SIGTERM);
         if (result == 0) {
@@ -187,7 +187,7 @@ void KontactInterface::activateWindowForProcess(const QString &executableName)
     KontactInterface::getProcessesIdForName(executableName, pids);
     int myPid = QCoreApplication::applicationPid();
     int foundPid = 0;
-    for (int pid : qAsConst(pids)) {
+    for (int pid : std::as_const(pids)) {
         if (myPid != pid) {
             qCDebug(KONTACTINTERFACE_LOG) << "activateWindowForProcess(): PID to activate:" << pid;
             foundPid = pid;

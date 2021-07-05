@@ -168,7 +168,7 @@ UniqueAppWatcher::UniqueAppWatcher(UniqueAppHandlerFactoryBase *factory, Plugin 
         getProcessesIdForName(plugin->objectName(), pids);
         const int mypid = getpid();
         bool processExits = false;
-        for (int pid : qAsConst(pids)) {
+        for (int pid : std::as_const(pids)) {
             if (mypid != pid) {
                 processExits = true;
                 break;
