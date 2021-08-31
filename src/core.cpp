@@ -9,11 +9,12 @@
 */
 
 #include "core.h"
-
+#include "kcoreaddons_version.h"
 #include "kontactinterface_debug.h"
 
 #include <KPluginFactory>
 #include <KPluginLoader>
+#include <KPluginMetaData>
 
 #include <QDateTime>
 #include <QTimer>
@@ -69,6 +70,21 @@ KParts::Part *Core::createPart(const char *libname)
         return it.value();
     }
 
+#if KCOREADDONS_VERSION >= QT_VERSION_CHECK(5, 86, 0)
+
+    qCDebug(KONTACTINTERFACE_LOG) << "Creating new KPart";
+    const auto result = KPluginFactory::instantiatePlugin<KParts::Part>(KPluginMetaData(QString::fromLatin1(libname)), this);
+    if (result.plugin) {
+        d->mParts.insert(libname, result.plugin);
+        QObject::connect(result.plugin, &KParts::Part::destroyed, this, [this](QObject *obj) {
+            d->slotPartDestroyed(obj);
+        });
+    } else {
+        d->lastErrorMessage = result.errorString;
+        qCWarning(KONTACTINTERFACE_LOG) << d->lastErrorMessage;
+    }
+    return result.plugin;
+#else
     qCDebug(KONTACTINTERFACE_LOG) << "Creating new KPart";
 
     KPluginLoader loader(QString::fromLatin1(libname));
@@ -78,7 +94,6 @@ KParts::Part *Core::createPart(const char *libname)
     if (factory) {
         part = factory->create<KParts::Part>(this);
     }
-
     if (part) {
         d->mParts.insert(libname, part);
         QObject::connect(part, &KParts::Part::destroyed, this, [this](QObject *obj) {
@@ -88,8 +103,8 @@ KParts::Part *Core::createPart(const char *libname)
         d->lastErrorMessage = loader.errorString();
         qCWarning(KONTACTINTERFACE_LOG) << d->lastErrorMessage;
     }
-
     return part;
+#endif
 }
 
 //@cond PRIVATE
