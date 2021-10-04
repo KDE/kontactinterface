@@ -5,3 +5,8 @@ Dependencies:
 - 'on': ['@all']
   'require':
     'frameworks/extra-cmake-modules': '@latest'
+    'frameworks/kcoreaddons': '@latest'
+    'frameworks/kparts': '@latest'
+    'frameworks/kwindowsystem': '@latest'
+    'frameworks/ki18n': '@latest'
+    'frameworks/kxmlgui': '@latest'
