@@ -17,7 +17,7 @@
 namespace KontactInterface
 {
 class Plugin;
-
+class CorePrivate;
 /**
  * @short The abstract interface that represents the Kontact core.
  *
@@ -94,8 +94,8 @@ protected:
 
 private:
     //@cond PRIVATE
-    class Private;
-    Private *const d;
+    friend class CorePrivate;
+    std::unique_ptr<CorePrivate> const d;
     //@endcond
 };
 

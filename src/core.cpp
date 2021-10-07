@@ -20,12 +20,12 @@
 using namespace KontactInterface;
 
 //@cond PRIVATE
-class Q_DECL_HIDDEN KontactInterface::Core::Private
+class Q_DECL_HIDDEN KontactInterface::CorePrivate
 {
     Core *const q;
 
 public:
-    explicit Private(Core *qq);
+    explicit CorePrivate(Core *qq);
 
     void slotPartDestroyed(QObject *);
     void checkNewDay();
@@ -35,7 +35,7 @@ public:
     QMap<QByteArray, KParts::Part *> mParts;
 };
 
-Core::Private::Private(Core *qq)
+CorePrivate::CorePrivate(Core *qq)
     : q(qq)
     , mLastDate(QDate::currentDate())
 {
@@ -44,7 +44,7 @@ Core::Private::Private(Core *qq)
 
 Core::Core(QWidget *parent, Qt::WindowFlags f)
     : KParts::MainWindow(parent, f)
-    , d(new Private(this))
+    , d(new CorePrivate(this))
 {
     auto timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, [this]() {
@@ -53,10 +53,7 @@ Core::Core(QWidget *parent, Qt::WindowFlags f)
     timer->start(1000 * 60);
 }
 
-Core::~Core()
-{
-    delete d;
-}
+Core::~Core() = default;
 
 KParts::Part *Core::createPart(const char *libname)
 {
@@ -84,7 +81,7 @@ KParts::Part *Core::createPart(const char *libname)
 }
 
 //@cond PRIVATE
-void Core::Private::slotPartDestroyed(QObject *obj)
+void CorePrivate::slotPartDestroyed(QObject *obj)
 {
     // the part was deleted, we need to remove it from the part map to not return
     // a dangling pointer in createPart
@@ -98,7 +95,7 @@ void Core::Private::slotPartDestroyed(QObject *obj)
     }
 }
 
-void Core::Private::checkNewDay()
+void CorePrivate::checkNewDay()
 {
     if (mLastDate != QDate::currentDate()) {
         Q_EMIT q->dayChanged(QDate::currentDate());
