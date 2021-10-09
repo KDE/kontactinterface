@@ -9,6 +9,7 @@
 #include "kontactinterface_export.h"
 
 #include <QApplication>
+#include <memory>
 
 class KAboutData;
 class QCommandLineParser;
@@ -56,8 +57,8 @@ protected:
 
 private:
     //@cond PRIVATE
-    class Private;
-    Private *const d;
+    class PimUniqueApplicationPrivate;
+    std::unique_ptr<PimUniqueApplicationPrivate> const d;
     //@endcond
 };
 

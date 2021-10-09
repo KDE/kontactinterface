@@ -32,15 +32,15 @@ const char kDisableInProcessStackTraces[] = "--disable-in-process-stack-traces";
 }
 
 //@cond PRIVATE
-class Q_DECL_HIDDEN KontactInterface::PimUniqueApplication::Private
+class Q_DECL_HIDDEN KontactInterface::PimUniqueApplication::PimUniqueApplicationPrivate
 {
 public:
-    Private()
+    PimUniqueApplicationPrivate()
         : cmdArgs(new QCommandLineParser())
     {
     }
 
-    ~Private()
+    ~PimUniqueApplicationPrivate()
     {
         delete cmdArgs;
     }
@@ -60,14 +60,11 @@ public:
 
 PimUniqueApplication::PimUniqueApplication(int &argc, char **argv[])
     : QApplication(argc, *argv)
-    , d(new Private())
+    , d(new PimUniqueApplicationPrivate())
 {
 }
 
-PimUniqueApplication::~PimUniqueApplication()
-{
-    delete d;
-}
+PimUniqueApplication::~PimUniqueApplication() = default;
 
 QCommandLineParser *PimUniqueApplication::cmdArgs() const
 {
@@ -139,7 +136,7 @@ bool PimUniqueApplication::start(const QStringList &arguments)
     QDBusConnection::sessionBus().registerService(serviceName);
 
     // Make sure we have DrKonqi
-    Private::disableChromiumCrashHandler();
+    PimUniqueApplicationPrivate::disableChromiumCrashHandler();
 
     static_cast<PimUniqueApplication *>(qApp)->activate(arguments, QDir::currentPath());
     return true;

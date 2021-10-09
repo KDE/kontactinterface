@@ -100,8 +100,8 @@ protected:
 
 private:
     //@cond PRIVATE
-    class Private;
-    Private *const d;
+    class SummaryPrivate;
+    std::unique_ptr<SummaryPrivate> const d;
     //@endcond
 };
 

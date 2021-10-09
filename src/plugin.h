@@ -321,8 +321,8 @@ protected:
 
 private:
     //@cond PRIVATE
-    class Private;
-    Private *const d;
+    class PluginPrivate;
+    std::unique_ptr<PluginPrivate> const d;
     //@endcond
 };
 

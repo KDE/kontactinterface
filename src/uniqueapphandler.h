@@ -10,7 +10,7 @@
 
 #include "kontactinterface_export.h"
 #include "plugin.h"
-
+#include <memory>
 class QCommandLineParser;
 
 namespace KontactInterface
@@ -57,8 +57,8 @@ protected:
     virtual int activate(const QStringList &args, const QString &workingDirectory);
 
 private:
-    class Private;
-    Private *const d;
+    class UniqueAppHandlerPrivate;
+    std::unique_ptr<UniqueAppHandlerPrivate> const d;
 };
 
 /// Base class for UniqueAppHandler
@@ -118,8 +118,8 @@ private Q_SLOTS:
     void slotApplicationRemoved(const QString &name, const QString &oldOwner, const QString &newOwner);
 
 private:
-    class Private;
-    Private *const d;
+    class UniqueAppWatcherPrivate;
+    std::unique_ptr<UniqueAppWatcherPrivate> const d;
 };
 
 } // namespace

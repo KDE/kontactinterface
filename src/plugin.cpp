@@ -27,11 +27,11 @@
 using namespace KontactInterface;
 
 /**
-  Private class that helps to provide binary compatibility between releases.
+  PluginPrivate class that helps to provide binary compatibility between releases.
   @internal
 */
 //@cond PRIVATE
-class Q_DECL_HIDDEN Plugin::Private
+class Q_DECL_HIDDEN Plugin::PluginPrivate
 {
 public:
     void partDestroyed();
@@ -57,7 +57,7 @@ public:
 Plugin::Plugin(Core *core, QObject *parent, const char *appName, const char *pluginName)
     : KXMLGUIClient(core)
     , QObject(parent)
-    , d(new Private)
+    , d(new PluginPrivate)
 {
     setObjectName(QLatin1String(appName));
     core->factory()->addClient(this);
@@ -72,7 +72,6 @@ Plugin::Plugin(Core *core, QObject *parent, const char *appName, const char *plu
 Plugin::~Plugin()
 {
     delete d->part;
-    delete d;
 }
 
 void Plugin::setIdentifier(const QString &identifier)
@@ -234,12 +233,12 @@ void Plugin::configUpdated()
 }
 
 //@cond PRIVATE
-void Plugin::Private::partDestroyed()
+void Plugin::PluginPrivate::partDestroyed()
 {
     part = nullptr;
 }
 
-void Plugin::Private::removeInvisibleToolbarActions(Plugin *plugin)
+void Plugin::PluginPrivate::removeInvisibleToolbarActions(Plugin *plugin)
 {
     if (pluginName.isEmpty()) {
         return;
@@ -294,7 +293,7 @@ void Plugin::Private::removeInvisibleToolbarActions(Plugin *plugin)
     setXmlFiles();
 }
 
-void Plugin::Private::setXmlFiles()
+void Plugin::PluginPrivate::setXmlFiles()
 {
     if (pluginName.isEmpty()) {
         return;

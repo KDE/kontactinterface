@@ -65,7 +65,7 @@
 using namespace KontactInterface;
 
 //@cond PRIVATE
-class UniqueAppHandler::Private
+class UniqueAppHandler::UniqueAppHandlerPrivate
 {
 public:
     Plugin *mPlugin;
@@ -74,7 +74,7 @@ public:
 
 UniqueAppHandler::UniqueAppHandler(Plugin *plugin)
     : QObject(plugin)
-    , d(new Private)
+    , d(new UniqueAppHandlerPrivate)
 {
     qCDebug(KONTACTINTERFACE_LOG) << "plugin->objectName():" << plugin->objectName();
 
@@ -91,7 +91,6 @@ UniqueAppHandler::~UniqueAppHandler()
     QDBusConnection session = QDBusConnection::sessionBus();
     const QString appName = parent()->objectName();
     session.unregisterService(QLatin1String("org.kde.") + appName);
-    delete d;
 }
 
 // DBUS call
@@ -141,7 +140,7 @@ bool KontactInterface::UniqueAppHandler::load()
 }
 
 //@cond PRIVATE
-class Q_DECL_HIDDEN UniqueAppWatcher::Private
+class Q_DECL_HIDDEN UniqueAppWatcher::UniqueAppWatcherPrivate
 {
 public:
     UniqueAppHandlerFactoryBase *mFactory = nullptr;
@@ -152,7 +151,7 @@ public:
 
 UniqueAppWatcher::UniqueAppWatcher(UniqueAppHandlerFactoryBase *factory, Plugin *plugin)
     : QObject(plugin)
-    , d(new Private)
+    , d(new UniqueAppWatcherPrivate)
 {
     d->mFactory = factory;
     d->mPlugin = plugin;
@@ -200,7 +199,6 @@ UniqueAppWatcher::UniqueAppWatcher(UniqueAppHandlerFactoryBase *factory, Plugin 
 UniqueAppWatcher::~UniqueAppWatcher()
 {
     delete d->mFactory;
-    delete d;
 }
 
 bool UniqueAppWatcher::isRunningStandalone() const

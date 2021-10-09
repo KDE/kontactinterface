@@ -41,7 +41,7 @@ public:
 //@endcond
 
 //@cond PRIVATE
-class Q_DECL_HIDDEN Summary::Private
+class Q_DECL_HIDDEN Summary::SummaryPrivate
 {
 public:
     QPoint mDragStartPoint;
@@ -50,16 +50,13 @@ public:
 
 Summary::Summary(QWidget *parent)
     : QWidget(parent)
-    , d(new Private)
+    , d(new SummaryPrivate)
 {
     setFont(QFontDatabase::systemFont(QFontDatabase::GeneralFont));
     setAcceptDrops(true);
 }
 
-Summary::~Summary()
-{
-    delete d;
-}
+Summary::~Summary() = default;
 
 int Summary::summaryHeight() const
 {
