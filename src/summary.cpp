@@ -67,7 +67,7 @@ QWidget *Summary::createHeader(QWidget *parent, const QString &iconname, const Q
 {
     auto box = new QWidget(parent);
     auto hbox = new QHBoxLayout(box);
-    hbox->setContentsMargins(0, 0, 0, 0);
+    hbox->setContentsMargins({});
     hbox->setSpacing(0);
     box->setAutoFillBackground(true);
 
