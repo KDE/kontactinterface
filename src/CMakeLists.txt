@@ -6,7 +6,13 @@ target_sources(KF5KontactInterface PRIVATE
     summary.cpp
     processes.cpp
     uniqueapphandler.cpp
-    pimuniqueapplication.cpp)
+    pimuniqueapplication.cpp
+    processes.h
+    core.h
+    plugin.h
+    uniqueapphandler.h
+    pimuniqueapplication.h
+    summary.h)
 
 ecm_qt_declare_logging_category(KF5KontactInterface HEADER kontactinterface_debug.h IDENTIFIER KONTACTINTERFACE_LOG CATEGORY_NAME org.kde.pim.kontactinterface
         OLD_CATEGORY_NAMES log_kontactinterface
