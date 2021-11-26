@@ -189,7 +189,7 @@ QList<QAction *> Plugin::syncActions() const
 
 QStringList Plugin::invisibleToolbarActions() const
 {
-    return QStringList();
+    return {};
 }
 
 bool Plugin::canDecodeMimeData(const QMimeData *data) const

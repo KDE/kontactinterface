@@ -91,7 +91,7 @@ QWidget *Summary::createHeader(QWidget *parent, const QString &iconname, const Q
 
 QStringList Summary::configModules() const
 {
-    return QStringList();
+    return {};
 }
 
 void Summary::configChanged()

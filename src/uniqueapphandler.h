@@ -65,9 +65,7 @@ private:
 class UniqueAppHandlerFactoryBase
 {
 public:
-    virtual ~UniqueAppHandlerFactoryBase()
-    {
-    }
+    virtual ~UniqueAppHandlerFactoryBase() = default;
     virtual UniqueAppHandler *createHandler(Plugin *) = 0;
 };
 
