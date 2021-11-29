@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: none
+# SPDX-License-Identifier: BSD-3-Clause
+
 add_library(KF5KontactInterface)
 add_library(KF5::KontactInterface ALIAS KF5KontactInterface)
 target_sources(KF5KontactInterface PRIVATE
