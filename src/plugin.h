@@ -17,6 +17,7 @@
 
 #include <QList>
 #include <QObject>
+#include <QStringList>
 
 class KAboutData;
 class QAction;
@@ -24,7 +25,6 @@ class KConfig;
 class KConfigGroup;
 class QDropEvent;
 class QMimeData;
-#include <QStringList>
 class QWidget;
 namespace KParts
 {
