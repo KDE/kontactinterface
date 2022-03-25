@@ -54,4 +54,3 @@ KONTACTINTERFACE_EXPORT void activateWindowForProcess(const QString &executableN
 #endif
 
 }
-

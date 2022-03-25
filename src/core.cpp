@@ -65,7 +65,6 @@ KParts::Part *Core::createPart(const char *libname)
         return it.value();
     }
 
-
     qCDebug(KONTACTINTERFACE_LOG) << "Creating new KPart";
     const auto result = KPluginFactory::instantiatePlugin<KParts::Part>(KPluginMetaData(QString::fromLatin1(libname)), this);
     if (result.plugin) {

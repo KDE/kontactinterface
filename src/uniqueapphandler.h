@@ -75,7 +75,8 @@ public:
  * The template argument is the UniqueAppHandler-derived class.
  * This allows to remove the need to subclass UniqueAppWatcher.
  */
-template<class T> class UniqueAppHandlerFactory : public UniqueAppHandlerFactoryBase
+template<class T>
+class UniqueAppHandlerFactory : public UniqueAppHandlerFactoryBase
 {
 public:
     UniqueAppHandler *createHandler(Plugin *plugin) override
@@ -121,4 +122,3 @@ private:
 };
 
 } // namespace
-
