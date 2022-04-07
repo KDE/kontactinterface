@@ -21,10 +21,13 @@ using namespace KontactInterface;
 
 #ifdef Q_OS_WIN
 
+// windows.h needs to come first
+// clang-format off
+#include <windows.h>
 #include <psapi.h>
 #include <signal.h>
 #include <tlhelp32.h>
-#include <windows.h>
+// clang-format on
 
 #include <QtDebug>
 
