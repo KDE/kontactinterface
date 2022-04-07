@@ -120,47 +120,6 @@ void KontactInterface::getProcessesIdForName(const QString &processName, QList<i
     CloseHandle(h);
 }
 
-bool KontactInterface::otherProcessesExist(const QString &processName)
-{
-    QList<int> pids;
-    getProcessesIdForName(processName, pids);
-    int myPid = QCoreApplication::applicationPid();
-    for (int pid : std::as_const(pids)) {
-        if (myPid != pid) {
-            // qCDebug(KONTACTINTERFACE_LOG) << "Process ID is " << pid;
-            return true;
-        }
-    }
-    return false;
-}
-
-bool KontactInterface::killProcesses(const QString &processName)
-{
-    QList<int> pids;
-    getProcessesIdForName(processName, pids);
-    if (pids.empty()) {
-        return true;
-    }
-
-    qCWarning(KONTACTINTERFACE_LOG) << "Killing process \"" << processName << " (pid=" << pids[0] << ")..";
-    int overallResult = 0;
-    qDebug() << "NEED TO PORT KILL PROCESS ON WINDOWS";
-#if 0
-    for (int pid : std::as_const(pids)) {
-        int result;
-        result = kill(pid, SIGTERM);
-        if (result == 0) {
-            continue;
-        }
-        result = kill(pid, SIGKILL);
-        if (result != 0) {
-            overallResult = result;
-        }
-    }
-#endif
-    return overallResult == 0;
-}
-
 struct EnumWindowsStruct {
     EnumWindowsStruct()
         : windowId(0)
