@@ -112,17 +112,19 @@ bool PimUniqueApplication::start(const QStringList &arguments)
     const QString serviceName = QLatin1String("org.kde.") + appName;
     if (QDBusConnection::sessionBus().interface()->isServiceRegistered(serviceName)) {
         QByteArray new_asn_id;
-#if KONTACTINTERFACE_HAVE_X11
-        KStartupInfoId id;
-        if (!KStartupInfo::startupId().isEmpty()) {
-            id.initId(KStartupInfo::startupId());
-        } else {
-            id = KStartupInfo::currentStartupIdEnv();
+        if (KWindowSystem::isPlatformX11()) {
+            KStartupInfoId id;
+            if (!KStartupInfo::startupId().isEmpty()) {
+                id.initId(KStartupInfo::startupId());
+            } else {
+                id = KStartupInfo::currentStartupIdEnv();
+            }
+            if (!id.isNull()) {
+                new_asn_id = id.id();
+            }
+        } else if (KWindowSystem::isPlatformWayland()) {
+            new_asn_id = qgetenv("XDG_ACTIVATION_TOKEN");
         }
-        if (!id.isNull()) {
-            new_asn_id = id.id();
-        }
-#endif
 
         KWindowSystem::allowExternalProcessWindowActivation();
 
@@ -156,17 +158,22 @@ bool PimUniqueApplication::activateApplication(const QString &appName, const QSt
 // started or by Kontact when the module is activated
 int PimUniqueApplication::newInstance(const QByteArray &startupId, const QStringList &arguments, const QString &workingDirectory)
 {
-    KStartupInfo::setStartupId(startupId);
+    if (KWindowSystem::isPlatformX11()) {
+        KStartupInfo::setStartupId(startupId);
+    } else if (KWindowSystem::isPlatformWayland()) {
+        KWindowSystem::setCurrentXdgActivationToken(QString::fromUtf8(startupId));
+    }
 
     const QWidgetList tlws = topLevelWidgets();
     for (QWidget *win : tlws) {
         if (qobject_cast<QMainWindow *>(win)) {
             win->show();
             win->setAttribute(Qt::WA_NativeWindow, true);
-            KStartupInfo::setNewStartupId(win->windowHandle(), startupId); // this moves 'win' to the current desktop
-#ifdef Q_OS_WIN
-            KWindowSystem::forceActiveWindow(win->winId());
-#endif
+            if (KWindowSystem::isPlatformX11()) {
+                KStartupInfo::setNewStartupId(win->windowHandle(), startupId); // this moves 'win' to the current desktop
+            } else if (KWindowSystem::isPlatformWayland()) {
+                KWindowSystem::activateWindow(win->windowHandle());
+            }
             break;
         }
     }
