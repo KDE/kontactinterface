@@ -144,16 +144,6 @@ bool PimUniqueApplication::start(const QStringList &arguments)
     return true;
 }
 
-bool PimUniqueApplication::activateApplication(const QString &appName, const QStringList &additionalArguments)
-{
-    const QString serviceName = QLatin1String("org.kde.") + appName;
-    QStringList arguments{appName};
-    arguments += additionalArguments;
-    // Start it standalone if not already running (if kontact is running, then this will do nothing)
-    QDBusConnection::sessionBus().interface()->startService(serviceName);
-    return callNewInstance(appName, serviceName, KStartupInfo::createNewStartupId(), arguments);
-}
-
 // This is called via DBus either by another instance that has just been
 // started or by Kontact when the module is activated
 int PimUniqueApplication::newInstance(const QByteArray &startupId, const QStringList &arguments, const QString &workingDirectory)

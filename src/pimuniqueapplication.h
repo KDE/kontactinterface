@@ -41,11 +41,6 @@ public:
      */
     static bool start(const QStringList &arguments);
 
-    /**
-     * Ensure that another PIM application is running.
-     */
-    static bool activateApplication(const QString &application, const QStringList &additionalArguments = {});
-
     Q_REQUIRED_RESULT QCommandLineParser *cmdArgs() const;
 
 public Q_SLOTS:
