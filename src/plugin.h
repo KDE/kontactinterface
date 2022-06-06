@@ -11,6 +11,7 @@
 #pragma once
 
 #include "kontactinterface_export.h"
+#include <kcoreaddons_version.h>
 
 #include <KPluginFactory>
 #include <KXMLGUIClient>
@@ -34,23 +35,36 @@ class Part;
 /**
   Increase this version number whenever you make a change in the API.
  */
-#define KONTACT_PLUGIN_VERSION 10
+#define KONTACT_PLUGIN_VERSION 11
 
 /**
   Exports Kontact plugin.
   @param pluginclass the class to instantiate (must derive from KontactInterface::Plugin)
   @param jsonFile filename of the JSON file, generated from a .desktop file
  */
+#if KCOREADDONS_VERSION < QT_VERSION_CHECK(5, 95, 0)
 #define EXPORT_KONTACT_PLUGIN_WITH_JSON(pluginclass, jsonFile)                                                                                                 \
     class Instance                                                                                                                                             \
     {                                                                                                                                                          \
     public:                                                                                                                                                    \
-        static QObject *createInstance(QWidget *, QObject *parent, const QVariantList &list)                                                                   \
+        static QObject *createInstance(QWidget *, QObject *parent, const KPluginMetaData &data, const QVariantList &list)                                      \
         {                                                                                                                                                      \
-            return new pluginclass(static_cast<KontactInterface::Core *>(parent), list);                                                                       \
+            return new pluginclass(static_cast<KontactInterface::Core *>(parent), data, list);                                                                 \
         }                                                                                                                                                      \
     };                                                                                                                                                         \
     K_PLUGIN_FACTORY_WITH_JSON(KontactPluginFactory, jsonFile, registerPlugin<pluginclass>(QString(), Instance::createInstance);)
+#else
+#define EXPORT_KONTACT_PLUGIN_WITH_JSON(pluginclass, jsonFile)                                                                                                 \
+    class Instance                                                                                                                                             \
+    {                                                                                                                                                          \
+    public:                                                                                                                                                    \
+        static QObject *createInstance(QWidget *, QObject *parent, const KPluginMetaData &data, const QVariantList &list)                                      \
+        {                                                                                                                                                      \
+            return new pluginclass(static_cast<KontactInterface::Core *>(parent), data, list);                                                                 \
+        }                                                                                                                                                      \
+    };                                                                                                                                                         \
+    K_PLUGIN_FACTORY_WITH_JSON(KontactPluginFactory, jsonFile, registerPlugin<pluginclass>(Instance::createInstance);)
+#endif
 
 namespace KontactInterface
 {
@@ -77,8 +91,7 @@ public:
      *       It's ok to have several plugins using the same application name.
      * @param pluginName The unique name of the plugin. Defaults to appName if not set.
      */
-    Plugin(Core *core, QObject *parent, const char *appName, const char *pluginName = nullptr);
-
+    Plugin(Core *core, QObject *parent, const KPluginMetaData &data, const char *appName, const char *pluginName = nullptr);
     /**
      * Destroys the plugin.
      */

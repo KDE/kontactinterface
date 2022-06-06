@@ -53,8 +53,7 @@ public:
     bool disabled;
 };
 //@endcond
-
-Plugin::Plugin(Core *core, QObject *parent, const char *appName, const char *pluginName)
+Plugin::Plugin(Core *core, QObject *parent, const KPluginMetaData &, const char *appName, const char *pluginName)
     : KXMLGUIClient(core)
     , QObject(parent)
     , d(new PluginPrivate)
