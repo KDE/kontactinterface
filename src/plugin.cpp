@@ -130,7 +130,7 @@ KParts::Part *Plugin::loadPart()
 
 const KAboutData Plugin::aboutData()
 {
-    return part()->componentData();
+    return KAboutData();
 }
 
 KParts::Part *Plugin::part()
