@@ -49,8 +49,8 @@ public:
     QByteArray partLibraryName;
     QByteArray pluginName;
     KParts::Part *part = nullptr;
-    bool hasPart;
-    bool disabled;
+    bool hasPart = true;
+    bool disabled = false;
 };
 //@endcond
 Plugin::Plugin(Core *core, QObject *parent, const KPluginMetaData &, const char *appName, const char *pluginName)
@@ -63,9 +63,6 @@ Plugin::Plugin(Core *core, QObject *parent, const KPluginMetaData &, const char 
 
     d->pluginName = pluginName ? pluginName : appName;
     d->core = core;
-    d->hasPart = true;
-    d->part = nullptr;
-    d->disabled = false;
 }
 
 Plugin::~Plugin()
@@ -249,8 +246,8 @@ void Plugin::PluginPrivate::removeInvisibleToolbarActions(Plugin *plugin)
     // actions don't appear in "edit toolbars". #207296
     const QStringList hideActions = plugin->invisibleToolbarActions();
     // qCDebug(KONTACTINTERFACE_LOG) << "Hiding actions" << hideActions << "from" << pluginName << part;
-    QDomDocument doc = part->domDocument();
-    QDomElement docElem = doc.documentElement();
+    const QDomDocument doc = part->domDocument();
+    const QDomElement docElem = doc.documentElement();
     // 1. Iterate over containers
     for (QDomElement containerElem = docElem.firstChildElement(); !containerElem.isNull(); containerElem = containerElem.nextSiblingElement()) {
         if (QString::compare(containerElem.tagName(), QLatin1String("ToolBar"), Qt::CaseInsensitive) == 0) {
@@ -278,7 +275,7 @@ void Plugin::PluginPrivate::removeInvisibleToolbarActions(Plugin *plugin)
 
     const QString newAppFile = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kontact/default-")
         + QLatin1String(pluginName) + QLatin1String(".rc");
-    QFileInfo fileInfo(newAppFile);
+    const QFileInfo fileInfo(newAppFile);
     QDir().mkpath(fileInfo.absolutePath());
 
     QFile file(newAppFile);
