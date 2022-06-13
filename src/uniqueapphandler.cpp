@@ -68,7 +68,7 @@ using namespace KontactInterface;
 class UniqueAppHandler::UniqueAppHandlerPrivate
 {
 public:
-    Plugin *mPlugin;
+    Plugin *mPlugin = nullptr;
 };
 //@endcond
 
