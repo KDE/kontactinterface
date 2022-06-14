@@ -11,7 +11,6 @@
 #pragma once
 
 #include "kontactinterface_export.h"
-#include <kcoreaddons_version.h>
 
 #include <KPluginFactory>
 #include <KXMLGUIClient>
@@ -42,18 +41,6 @@ class Part;
   @param pluginclass the class to instantiate (must derive from KontactInterface::Plugin)
   @param jsonFile filename of the JSON file, generated from a .desktop file
  */
-#if KCOREADDONS_VERSION < QT_VERSION_CHECK(5, 95, 0)
-#define EXPORT_KONTACT_PLUGIN_WITH_JSON(pluginclass, jsonFile)                                                                                                 \
-    class Instance                                                                                                                                             \
-    {                                                                                                                                                          \
-    public:                                                                                                                                                    \
-        static QObject *createInstance(QWidget *, QObject *parent, const KPluginMetaData &data, const QVariantList &list)                                      \
-        {                                                                                                                                                      \
-            return new pluginclass(static_cast<KontactInterface::Core *>(parent), data, list);                                                                 \
-        }                                                                                                                                                      \
-    };                                                                                                                                                         \
-    K_PLUGIN_FACTORY_WITH_JSON(KontactPluginFactory, jsonFile, registerPlugin<pluginclass>(QString(), Instance::createInstance);)
-#else
 #define EXPORT_KONTACT_PLUGIN_WITH_JSON(pluginclass, jsonFile)                                                                                                 \
     class Instance                                                                                                                                             \
     {                                                                                                                                                          \
@@ -64,7 +51,6 @@ class Part;
         }                                                                                                                                                      \
     };                                                                                                                                                         \
     K_PLUGIN_FACTORY_WITH_JSON(KontactPluginFactory, jsonFile, registerPlugin<pluginclass>(Instance::createInstance);)
-#endif
 
 namespace KontactInterface
 {
