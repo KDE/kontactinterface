@@ -47,7 +47,7 @@ set_target_properties(KF5KontactInterface PROPERTIES
 )
 
 
-install(TARGETS KF5KontactInterface EXPORT KF5KontactInterfaceTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS KF5KontactInterface EXPORT KF5KontactInterfaceTargets ${KF_INSTALL_TARGETS_DEFAULT_ARGS})
 
 ########### install files ###############
 
