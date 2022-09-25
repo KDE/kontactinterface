@@ -29,8 +29,6 @@ using namespace KontactInterface;
 #include <tlhelp32.h>
 // clang-format on
 
-#include <QtDebug>
-
 #include "kontactinterface_debug.h"
 #include <QCoreApplication>
 
