@@ -93,7 +93,7 @@ install(FILES
 install(EXPORT KF5KontactInterfaceTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE KF5KontactInterfaceTargets.cmake NAMESPACE KF5::)
 
 ecm_set_disabled_deprecation_versions(QT 5.15.2
-    KF 5.99.0
+     KF 5.100.0
     KPARTS 5.76 # componentData()
 )
 
