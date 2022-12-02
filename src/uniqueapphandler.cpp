@@ -23,9 +23,6 @@
 #include "kwindowsystem_version.h"
 
 #ifdef Q_OS_WIN
-#if KWINDOWSYSTEM_VERSION >= QT_VERSION_CHECK(5, 101, 0)
-#include <KX11Extras>
-#endif
 #include <process.h>
 #endif
 
@@ -125,8 +122,6 @@ int KontactInterface::UniqueAppHandler::activate(const QStringList &args, const 
 #ifdef Q_OS_WIN
 #if KWINDOWSYSTEM_VERSION < QT_VERSION_CHECK(5, 101, 0)
         KWindowSystem::forceActiveWindow(s_mainWidget->winId());
-#else
-        KX11Extras::forceActiveWindow(s_mainWidget->winId());
 #endif
 #endif
         KStartupInfo::appStarted();
