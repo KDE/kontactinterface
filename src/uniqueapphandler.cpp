@@ -96,10 +96,12 @@ UniqueAppHandler::~UniqueAppHandler()
 }
 
 // DBUS call
-int UniqueAppHandler::newInstance(const QByteArray &asn_id, const QStringList &args, const QString &workingDirectory)
+int UniqueAppHandler::newInstance(const QByteArray &startupId, const QStringList &args, const QString &workingDirectory)
 {
-    if (!asn_id.isEmpty()) {
-        KStartupInfo::setStartupId(asn_id);
+    if (KWindowSystem::isPlatformX11()) {
+        KStartupInfo::setStartupId(startupId);
+    } else if (KWindowSystem::isPlatformWayland()) {
+        KWindowSystem::setCurrentXdgActivationToken(QString::fromUtf8(startupId));
     }
 
     QCommandLineParser parser;
