@@ -121,11 +121,7 @@ int KontactInterface::UniqueAppHandler::activate(const QStringList &args, const 
 
     if (s_mainWidget) {
         s_mainWidget->show();
-#ifdef Q_OS_WIN
-#if KWINDOWSYSTEM_VERSION < QT_VERSION_CHECK(5, 101, 0)
-        KWindowSystem::forceActiveWindow(s_mainWidget->winId());
-#endif
-#endif
+        KWindowSystem::activateWindow(s_mainWidget->windowHandle());
         KStartupInfo::appStarted();
     }
 
