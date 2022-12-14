@@ -40,6 +40,14 @@ target_link_libraries(KF5KontactInterface
                       KF5::I18n
 )
 
+if (KONTACTINTERFACE_HAVE_X11)
+    if (QT_MAJOR_VERSION STREQUAL "5")
+        target_link_libraries(KF5KontactInterface PRIVATE Qt::X11Extras)
+    else()
+        target_link_libraries(KF5KontactInterface PRIVATE Qt::GuiPrivate)
+    endif()
+endif()
+
 set_target_properties(KF5KontactInterface PROPERTIES
     VERSION ${KONTACTINTERFACE_VERSION}
     SOVERSION ${KONTACTINTERFACE_SOVERSION}

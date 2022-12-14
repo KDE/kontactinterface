@@ -60,8 +60,11 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS
     XmlGui
 )
 
-if (NOT APPLE)
-    find_package(X11)
+if (NOT APPLE AND NOT WIN32)
+    find_package(X11 REQUIRED)
+    if (QT_MAJOR_VERSION STREQUAL "5")
+        find_package(Qt5X11Extras REQUIRED)
+    endif()
 endif()
 
 set(KONTACTINTERFACE_HAVE_X11 ${X11_FOUND})

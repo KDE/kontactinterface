@@ -13,6 +13,16 @@
 #include <KStartupInfo>
 #include <KWindowSystem>
 
+#include "config-kontactinterface.h"
+#if KONTACTINTERFACE_HAVE_X11
+#include <KX11Extras>
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <private/qtx11extras_p.h>
+#else
+#include <QX11Info>
+#endif
+#endif
+
 #include <QCommandLineParser>
 #include <QDir>
 
@@ -113,15 +123,9 @@ bool PimUniqueApplication::start(const QStringList &arguments)
     if (QDBusConnection::sessionBus().interface()->isServiceRegistered(serviceName)) {
         QByteArray new_asn_id;
         if (KWindowSystem::isPlatformX11()) {
-            KStartupInfoId id;
-            if (!KStartupInfo::startupId().isEmpty()) {
-                id.initId(KStartupInfo::startupId());
-            } else {
-                id = KStartupInfo::currentStartupIdEnv();
-            }
-            if (!id.isNull()) {
-                new_asn_id = id.id();
-            }
+#if KONTACTINTERFACE_HAVE_X11
+            new_asn_id = QX11Info::nextStartupId();
+#endif
         } else if (KWindowSystem::isPlatformWayland()) {
             new_asn_id = qgetenv("XDG_ACTIVATION_TOKEN");
         }
@@ -159,11 +163,14 @@ int PimUniqueApplication::newInstance(const QByteArray &startupId, const QString
         if (qobject_cast<QMainWindow *>(win)) {
             win->show();
             win->setAttribute(Qt::WA_NativeWindow, true);
+
+#if KONTACTINTERFACE_HAVE_X11
             if (KWindowSystem::isPlatformX11()) {
-                KStartupInfo::setNewStartupId(win->windowHandle(), startupId); // this moves 'win' to the current desktop
-            } else if (KWindowSystem::isPlatformWayland()) {
-                KWindowSystem::activateWindow(win->windowHandle());
+                KX11Extras::setOnDesktop(win->winId(), KX11Extras::currentDesktop());
             }
+#endif
+
+            KWindowSystem::activateWindow(win->windowHandle());
             break;
         }
     }
