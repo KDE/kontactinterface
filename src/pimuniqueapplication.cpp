@@ -108,7 +108,7 @@ static bool callNewInstance(const QString &appName, const QString &serviceName, 
 
 int PimUniqueApplication::newInstance()
 {
-    return newInstance(KStartupInfo::startupId(), QStringList() << QApplication::applicationName(), QDir::currentPath());
+    return newInstance(QByteArray(), QStringList() << QApplication::applicationName(), QDir::currentPath());
 }
 
 bool PimUniqueApplication::start(const QStringList &arguments)
