@@ -20,8 +20,6 @@
 
 #include <QCommandLineParser>
 
-#include "kwindowsystem_version.h"
-
 #ifdef Q_OS_WIN
 #include <process.h>
 #endif
