@@ -15,7 +15,6 @@
 
 #include "config-kontactinterface.h"
 #if KONTACTINTERFACE_HAVE_X11
-#include <KX11Extras>
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 #include <private/qtx11extras_p.h>
 #else
@@ -163,12 +162,6 @@ int PimUniqueApplication::newInstance(const QByteArray &startupId, const QString
         if (qobject_cast<QMainWindow *>(win)) {
             win->show();
             win->setAttribute(Qt::WA_NativeWindow, true);
-
-#if KONTACTINTERFACE_HAVE_X11
-            if (KWindowSystem::isPlatformX11()) {
-                KX11Extras::setOnDesktop(win->winId(), KX11Extras::currentDesktop());
-            }
-#endif
 
             KWindowSystem::activateWindow(win->windowHandle());
             break;
