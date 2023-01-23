@@ -32,12 +32,13 @@ target_include_directories(KF5KontactInterface PUBLIC "$<BUILD_INTERFACE:${Konta
 
 target_link_libraries(KF5KontactInterface
                      PUBLIC
-                      KF5::CoreAddons
-                      KF5::Parts
-                      KF5::XmlGui
+                      KF${KF_MAJOR_VERSION}::CoreAddons
+                      KF${KF_MAJOR_VERSION}::Parts
+                      KF${KF_MAJOR_VERSION}::XmlGui
                      PRIVATE
-                      KF5::WindowSystem
-                      KF5::I18n
+                      KF${KF_MAJOR_VERSION}::WindowSystem
+                      KF${KF_MAJOR_VERSION}::I18n
+                      KF${KF_MAJOR_VERSION}::KIOGui
 )
 
 if (KONTACTINTERFACE_HAVE_X11)
