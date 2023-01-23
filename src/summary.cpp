@@ -143,7 +143,11 @@ void Summary::dragEnterEvent(QDragEnterEvent *event)
 
 void Summary::dropEvent(QDropEvent *event)
 {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     const int alignment = (event->pos().y() < (height() / 2) ? Qt::AlignTop : Qt::AlignBottom);
+#else
+    const int alignment = (event->position().y() < (height() / 2) ? Qt::AlignTop : Qt::AlignBottom);
+#endif
     Q_EMIT summaryWidgetDropped(this, event->source(), alignment);
 }
 
