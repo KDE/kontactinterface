@@ -59,7 +59,7 @@ public:
         // Disable Chromium's own crash handler, which overrides DrKonqi.
         auto flags = qgetenv(kChromiumFlagsEnv);
         if (!flags.contains(kDisableInProcessStackTraces)) {
-            qputenv(kChromiumFlagsEnv, flags + " " + kDisableInProcessStackTraces);
+            qputenv(kChromiumFlagsEnv, QByteArray(flags + " " + kDisableInProcessStackTraces));
         }
     }
 
