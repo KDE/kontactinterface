@@ -12,13 +12,17 @@
 #include "processes.h"
 
 #include "kontactinterface_debug.h"
-#include <KStartupInfo>
 #include <kwindowsystem.h>
 
 #include <QDBusConnection>
 #include <QDBusConnectionInterface>
 
 #include <QCommandLineParser>
+
+#include <config-kontactinterface.h>
+#if KONTACTINTERFACE_HAVE_X11
+#include <KStartupInfo>
+#endif
 
 #ifdef Q_OS_WIN
 #include <process.h>
@@ -97,7 +101,9 @@ UniqueAppHandler::~UniqueAppHandler()
 int UniqueAppHandler::newInstance(const QByteArray &startupId, const QStringList &args, const QString &workingDirectory)
 {
     if (KWindowSystem::isPlatformX11()) {
+#if KONTACTINTERFACE_HAVE_X11
         KStartupInfo::setStartupId(startupId);
+#endif
     } else if (KWindowSystem::isPlatformWayland()) {
         KWindowSystem::setCurrentXdgActivationToken(QString::fromUtf8(startupId));
     }
@@ -120,7 +126,9 @@ int KontactInterface::UniqueAppHandler::activate(const QStringList &args, const 
     if (s_mainWidget) {
         s_mainWidget->show();
         KWindowSystem::activateWindow(s_mainWidget->windowHandle());
+#if KONTACTINTERFACE_HAVE_X11
         KStartupInfo::appStarted();
+#endif
     }
 
     // Then ensure the part appears in kontact

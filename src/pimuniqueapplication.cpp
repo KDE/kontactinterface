@@ -10,11 +10,12 @@
 #include "kontactinterface_debug.h"
 
 #include <KAboutData>
-#include <KStartupInfo>
 #include <KWindowSystem>
 
 #include "config-kontactinterface.h"
 #if KONTACTINTERFACE_HAVE_X11
+#include <KStartupInfo>
+
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 #include <private/qtx11extras_p.h>
 #else
@@ -152,7 +153,9 @@ bool PimUniqueApplication::start(const QStringList &arguments)
 int PimUniqueApplication::newInstance(const QByteArray &startupId, const QStringList &arguments, const QString &workingDirectory)
 {
     if (KWindowSystem::isPlatformX11()) {
+#if KONTACTINTERFACE_HAVE_X11
         KStartupInfo::setStartupId(startupId);
+#endif
     } else if (KWindowSystem::isPlatformWayland()) {
         KWindowSystem::setCurrentXdgActivationToken(QString::fromUtf8(startupId));
     }
