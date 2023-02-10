@@ -130,8 +130,6 @@ bool PimUniqueApplication::start(const QStringList &arguments)
             new_asn_id = qgetenv("XDG_ACTIVATION_TOKEN");
         }
 
-        KWindowSystem::allowExternalProcessWindowActivation();
-
         if (callNewInstance(appName, serviceName, new_asn_id, arguments)) {
             return false; // success means that main() can exit now.
         }
