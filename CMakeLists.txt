@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: none
 # SPDX-License-Identifier: BSD-3-Clause
 cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
-set(PIM_VERSION "5.22.40")
+set(PIM_VERSION "5.22.41")
 
 project(KontactInterface VERSION ${PIM_VERSION})
 
@@ -45,11 +45,11 @@ add_feature_info(QCH ${BUILD_QCH} "API documentation in QCH format (for e.g. Qt 
 add_definitions(-DTRANSLATION_DOMAIN=\"kontactinterfaces5\")
 
 set(KONTACTINTERFACE_LIB_VERSION ${PIM_VERSION})
-set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5KontactInterface")
+set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KPim${KF_MAJOR_VERSION}KontactInterface")
 
 ecm_setup_version(PROJECT VARIABLE_PREFIX KONTACTINTERFACE
                         VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kontactinterface_version.h"
-                        PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5KontactInterfaceConfigVersion.cmake"
+                        PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KPim${KF_MAJOR_VERSION}KontactInterfaceConfigVersion.cmake"
                         SOVERSION 5
 )
 
@@ -76,20 +76,48 @@ if (NOT APPLE AND NOT WIN32)
     endif()
 endif()
 
+##
+# TODO: Backwards compatiblity. Remove in next major version
+##
+set(CMAKECONFIG_INSTALL_DIR_KF5 "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5KontactInterface")
+set(KONTACTINTERFACE_KF5_COMPAT TRUE)
+configure_package_config_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/KPimKontactInterfaceConfig.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/KF5KontactInterfaceConfig.cmake"
+    INSTALL_DESTINATION ${CMAKECONFIG_INSTALL_DIR_KF5}
+)
+
+install(FILES
+    "${CMAKE_CURRENT_BINARY_DIR}/KF5KontactInterfaceConfig.cmake"
+    DESTINATION "${CMAKECONFIG_INSTALL_DIR_KF5}"
+    COMPONENT Devel
+)
+install(FILES
+    "${CMAKE_CURRENT_BINARY_DIR}/KPim${KF_MAJOR_VERSION}KontactInterfaceConfigVersion.cmake"
+    RENAME "KF5KontactInterfaceConfigVersion.cmake"
+    DESTINATION "${CMAKECONFIG_INSTALL_DIR_KF5}"
+    COMPONENT Devel
+)
+install(EXPORT KPim${KF_MAJOR_VERSION}KontactInterfaceTargets
+    DESTINATION "${CMAKECONFIG_INSTALL_DIR_KF5}"
+    FILE KPim${KF_MAJOR_VERSION}KontactInterfaceTargets.cmake
+    NAMESPACE KF5::
+)
+
 set(KONTACTINTERFACE_HAVE_X11 ${X11_FOUND})
 configure_file(config-kontactinterface.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kontactinterface.h )
 
 
 configure_package_config_file(
-  "${CMAKE_CURRENT_SOURCE_DIR}/KF5KontactInterfaceConfig.cmake.in"
-  "${CMAKE_CURRENT_BINARY_DIR}/KF5KontactInterfaceConfig.cmake"
+  "${CMAKE_CURRENT_SOURCE_DIR}/KPimKontactInterfaceConfig.cmake.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/KPim${KF_MAJOR_VERSION}KontactInterfaceConfig.cmake"
   INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
 )
 
 ########### Install Files ###########
 install(FILES
-  "${CMAKE_CURRENT_BINARY_DIR}/KF5KontactInterfaceConfig.cmake"
-  "${CMAKE_CURRENT_BINARY_DIR}/KF5KontactInterfaceConfigVersion.cmake"
+  "${CMAKE_CURRENT_BINARY_DIR}/KPim${KF_MAJOR_VERSION}KontactInterfaceConfig.cmake"
+  "${CMAKE_CURRENT_BINARY_DIR}/KPim${KF_MAJOR_VERSION}KontactInterfaceConfigVersion.cmake"
   DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
   COMPONENT Devel
 )
@@ -97,12 +125,13 @@ install(FILES
 
 install(FILES
    ${CMAKE_CURRENT_BINARY_DIR}/kontactinterface_version.h
-   DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KontactInterface
+   DESTINATION ${KDE_INSTALL_INCLUDEDIR}/KPim${KF_MAJOR_VERSION}/KontactInterface
    COMPONENT Devel
 )
 
 
-install(EXPORT KF5KontactInterfaceTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE KF5KontactInterfaceTargets.cmake NAMESPACE KF5::)
+install(EXPORT KPim${KF_MAJOR_VERSION}KontactInterfaceTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
+    FILE KPim${KF_MAJOR_VERSION}KontactInterfaceTargets.cmake NAMESPACE KPim${KF_MAJOR_VERSION}::)
 
 ecm_set_disabled_deprecation_versions(QT 6.4
      KF 5.103.0
@@ -125,12 +154,12 @@ ki18n_install(po)
 
 if (BUILD_QCH)
     ecm_install_qch_export(
-        TARGETS KF5KontactInterface_QCH
-        FILE KF5KontactInterfaceQchTargets.cmake
+        TARGETS KPim${KF_MAJOR_VERSION}KontactInterface_QCH
+        FILE KPim${KF_MAJOR_VERSION}KontactInterfaceQchTargets.cmake
         DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
         COMPONENT Devel
     )
-    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/KF5KontactInterfaceQchTargets.cmake\")")
+    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/KPim${KF_MAJOR_VERSION}KontactInterfaceQchTargets.cmake\")")
 endif()
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
