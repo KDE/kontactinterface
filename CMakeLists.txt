@@ -107,7 +107,7 @@ install(EXPORT KPim${KF_MAJOR_VERSION}KontactInterfaceTargets DESTINATION "${CMA
     FILE KPim${KF_MAJOR_VERSION}KontactInterfaceTargets.cmake NAMESPACE KPim${KF_MAJOR_VERSION}::)
 
 ecm_set_disabled_deprecation_versions(QT 6.4
-     KF 5.103.0
+     KF 5.104.0
     KPARTS 5.76 # componentData()
 )
 
