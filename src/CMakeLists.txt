@@ -3,7 +3,6 @@
 
 add_library(KPim${KF_MAJOR_VERSION}KontactInterface)
 add_library(KPim${KF_MAJOR_VERSION}::KontactInterface ALIAS KPim${KF_MAJOR_VERSION}KontactInterface)
-add_library(KF5::KontactInterface ALIAS KPim${KF_MAJOR_VERSION}KontactInterface)
 
 target_sources(KPim${KF_MAJOR_VERSION}KontactInterface PRIVATE
     core.cpp
