@@ -76,9 +76,30 @@ if (NOT APPLE AND NOT WIN32)
     endif()
 endif()
 
+option(USE_UNITY_CMAKE_SUPPORT "Use UNITY cmake support (speedup compile time)" OFF)
+
+set(COMPILE_WITH_UNITY_CMAKE_SUPPORT OFF)
+if (USE_UNITY_CMAKE_SUPPORT)
+    set(COMPILE_WITH_UNITY_CMAKE_SUPPORT ON)
+endif()
+ecm_set_disabled_deprecation_versions(QT 6.4
+     KF 5.104.0
+    KPARTS 5.76 # componentData()
+)
 set(KONTACTINTERFACE_HAVE_X11 ${X11_FOUND})
+
+add_subdirectory(src)
+
 configure_file(config-kontactinterface.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kontactinterface.h )
-set(KONTACTINTERFACE_KF5_COMPAT FALSE)
+if (BUILD_QCH)
+    ecm_install_qch_export(
+        TARGETS KPim${KF_MAJOR_VERSION}KontactInterface_QCH
+        FILE KPim${KF_MAJOR_VERSION}KontactInterfaceQchTargets.cmake
+        DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
+        COMPONENT Devel
+    )
+    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/KPim${KF_MAJOR_VERSION}KontactInterfaceQchTargets.cmake\")")
+endif()
 
 configure_package_config_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/KPimKontactInterfaceConfig.cmake.in"
@@ -105,33 +126,7 @@ install(FILES
 install(EXPORT KPim${KF_MAJOR_VERSION}KontactInterfaceTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
     FILE KPim${KF_MAJOR_VERSION}KontactInterfaceTargets.cmake NAMESPACE KPim${KF_MAJOR_VERSION}::)
 
-ecm_set_disabled_deprecation_versions(QT 6.4
-     KF 5.104.0
-    KPARTS 5.76 # componentData()
-)
-
-
-option(USE_UNITY_CMAKE_SUPPORT "Use UNITY cmake support (speedup compile time)" OFF)
-
-set(COMPILE_WITH_UNITY_CMAKE_SUPPORT OFF)
-if (USE_UNITY_CMAKE_SUPPORT)
-    set(COMPILE_WITH_UNITY_CMAKE_SUPPORT ON)
-endif()
-add_subdirectory(src)
-
-
 kde_configure_git_pre_commit_hook(CHECKS CLANG_FORMAT)
 ki18n_install(po)
-
-
-if (BUILD_QCH)
-    ecm_install_qch_export(
-        TARGETS KPim${KF_MAJOR_VERSION}KontactInterface_QCH
-        FILE KPim${KF_MAJOR_VERSION}KontactInterfaceQchTargets.cmake
-        DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
-        COMPONENT Devel
-    )
-    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/KPim${KF_MAJOR_VERSION}KontactInterfaceQchTargets.cmake\")")
-endif()
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
