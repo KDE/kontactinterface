@@ -114,7 +114,7 @@ public:
     bool isRunningStandalone() const;
 
 private Q_SLOTS:
-    void slotApplicationRemoved(const QString &name, const QString &oldOwner, const QString &newOwner);
+    KONTACTINTERFACE_NO_EXPORT void slotApplicationRemoved(const QString &name, const QString &oldOwner, const QString &newOwner);
 
 private:
     class UniqueAppWatcherPrivate;
