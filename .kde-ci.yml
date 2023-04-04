@@ -2,15 +2,6 @@
 # SPDX-License-Identifier: CC0-1.0
 
 Dependencies:
-- 'on': ['Linux/Qt5', 'FreeBSD/Qt5', 'Windows/Qt5']
-  'require':
-    'frameworks/extra-cmake-modules': '@latest'
-    'frameworks/kcoreaddons': '@latest'
-    'frameworks/kparts': '@latest'
-    'frameworks/kwindowsystem': '@latest'
-    'frameworks/ki18n': '@latest'
-    'frameworks/kxmlgui': '@latest'
-
 - 'on': ['Linux/Qt6', 'FreeBSD/Qt6', 'Windows/Qt6']
   'require':
     'frameworks/extra-cmake-modules': '@latest-kf6'
