@@ -43,11 +43,7 @@ target_link_libraries(KPim6KontactInterface
 )
 
 if (KONTACTINTERFACE_HAVE_X11)
-    if (QT_MAJOR_VERSION STREQUAL "5")
-        target_link_libraries(KPim6KontactInterface PRIVATE Qt::X11Extras)
-    else()
-        target_link_libraries(KPim6KontactInterface PRIVATE Qt::GuiPrivate)
-    endif()
+    target_link_libraries(KPim6KontactInterface PRIVATE Qt::GuiPrivate)
 endif()
 
 set_target_properties(KPim6KontactInterface PROPERTIES

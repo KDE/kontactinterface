@@ -63,9 +63,6 @@ find_package(KF6 ${KF_MIN_VERSION} REQUIRED COMPONENTS
 
 if (NOT APPLE AND NOT WIN32)
     find_package(X11 REQUIRED)
-    if (QT_MAJOR_VERSION STREQUAL "5")
-        find_package(Qt5X11Extras REQUIRED)
-    endif()
 endif()
 
 option(USE_UNITY_CMAKE_SUPPORT "Use UNITY cmake support (speedup compile time)" OFF)
