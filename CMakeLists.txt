@@ -15,7 +15,7 @@ include(KDEInstallDirs)
 include(KDECMakeSettings)
 include(KDECompilerSettings NO_POLICY_SCOPE)
 
-include(GenerateExportHeader)
+include(ECMGenerateExportHeader)
 include(ECMGenerateHeaders)
 include(ECMGeneratePriFile)
 
@@ -40,7 +40,7 @@ set(KONTACTINTERFACE_LIB_VERSION ${PIM_VERSION})
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KPim6KontactInterface")
 
 ecm_setup_version(PROJECT VARIABLE_PREFIX KONTACTINTERFACE
-                        VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kontactinterface_version.h"
+                        VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/src/kontactinterface_version.h"
                         PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KPim6KontactInterfaceConfigVersion.cmake"
                         SOVERSION 6
 )
@@ -106,7 +106,7 @@ install(FILES
 
 
 install(FILES
-   ${CMAKE_CURRENT_BINARY_DIR}/kontactinterface_version.h
+   ${CMAKE_CURRENT_BINARY_DIR}/src/kontactinterface_version.h
    DESTINATION ${KDE_INSTALL_INCLUDEDIR}/KPim6/KontactInterface
    COMPONENT Devel
 )

@@ -26,7 +26,12 @@ if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
     set_target_properties(KPim6KontactInterface PROPERTIES UNITY_BUILD ON)
 endif()
 
-generate_export_header(KPim6KontactInterface BASE_NAME kontactinterface)
+ecm_generate_export_header(KPim6KontactInterface
+    BASE_NAME kontactinterface
+    VERSION ${KONTACTINTERFACE_VERSION}
+    DEPRECATED_BASE_VERSION 0
+    USE_VERSION_HEADER
+)
 
 target_include_directories(KPim6KontactInterface INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR}/KPim6/KontactInterface>")
 target_include_directories(KPim6KontactInterface PUBLIC "$<BUILD_INTERFACE:${KontactInterface_SOURCE_DIR}/src;${KontactInterface_BINARY_DIR}/src;${KontactInterface_BINARY_DIR}>")
