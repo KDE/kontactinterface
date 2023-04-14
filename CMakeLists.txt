@@ -72,7 +72,7 @@ if (USE_UNITY_CMAKE_SUPPORT)
     set(COMPILE_WITH_UNITY_CMAKE_SUPPORT ON)
 endif()
 ecm_set_disabled_deprecation_versions(QT 6.4
-     KF 5.105.0
+     KF 5.240.0
     KPARTS 5.76 # componentData()
 )
 set(KONTACTINTERFACE_HAVE_X11 ${X11_FOUND})
