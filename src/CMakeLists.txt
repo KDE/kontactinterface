@@ -58,7 +58,7 @@ set_target_properties(KPim${KF_MAJOR_VERSION}KontactInterface PROPERTIES
 )
 
 
-install(TARGETS KPim${KF_MAJOR_VERSION}KontactInterface EXPORT KPim${KF_MAJOR_VERSION}KontactInterfaceTargets ${KF_INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS KPim${KF_MAJOR_VERSION}KontactInterface EXPORT KPim${KF_MAJOR_VERSION}KontactInterfaceTargets ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 
 ########### install files ###############
 
