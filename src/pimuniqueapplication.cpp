@@ -174,3 +174,5 @@ int PimUniqueApplication::activate(const QStringList &arguments, const QString &
     Q_UNUSED(workingDirectory)
     return 0;
 }
+
+#include "moc_pimuniqueapplication.cpp"

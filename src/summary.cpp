@@ -148,3 +148,5 @@ void Summary::dropEvent(QDropEvent *event)
 }
 
 #include <summary.moc>
+
+#include "moc_summary.cpp"
