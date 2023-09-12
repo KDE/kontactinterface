@@ -18,6 +18,11 @@
 #include <private/qtx11extras_p.h>
 #endif
 
+#ifdef Q_OS_WINDOWS
+#include <QFont>
+#include <Windows.h>
+#endif
+
 #include <QCommandLineParser>
 #include <QDir>
 
@@ -67,6 +72,18 @@ PimUniqueApplication::PimUniqueApplication(int &argc, char **argv[])
     : QApplication(argc, *argv)
     , d(new PimUniqueApplicationPrivate())
 {
+#ifdef Q_OS_WINDOWS
+    if (AttachConsole(ATTACH_PARENT_PROCESS)) {
+        freopen("CONOUT$", "w", stdout);
+        freopen("CONOUT$", "w", stderr);
+    }
+
+    setStyle(QStringLiteral("breeze"));
+    QFont font(QStringLiteral("Segoe UI Emoji"));
+    font.setPointSize(10);
+    font.setHintingPreference(QFont::PreferNoHinting);
+    setFont(font);
+#endif
 }
 
 PimUniqueApplication::~PimUniqueApplication() = default;
