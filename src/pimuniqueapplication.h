@@ -41,7 +41,7 @@ public:
      */
     static bool start(const QStringList &arguments);
 
-    Q_REQUIRED_RESULT QCommandLineParser *cmdArgs() const;
+    [[nodiscard]] QCommandLineParser *cmdArgs() const;
 
 public Q_SLOTS:
     Q_SCRIPTABLE int newInstance();

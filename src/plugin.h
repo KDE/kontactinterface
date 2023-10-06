@@ -91,7 +91,7 @@ public:
     /**
      * Returns the identifier of the plugin.
      */
-    Q_REQUIRED_RESULT QString identifier() const;
+    [[nodiscard]] QString identifier() const;
 
     /**
      * Sets the localized @p title of the plugin.
@@ -101,7 +101,7 @@ public:
     /**
      * Returns the localized title of the plugin.
      */
-    Q_REQUIRED_RESULT QString title() const;
+    [[nodiscard]] QString title() const;
 
     /**
      * Sets the @p icon name that is used for the plugin.
@@ -111,7 +111,7 @@ public:
     /**
      * Returns the icon name that is used for the plugin.
      */
-    Q_REQUIRED_RESULT QString icon() const;
+    [[nodiscard]] QString icon() const;
 
     /**
      * Sets the @p name of executable (if existent).
@@ -121,7 +121,7 @@ public:
     /**
      * Returns the name of the executable (if existent).
      */
-    Q_REQUIRED_RESULT QString executableName() const;
+    [[nodiscard]] QString executableName() const;
 
     /**
      * Set @p name of library which contains the KPart used by this plugin.
@@ -133,7 +133,7 @@ public:
      * is still running. This is only required if your part is also available
      * as standalone application.
      */
-    Q_REQUIRED_RESULT virtual bool isRunningStandalone() const;
+    [[nodiscard]] virtual bool isRunningStandalone() const;
 
     /**
      * Reimplement this method if your application needs a different approach to be brought
@@ -146,14 +146,14 @@ public:
      * Reimplement this method if you want to add your credits to the Kontact
      * about dialog.
      */
-    Q_REQUIRED_RESULT virtual const KAboutData aboutData();
+    [[nodiscard]] virtual const KAboutData aboutData();
 
     /**
      * You can use this method if you need to access the current part. You can be
      * sure that you always get the same pointer as long as the part has not been
      * deleted.
      */
-    Q_REQUIRED_RESULT KParts::Part *part();
+    [[nodiscard]] KParts::Part *part();
 
     /**
      * This function is called when the plugin is selected by the user before the
@@ -180,12 +180,12 @@ public:
      *
      * @param parent The parent widget of the summary widget.
      */
-    Q_REQUIRED_RESULT virtual Summary *createSummaryWidget(QWidget *parent);
+    [[nodiscard]] virtual Summary *createSummaryWidget(QWidget *parent);
 
     /**
      * Returns whether the plugin provides a part that should be shown in the sidebar.
      */
-    Q_REQUIRED_RESULT virtual bool showInSideBar() const;
+    [[nodiscard]] virtual bool showInSideBar() const;
 
     /**
      * Set if the plugin provides a part that should be shown in the sidebar.
@@ -199,7 +199,7 @@ public:
      * If any loaded plugin returns false from this method, then the
      * main kontact window will not close.
      */
-    Q_REQUIRED_RESULT virtual bool queryClose() const;
+    [[nodiscard]] virtual bool queryClose() const;
 
     /**
      * Registers the client at DBus and returns the dbus identifier.
@@ -227,22 +227,22 @@ public:
     /**
      * Returns the list of custom "New" actions.
      */
-    Q_REQUIRED_RESULT QList<QAction *> newActions() const;
+    [[nodiscard]] QList<QAction *> newActions() const;
 
     /**
      * Returns the list of custom "Sync" actions.
      */
-    Q_REQUIRED_RESULT QList<QAction *> syncActions() const;
+    [[nodiscard]] QList<QAction *> syncActions() const;
 
     /**
      * Returns a list of action names that shall be hidden in the main toolbar.
      */
-    Q_REQUIRED_RESULT virtual QStringList invisibleToolbarActions() const;
+    [[nodiscard]] virtual QStringList invisibleToolbarActions() const;
 
     /**
      * Returns whether the plugin can handle the drag object of the given mime type.
      */
-    Q_REQUIRED_RESULT virtual bool canDecodeMimeData(const QMimeData *data) const;
+    [[nodiscard]] virtual bool canDecodeMimeData(const QMimeData *data) const;
 
     /**
      * Process drop event.
@@ -262,7 +262,7 @@ public:
     /**
      * Returns a pointer to the kontact core object.
      */
-    Q_REQUIRED_RESULT Core *core() const;
+    [[nodiscard]] Core *core() const;
 
     /**
      * Sets whether the plugin shall be disabled.
@@ -272,7 +272,7 @@ public:
     /**
      * Returns whether the plugin is disabled.
      */
-    Q_REQUIRED_RESULT bool disabled() const;
+    [[nodiscard]] bool disabled() const;
 
     /**
      * @since 4.13

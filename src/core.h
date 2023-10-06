@@ -60,7 +60,7 @@ public:
      * @param library the library to create part from
      * Creates a part from the given @p library.
      */
-    Q_REQUIRED_RESULT KParts::Part *createPart(const char *library);
+    [[nodiscard]] KParts::Part *createPart(const char *library);
 
     /**
      * @internal (for Plugin)
