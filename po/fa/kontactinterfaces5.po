@@ -1,0 +1,28 @@
+# Copyright (C) 2023 This file is copyright:
+# This file is distributed under the same license as the kontactinterface package.
+#
+# SPDX-FileCopyrightText: 2023 Alosra <Aleomoeini@gmail.com>
+msgid ""
+msgstr ""
+"Project-Id-Version: kontactinterface\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2019-05-20 03:17+0200\n"
+"PO-Revision-Date: 2023-10-07 15:34+0300\n"
+"Last-Translator: Alosra <Aleomoeini@gmail.com>\n"
+"Language-Team: English <kde-i18-fa@kde.org>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 23.08.1\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "علی معینی،"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "aleomoeini@gmail.com"
