@@ -78,7 +78,7 @@ set(KONTACTINTERFACE_HAVE_X11 ${X11_FOUND})
 
 add_subdirectory(src)
 
-configure_file(config-kontactinterface.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kontactinterface.h )
+configure_file(config-kontactinterface.h.in ${CMAKE_CURRENT_BINARY_DIR}/config-kontactinterface.h )
 if (BUILD_QCH)
     ecm_install_qch_export(
         TARGETS KPim6KontactInterface_QCH
