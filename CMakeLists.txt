@@ -70,6 +70,7 @@ set(COMPILE_WITH_UNITY_CMAKE_SUPPORT OFF)
 if (USE_UNITY_CMAKE_SUPPORT)
     set(COMPILE_WITH_UNITY_CMAKE_SUPPORT ON)
 endif()
+add_definitions(-DQT_NO_CONTEXTLESS_CONNECT)
 ecm_set_disabled_deprecation_versions(QT 6.5
      KF 5.240.0
     KPARTS 5.76 # componentData()
