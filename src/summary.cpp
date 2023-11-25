@@ -115,7 +115,7 @@ void Summary::mouseMoveEvent(QMouseEvent *event)
     if ((event->buttons() & Qt::LeftButton) && (event->pos() - d->mDragStartPoint).manhattanLength() > 4) {
         auto drag = new QDrag(this);
         drag->setMimeData(new SummaryMimeData());
-        drag->setObjectName(QStringLiteral("SummaryWidgetDrag"));
+        drag->setObjectName(QLatin1StringView("SummaryWidgetDrag"));
 
         QPixmap pm = grab();
         if (pm.width() > 300) {
