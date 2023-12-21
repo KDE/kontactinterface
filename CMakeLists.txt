@@ -33,7 +33,7 @@ include(ECMAddQch)
 option(BUILD_QCH "Build API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)" OFF)
 add_feature_info(QCH ${BUILD_QCH} "API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)")
 
-add_definitions(-DTRANSLATION_DOMAIN=\"kontactinterfaces5\")
+add_definitions(-DTRANSLATION_DOMAIN=\"kontactinterfaces6\")
 
 set(KONTACTINTERFACE_LIB_VERSION ${PIM_VERSION})
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KPim6KontactInterface")
