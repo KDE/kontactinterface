@@ -1,4 +1,4 @@
-# Translation of kontactinterfaces5 to Norwegian Bokmål
+# Translation of kontactinterfaces6 to Norwegian Bokmål
 #
 # Bjørn Steensrud <bjornst@skogkatt.homelinux.org>, 2008.
 msgid ""
