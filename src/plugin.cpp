@@ -58,7 +58,7 @@ Plugin::Plugin(Core *core, QObject *parent, const KPluginMetaData &, const char 
     , QObject(parent)
     , d(new PluginPrivate)
 {
-    setObjectName(QLatin1String(appName));
+    setObjectName(QLatin1StringView(appName));
     core->factory()->addClient(this);
 
     d->pluginName = pluginName ? pluginName : appName;
@@ -148,10 +148,10 @@ KParts::Part *Plugin::part()
 QString Plugin::registerClient()
 {
     if (d->serviceName.isEmpty()) {
-        d->serviceName = QLatin1String("org.kde.") + QLatin1String(objectName().toLatin1());
+        d->serviceName = QLatin1StringView("org.kde.") + QLatin1String(objectName().toLatin1());
 #ifdef Q_OS_WIN
         const QString pid = QString::number(QCoreApplication::applicationPid());
-        d->serviceName.append(QLatin1String(".unique-") + pid);
+        d->serviceName.append(QLatin1StringView(".unique-") + pid);
 #endif
         QDBusConnection::sessionBus().registerService(d->serviceName);
     }
@@ -250,12 +250,12 @@ void Plugin::PluginPrivate::removeInvisibleToolbarActions(Plugin *plugin)
     const QDomElement docElem = doc.documentElement();
     // 1. Iterate over containers
     for (QDomElement containerElem = docElem.firstChildElement(); !containerElem.isNull(); containerElem = containerElem.nextSiblingElement()) {
-        if (QString::compare(containerElem.tagName(), QLatin1String("ToolBar"), Qt::CaseInsensitive) == 0) {
+        if (QString::compare(containerElem.tagName(), QLatin1StringView("ToolBar"), Qt::CaseInsensitive) == 0) {
             // 2. Iterate over actions in toolbars
             QDomElement actionElem = containerElem.firstChildElement();
             while (!actionElem.isNull()) {
                 QDomElement nextActionElem = actionElem.nextSiblingElement();
-                if (QString::compare(actionElem.tagName(), QLatin1String("Action"), Qt::CaseInsensitive) == 0) {
+                if (QString::compare(actionElem.tagName(), QLatin1StringView("Action"), Qt::CaseInsensitive) == 0) {
                     // qCDebug(KONTACTINTERFACE_LOG) << "Looking at action" << actionElem.attribute("name");
                     if (hideActions.contains(actionElem.attribute(QStringLiteral("name")))) {
                         // qCDebug(KONTACTINTERFACE_LOG) << "REMOVING";
@@ -273,8 +273,8 @@ void Plugin::PluginPrivate::removeInvisibleToolbarActions(Plugin *plugin)
     // the fast kdeui code for that rather than a full QDomDocument.
     // (*) or when invisibleToolbarActions() changes :)
 
-    const QString newAppFile = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kontact/default-")
-        + QLatin1String(pluginName) + QLatin1String(".rc");
+    const QString newAppFile = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1StringView("/kontact/default-")
+        + QLatin1StringView(pluginName) + QLatin1String(".rc");
     const QFileInfo fileInfo(newAppFile);
     QDir().mkpath(fileInfo.absolutePath());
 
@@ -294,10 +294,10 @@ void Plugin::PluginPrivate::setXmlFiles()
     if (pluginName.isEmpty()) {
         return;
     }
-    const QString newAppFile = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kontact/default-")
-        + QLatin1String(pluginName) + QLatin1String(".rc");
-    const QString localFile = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kontact/local-")
-        + QLatin1String(pluginName) + QLatin1String(".rc");
+    const QString newAppFile = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1StringView("/kontact/default-")
+        + QLatin1StringView(pluginName) + QLatin1String(".rc");
+    const QString localFile = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1StringView("/kontact/local-")
+        + QLatin1StringView(pluginName) + QLatin1String(".rc");
     if (!localFile.isEmpty() && !newAppFile.isEmpty()) {
         if (part->xmlFile() != newAppFile || part->localXMLFile() != localFile) {
             part->replaceXMLFile(newAppFile, localFile);

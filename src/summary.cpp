@@ -34,7 +34,7 @@ class SummaryMimeData : public QMimeData
 public:
     bool hasFormat(const QString &format) const override
     {
-        return format == QLatin1String("application/x-kontact-summary");
+        return format == QLatin1StringView("application/x-kontact-summary");
     }
 };
 }

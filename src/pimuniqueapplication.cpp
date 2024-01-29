@@ -98,7 +98,7 @@ void PimUniqueApplication::setAboutData(KAboutData &aboutData)
     KAboutData::setApplicationData(aboutData);
     aboutData.setupCommandLine(d->cmdArgs);
     // This object name is used in start(), and also in kontact's UniqueAppHandler.
-    const QString objectName = QLatin1Char('/') + QApplication::applicationName() + QLatin1String("_PimApplication");
+    const QString objectName = QLatin1Char('/') + QApplication::applicationName() + QLatin1StringView("_PimApplication");
     QDBusConnection::sessionBus().registerObject(objectName,
                                                  this,
                                                  QDBusConnection::ExportScriptableSlots | QDBusConnection::ExportScriptableProperties
@@ -107,7 +107,7 @@ void PimUniqueApplication::setAboutData(KAboutData &aboutData)
 
 static bool callNewInstance(const QString &appName, const QString &serviceName, const QByteArray &asn_id, const QStringList &arguments)
 {
-    const QString objectName = QLatin1Char('/') + appName + QLatin1String("_PimApplication");
+    const QString objectName = QLatin1Char('/') + appName + QLatin1StringView("_PimApplication");
     QDBusInterface iface(serviceName, objectName, QStringLiteral("org.kde.PIMUniqueApplication"), QDBusConnection::sessionBus());
     if (iface.isValid()) {
         QDBusReply<int> reply = iface.call(QStringLiteral("newInstance"), asn_id, arguments, QDir::currentPath());
@@ -131,7 +131,7 @@ bool PimUniqueApplication::start(const QStringList &arguments)
     // (which could be kontact or the standalone application),
     // otherwise the current app being started will register to DBus.
 
-    const QString serviceName = QLatin1String("org.kde.") + appName;
+    const QString serviceName = QLatin1StringView("org.kde.") + appName;
     if (QDBusConnection::sessionBus().interface()->isServiceRegistered(serviceName)) {
         QByteArray new_asn_id;
         if (KWindowSystem::isPlatformX11()) {
