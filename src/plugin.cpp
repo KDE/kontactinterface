@@ -148,7 +148,7 @@ KParts::Part *Plugin::part()
 QString Plugin::registerClient()
 {
     if (d->serviceName.isEmpty()) {
-        d->serviceName = QLatin1StringView("org.kde.") + QLatin1String(objectName().toLatin1());
+        d->serviceName = QLatin1StringView("org.kde.") + QLatin1StringView(objectName().toLatin1());
 #ifdef Q_OS_WIN
         const QString pid = QString::number(QCoreApplication::applicationPid());
         d->serviceName.append(QLatin1StringView(".unique-") + pid);
@@ -274,7 +274,7 @@ void Plugin::PluginPrivate::removeInvisibleToolbarActions(Plugin *plugin)
     // (*) or when invisibleToolbarActions() changes :)
 
     const QString newAppFile = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1StringView("/kontact/default-")
-        + QLatin1StringView(pluginName) + QLatin1String(".rc");
+        + QLatin1StringView(pluginName) + QLatin1StringView(".rc");
     const QFileInfo fileInfo(newAppFile);
     QDir().mkpath(fileInfo.absolutePath());
 
@@ -295,9 +295,9 @@ void Plugin::PluginPrivate::setXmlFiles()
         return;
     }
     const QString newAppFile = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1StringView("/kontact/default-")
-        + QLatin1StringView(pluginName) + QLatin1String(".rc");
+        + QLatin1StringView(pluginName) + QLatin1StringView(".rc");
     const QString localFile = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1StringView("/kontact/local-")
-        + QLatin1StringView(pluginName) + QLatin1String(".rc");
+        + QLatin1StringView(pluginName) + QLatin1StringView(".rc");
     if (!localFile.isEmpty() && !newAppFile.isEmpty()) {
         if (part->xmlFile() != newAppFile || part->localXMLFile() != localFile) {
             part->replaceXMLFile(newAppFile, localFile);
