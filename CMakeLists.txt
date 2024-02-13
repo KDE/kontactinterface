@@ -73,7 +73,7 @@ if (USE_UNITY_CMAKE_SUPPORT)
 endif()
 add_definitions(-DQT_NO_CONTEXTLESS_CONNECT)
 ecm_set_disabled_deprecation_versions(QT 6.6
-     KF 5.249.0
+     KF 6.0.0
     KPARTS 5.76 # componentData()
 )
 set(KONTACTINTERFACE_HAVE_X11 ${X11_FOUND})
