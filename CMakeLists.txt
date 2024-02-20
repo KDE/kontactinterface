@@ -61,14 +61,14 @@ find_package(KF6 ${KF_MIN_VERSION} REQUIRED COMPONENTS
     XmlGui
 )
 
-if (NOT APPLE AND NOT WIN32)
+if(NOT APPLE AND NOT WIN32)
     find_package(X11 REQUIRED)
 endif()
 
 option(USE_UNITY_CMAKE_SUPPORT "Use UNITY cmake support (speedup compile time)" OFF)
 
 set(COMPILE_WITH_UNITY_CMAKE_SUPPORT OFF)
-if (USE_UNITY_CMAKE_SUPPORT)
+if(USE_UNITY_CMAKE_SUPPORT)
     set(COMPILE_WITH_UNITY_CMAKE_SUPPORT ON)
 endif()
 add_definitions(-DQT_NO_CONTEXTLESS_CONNECT)
@@ -80,8 +80,8 @@ set(KONTACTINTERFACE_HAVE_X11 ${X11_FOUND})
 
 add_subdirectory(src)
 
-configure_file(config-kontactinterface.h.in ${CMAKE_CURRENT_BINARY_DIR}/config-kontactinterface.h )
-if (BUILD_QCH)
+configure_file(config-kontactinterface.h.in ${CMAKE_CURRENT_BINARY_DIR}/config-kontactinterface.h)
+if(BUILD_QCH)
     ecm_install_qch_export(
         TARGETS KPim6KontactInterface_QCH
         FILE KPim6KontactInterfaceQchTargets.cmake
