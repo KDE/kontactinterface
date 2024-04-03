@@ -8,6 +8,7 @@
 */
 
 #include "summary.h"
+using namespace Qt::Literals::StringLiterals;
 
 #include <QDrag>
 #include <QDragEnterEvent>
@@ -34,7 +35,7 @@ class SummaryMimeData : public QMimeData
 public:
     bool hasFormat(const QString &format) const override
     {
-        return format == QLatin1StringView("application/x-kontact-summary");
+        return format == "application/x-kontact-summary"_L1;
     }
 };
 }
@@ -115,7 +116,7 @@ void Summary::mouseMoveEvent(QMouseEvent *event)
     if ((event->buttons() & Qt::LeftButton) && (event->pos() - d->mDragStartPoint).manhattanLength() > 4) {
         auto drag = new QDrag(this);
         drag->setMimeData(new SummaryMimeData());
-        drag->setObjectName(QLatin1StringView("SummaryWidgetDrag"));
+        drag->setObjectName("SummaryWidgetDrag"_L1);
 
         QPixmap pm = grab();
         if (pm.width() > 300) {

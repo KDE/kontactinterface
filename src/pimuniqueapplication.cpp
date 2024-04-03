@@ -6,6 +6,8 @@
 */
 
 #include "pimuniqueapplication.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "config-kontactinterface.h"
 #include "kontactinterface_debug.h"
 
@@ -98,7 +100,7 @@ void PimUniqueApplication::setAboutData(KAboutData &aboutData)
     KAboutData::setApplicationData(aboutData);
     aboutData.setupCommandLine(d->cmdArgs);
     // This object name is used in start(), and also in kontact's UniqueAppHandler.
-    const QString objectName = QLatin1Char('/') + QApplication::applicationName() + QLatin1StringView("_PimApplication");
+    const QString objectName = QLatin1Char('/') + QApplication::applicationName() + "_PimApplication"_L1;
     QDBusConnection::sessionBus().registerObject(objectName,
                                                  this,
                                                  QDBusConnection::ExportScriptableSlots | QDBusConnection::ExportScriptableProperties
@@ -107,7 +109,7 @@ void PimUniqueApplication::setAboutData(KAboutData &aboutData)
 
 static bool callNewInstance(const QString &appName, const QString &serviceName, const QByteArray &asn_id, const QStringList &arguments)
 {
-    const QString objectName = QLatin1Char('/') + appName + QLatin1StringView("_PimApplication");
+    const QString objectName = QLatin1Char('/') + appName + "_PimApplication"_L1;
     QDBusInterface iface(serviceName, objectName, QStringLiteral("org.kde.PIMUniqueApplication"), QDBusConnection::sessionBus());
     if (iface.isValid()) {
         QDBusReply<int> reply = iface.call(QStringLiteral("newInstance"), asn_id, arguments, QDir::currentPath());
@@ -131,7 +133,7 @@ bool PimUniqueApplication::start(const QStringList &arguments)
     // (which could be kontact or the standalone application),
     // otherwise the current app being started will register to DBus.
 
-    const QString serviceName = QLatin1StringView("org.kde.") + appName;
+    const QString serviceName = "org.kde."_L1 + appName;
     if (QDBusConnection::sessionBus().interface()->isServiceRegistered(serviceName)) {
         QByteArray new_asn_id;
         if (KWindowSystem::isPlatformX11()) {

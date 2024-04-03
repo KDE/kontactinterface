@@ -8,6 +8,8 @@
 */
 
 #include "plugin.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "core.h"
 #include "kontactinterface_debug.h"
 #include "processes.h"
@@ -148,10 +150,10 @@ KParts::Part *Plugin::part()
 QString Plugin::registerClient()
 {
     if (d->serviceName.isEmpty()) {
-        d->serviceName = QLatin1StringView("org.kde.") + QLatin1StringView(objectName().toLatin1());
+        d->serviceName = "org.kde."_L1 + QLatin1StringView(objectName().toLatin1());
 #ifdef Q_OS_WIN
         const QString pid = QString::number(QCoreApplication::applicationPid());
-        d->serviceName.append(QLatin1StringView(".unique-") + pid);
+        d->serviceName.append(".unique-"_L1 + pid);
 #endif
         QDBusConnection::sessionBus().registerService(d->serviceName);
     }
@@ -250,12 +252,12 @@ void Plugin::PluginPrivate::removeInvisibleToolbarActions(Plugin *plugin)
     const QDomElement docElem = doc.documentElement();
     // 1. Iterate over containers
     for (QDomElement containerElem = docElem.firstChildElement(); !containerElem.isNull(); containerElem = containerElem.nextSiblingElement()) {
-        if (QString::compare(containerElem.tagName(), QLatin1StringView("ToolBar"), Qt::CaseInsensitive) == 0) {
+        if (QString::compare(containerElem.tagName(), "ToolBar"_L1, Qt::CaseInsensitive) == 0) {
             // 2. Iterate over actions in toolbars
             QDomElement actionElem = containerElem.firstChildElement();
             while (!actionElem.isNull()) {
                 QDomElement nextActionElem = actionElem.nextSiblingElement();
-                if (QString::compare(actionElem.tagName(), QLatin1StringView("Action"), Qt::CaseInsensitive) == 0) {
+                if (QString::compare(actionElem.tagName(), "Action"_L1, Qt::CaseInsensitive) == 0) {
                     // qCDebug(KONTACTINTERFACE_LOG) << "Looking at action" << actionElem.attribute("name");
                     if (hideActions.contains(actionElem.attribute(QStringLiteral("name")))) {
                         // qCDebug(KONTACTINTERFACE_LOG) << "REMOVING";
@@ -273,8 +275,8 @@ void Plugin::PluginPrivate::removeInvisibleToolbarActions(Plugin *plugin)
     // the fast kdeui code for that rather than a full QDomDocument.
     // (*) or when invisibleToolbarActions() changes :)
 
-    const QString newAppFile = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1StringView("/kontact/default-")
-        + QLatin1StringView(pluginName) + QLatin1StringView(".rc");
+    const QString newAppFile =
+        QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/kontact/default-"_L1 + QLatin1StringView(pluginName) + ".rc"_L1;
     const QFileInfo fileInfo(newAppFile);
     QDir().mkpath(fileInfo.absolutePath());
 
@@ -294,10 +296,10 @@ void Plugin::PluginPrivate::setXmlFiles()
     if (pluginName.isEmpty()) {
         return;
     }
-    const QString newAppFile = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1StringView("/kontact/default-")
-        + QLatin1StringView(pluginName) + QLatin1StringView(".rc");
-    const QString localFile = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1StringView("/kontact/local-")
-        + QLatin1StringView(pluginName) + QLatin1StringView(".rc");
+    const QString newAppFile =
+        QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/kontact/default-"_L1 + QLatin1StringView(pluginName) + ".rc"_L1;
+    const QString localFile =
+        QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/kontact/local-"_L1 + QLatin1StringView(pluginName) + ".rc"_L1;
     if (!localFile.isEmpty() && !newAppFile.isEmpty()) {
         if (part->xmlFile() != newAppFile || part->localXMLFile() != localFile) {
             part->replaceXMLFile(newAppFile, localFile);
