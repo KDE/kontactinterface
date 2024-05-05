@@ -72,7 +72,7 @@ if(USE_UNITY_CMAKE_SUPPORT)
     set(COMPILE_WITH_UNITY_CMAKE_SUPPORT ON)
 endif()
 add_definitions(-DQT_NO_CONTEXTLESS_CONNECT)
-ecm_set_disabled_deprecation_versions(QT 6.6
+ecm_set_disabled_deprecation_versions(QT 6.7
      KF 6.2.0
 )
 set(KONTACTINTERFACE_HAVE_X11 ${X11_FOUND})
