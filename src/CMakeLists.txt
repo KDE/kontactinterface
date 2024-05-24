@@ -45,6 +45,7 @@ target_link_libraries(KPim6KontactInterface
                       KF6::WindowSystem
                       KF6::I18n
                       KF6::KIOGui
+		      Qt6::DBus
 )
 
 if (KONTACTINTERFACE_HAVE_X11)
