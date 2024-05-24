@@ -52,6 +52,8 @@ ecm_setup_qtplugin_macro_names(
         PACKAGE_SETUP_AUTOMOC_VARIABLES
 )
 
+find_package(Qt6DBus ${QT_REQUIRED_VERSION} CONFIG REQUIRED)
+
 ########### Find packages ###########
 find_package(KF6 ${KF_MIN_VERSION} REQUIRED COMPONENTS
     CoreAddons
