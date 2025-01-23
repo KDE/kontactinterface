@@ -11,7 +11,7 @@ portingAid: false
 deprecated: false
 release: false
 libraries:
- - cmake: "KPim6::KontactInterface"
+    - cmake: "KPim6::KontactInterface"
 cmakename: KPim6KontactInterface
 group: kdepim
 public_lib: true
