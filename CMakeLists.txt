@@ -63,6 +63,9 @@ ecm_setup_qtplugin_macro_names(
 )
 
 find_package(Qt6DBus ${QT_REQUIRED_VERSION} CONFIG REQUIRED)
+if (Qt6Gui_VERSION VERSION_GREATER_EQUAL "6.10.0")
+   find_package(Qt6GuiPrivate ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE)
+endif()
 
 ########### Find packages ###########
 find_package(KF6 ${KF_MIN_VERSION} REQUIRED COMPONENTS
