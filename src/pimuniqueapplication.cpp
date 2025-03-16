@@ -20,6 +20,11 @@ using namespace Qt::Literals::StringLiterals;
 #include <private/qtx11extras_p.h>
 #endif
 
+#if __has_include(<KWaylandExtras>)
+#include <KWaylandExtras>
+#define HAVE_WAYLAND
+#endif
+
 #ifdef Q_OS_WINDOWS
 #include <QFont>
 #include <Windows.h>
@@ -66,6 +71,13 @@ public:
         }
     }
 
+    void exportFocusWindow()
+    {
+#ifdef HAVE_WAYLAND
+        KWaylandExtras::self()->exportWindow(QGuiApplication::focusWindow());
+#endif
+    }
+
     QCommandLineParser *const cmdArgs;
 };
 //@endcond
@@ -85,6 +97,25 @@ PimUniqueApplication::PimUniqueApplication(int &argc, char **argv[])
     font.setPointSize(10);
     font.setHintingPreference(QFont::PreferNoHinting);
     setFont(font);
+#endif
+
+#ifdef HAVE_WAYLAND
+    connect(KWaylandExtras::self(), &KWaylandExtras::windowExported, this, [](const auto, const auto &token) {
+        qputenv("PINENTRY_GEOM_HINT", QUrl::toPercentEncoding(token));
+    });
+    connect(qApp, &QGuiApplication::focusWindowChanged, this, [this](auto w) {
+        if (!w) {
+            return;
+        }
+        d->exportFocusWindow();
+    });
+
+    QMetaObject::invokeMethod(
+        this,
+        [this]() {
+            d->exportFocusWindow();
+        },
+        Qt::QueuedConnection);
 #endif
 }
 
