@@ -25,7 +25,7 @@ using namespace KontactInterface;
 // clang-format off
 #include <windows.h>
 #include <psapi.h>
-#include <signal.h>
+#include <csignal>
 #include <tlhelp32.h>
 // clang-format on
 
