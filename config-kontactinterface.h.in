@@ -9,4 +9,3 @@
 
 /* Define to 1 if you have the Xlib */
 #cmakedefine01 KONTACTINTERFACE_HAVE_X11
-
