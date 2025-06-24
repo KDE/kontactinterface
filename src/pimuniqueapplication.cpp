@@ -92,8 +92,8 @@ PimUniqueApplication::PimUniqueApplication(int &argc, char **argv[])
         freopen("CONOUT$", "w", stderr);
     }
 
-    setStyle(QStringLiteral("breeze"));
-    QFont font(QStringLiteral("Segoe UI Emoji"));
+    setStyle(u"breeze"_s);
+    QFont font(u"Segoe UI Emoji"_s);
     font.setPointSize(10);
     font.setHintingPreference(QFont::PreferNoHinting);
     setFont(font);
@@ -131,7 +131,7 @@ void PimUniqueApplication::setAboutData(KAboutData &aboutData)
     KAboutData::setApplicationData(aboutData);
     aboutData.setupCommandLine(d->cmdArgs);
     // This object name is used in start(), and also in kontact's UniqueAppHandler.
-    const QString objectName = QLatin1Char('/') + QApplication::applicationName() + "_PimApplication"_L1;
+    const QString objectName = u'/' + QApplication::applicationName() + "_PimApplication"_L1;
     QDBusConnection::sessionBus().registerObject(objectName,
                                                  this,
                                                  QDBusConnection::ExportScriptableSlots | QDBusConnection::ExportScriptableProperties
@@ -140,10 +140,10 @@ void PimUniqueApplication::setAboutData(KAboutData &aboutData)
 
 static bool callNewInstance(const QString &appName, const QString &serviceName, const QByteArray &asn_id, const QStringList &arguments)
 {
-    const QString objectName = QLatin1Char('/') + appName + "_PimApplication"_L1;
-    QDBusInterface iface(serviceName, objectName, QStringLiteral("org.kde.PIMUniqueApplication"), QDBusConnection::sessionBus());
+    const QString objectName = u'/' + appName + "_PimApplication"_L1;
+    QDBusInterface iface(serviceName, objectName, u"org.kde.PIMUniqueApplication"_s, QDBusConnection::sessionBus());
     if (iface.isValid()) {
-        QDBusReply<int> reply = iface.call(QStringLiteral("newInstance"), asn_id, arguments, QDir::currentPath());
+        QDBusReply<int> reply = iface.call(u"newInstance"_s, asn_id, arguments, QDir::currentPath());
         if (reply.isValid()) {
             return true;
         }

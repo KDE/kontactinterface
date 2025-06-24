@@ -137,7 +137,7 @@ void Summary::mouseMoveEvent(QMouseEvent *event)
 
 void Summary::dragEnterEvent(QDragEnterEvent *event)
 {
-    if (event->mimeData()->hasFormat(QStringLiteral("application/x-kontact-summary"))) {
+    if (event->mimeData()->hasFormat(u"application/x-kontact-summary"_s)) {
         event->acceptProposedAction();
     }
 }

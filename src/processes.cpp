@@ -17,6 +17,8 @@
 // krazy:excludeall=captruefalse,null
 
 #include "processes.h"
+using namespace Qt::Literals::StringLiterals;
+
 using namespace KontactInterface;
 
 #ifdef Q_OS_WIN

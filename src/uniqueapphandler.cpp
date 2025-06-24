@@ -88,7 +88,7 @@ UniqueAppHandler::UniqueAppHandler(Plugin *plugin)
     QDBusConnection session = QDBusConnection::sessionBus();
     const QString appName = plugin->objectName();
     session.registerService("org.kde."_L1 + appName);
-    const QString objectName = QLatin1Char('/') + appName + "_PimApplication"_L1;
+    const QString objectName = u'/' + appName + "_PimApplication"_L1;
     session.registerObject(objectName, this, QDBusConnection::ExportAllSlots);
 }
 
