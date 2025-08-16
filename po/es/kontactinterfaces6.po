@@ -1,16 +1,17 @@
-# translation of kontactinterfaces.po to Español
-# Copyright (C) YEAR This_file_is_part_of_KDE
-# This file is distributed under the same license as the PACKAGE package.
+# Spanish translations for kontactinterfaces6.po package.
+# Copyright (C) 2008-2025 This file is copyright:
+# This file is distributed under the same license as the kontactinterface package.
 #
-# Franco Mariluis <fmariluis@gmail.com>, 2008.
-# Javier Vinal <fjvinal@gmail.com>, 2013.
+# SPDX-FileCopyrightText: 2008 Franco Mariluis <fmariluis@gmail.com>
+# SPDX-FileCopyrightText: 2013 Javier Vinal <fjvinal@gmail.com>
+# SPDX-FileCopyrightText: 2025 Eloy Cuadra <ecuadra@eloihr.net>
 msgid ""
 msgstr ""
-"Project-Id-Version: kontactinterfaces\n"
+"Project-Id-Version: kontactinterfaces6\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2019-05-20 03:17+0200\n"
-"PO-Revision-Date: 2013-11-25 14:08+0100\n"
-"Last-Translator: Javier Vinal <fjvinal@gmail.com>\n"
+"PO-Revision-Date: 2025-08-16 01:36+0100\n"
+"Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
