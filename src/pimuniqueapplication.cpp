@@ -25,7 +25,7 @@ using namespace Qt::Literals::StringLiterals;
 #define HAVE_WAYLAND
 #endif
 
-#ifdef Q_OS_WINDOWS
+#ifdef Q_OS_WIN
 #include <QFont>
 #include <Windows.h>
 #endif
@@ -86,7 +86,7 @@ PimUniqueApplication::PimUniqueApplication(int &argc, char **argv[])
     : QApplication(argc, *argv)
     , d(new PimUniqueApplicationPrivate())
 {
-#ifdef Q_OS_WINDOWS
+#ifdef Q_OS_WIN
     if (AttachConsole(ATTACH_PARENT_PROCESS)) {
         freopen("CONOUT$", "w", stdout);
         freopen("CONOUT$", "w", stderr);
