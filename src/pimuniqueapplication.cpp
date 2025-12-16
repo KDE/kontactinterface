@@ -8,7 +8,6 @@
 #include "pimuniqueapplication.h"
 using namespace Qt::Literals::StringLiterals;
 
-#include "config-kontactinterface.h"
 #include "kontactinterface_debug.h"
 
 #include <KAboutData>
