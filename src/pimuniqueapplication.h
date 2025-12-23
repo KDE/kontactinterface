@@ -16,7 +16,7 @@ class QCommandLineParser;
 
 namespace KontactInterface
 {
-/**
+/*!
  * KDEPIM applications which can be integrated into kontact should use
  * PimUniqueApplication instead of QApplication + Dbus unique.
  * This makes command-line handling work, i.e. you can launch "korganizer"
@@ -34,10 +34,10 @@ public:
 
     void setAboutData(KAboutData &aboutData);
 
-    /**
+    /*!
      * Register this process as a unique application, if not already running.
      * Typically called in main().
-     * @param arguments should start with the appname, as QCoreApplication::arguments() does.
+     * \a arguments should start with the appname, as QCoreApplication::arguments() does.
      */
     static bool start(const QStringList &arguments);
 
@@ -51,10 +51,8 @@ protected:
     virtual int activate(const QStringList &arguments, const QString &workingDirectory);
 
 private:
-    //@cond PRIVATE
     class PimUniqueApplicationPrivate;
     std::unique_ptr<PimUniqueApplicationPrivate> const d;
-    //@endcond
 };
 
 }

@@ -31,15 +31,15 @@ namespace KParts
 class Part;
 }
 
-/**
+/*!
   Increase this version number whenever you make a change in the API.
  */
 #define KONTACT_PLUGIN_VERSION 11
 
-/**
+/*!
   Exports Kontact plugin.
-  @param pluginclass the class to instantiate (must derive from KontactInterface::Plugin)
-  @param jsonFile filename of the JSON file, generated from a .desktop file
+  \a pluginclass the class to instantiate (must derive from KontactInterface::Plugin)
+  \a jsonFile filename of the JSON file, generated from a .desktop file
  */
 #define EXPORT_KONTACT_PLUGIN_WITH_JSON(pluginclass, jsonFile)                                                                                                 \
     class Instance                                                                                                                                             \
@@ -56,8 +56,8 @@ namespace KontactInterface
 {
 class Core;
 class Summary;
-/**
- * @short Base class for all Plugins in Kontact.
+/*!
+ * \brief Base class for all Plugins in Kontact.
  *
  * Inherit from it to get a plugin. It can insert an icon into the sidepane,
  * add widgets to the widgetstack and add menu items via XMLGUI.
@@ -67,133 +67,133 @@ class KONTACTINTERFACE_EXPORT Plugin : public QObject, virtual public KXMLGUICli
     Q_OBJECT
 
 public:
-    /**
+    /*!
      * Creates a new plugin.
      *
-     * @param core The core object that manages the plugin.
-     * @param parent The parent object.
-     * @param appName The name of the application that
+     * \a core The core object that manages the plugin.
+     * \a parent The parent object.
+     * \a appName The name of the application that
      *       provides the part. This is the name used for DBus registration.
      *       It's ok to have several plugins using the same application name.
-     * @param pluginName The unique name of the plugin. Defaults to appName if not set.
+     * \a pluginName The unique name of the plugin. Defaults to appName if not set.
      */
     Plugin(Core *core, QObject *parent, const KPluginMetaData &data, const char *appName, const char *pluginName = nullptr);
-    /**
+    /*!
      * Destroys the plugin.
      */
     ~Plugin() override;
 
-    /**
-     * Sets the @p identifier of the plugin.
+    /*!
+     * Sets the \a identifier of the plugin.
      */
     void setIdentifier(const QString &identifier);
 
-    /**
+    /*!
      * Returns the identifier of the plugin.
      */
     [[nodiscard]] QString identifier() const;
 
-    /**
-     * Sets the localized @p title of the plugin.
+    /*!
+     * Sets the localized \a title of the plugin.
      */
     void setTitle(const QString &title);
 
-    /**
+    /*!
      * Returns the localized title of the plugin.
      */
     [[nodiscard]] QString title() const;
 
-    /**
-     * Sets the @p icon name that is used for the plugin.
+    /*!
+     * Sets the \a icon name that is used for the plugin.
      */
     void setIcon(const QString &icon);
 
-    /**
+    /*!
      * Returns the icon name that is used for the plugin.
      */
     [[nodiscard]] QString icon() const;
 
-    /**
-     * Sets the @p name of executable (if existent).
+    /*!
+     * Sets the \a name of executable (if existent).
      */
     void setExecutableName(const QString &name);
 
-    /**
+    /*!
      * Returns the name of the executable (if existent).
      */
     [[nodiscard]] QString executableName() const;
 
-    /**
-     * Set @p name of library which contains the KPart used by this plugin.
+    /*!
+     * Set \a name of library which contains the KPart used by this plugin.
      */
     void setPartLibraryName(const QByteArray &name);
 
-    /**
+    /*!
      * Reimplement this method and return whether a standalone application
      * is still running. This is only required if your part is also available
      * as standalone application.
      */
     [[nodiscard]] virtual bool isRunningStandalone() const;
 
-    /**
+    /*!
      * Reimplement this method if your application needs a different approach to be brought
      * in the foreground. The default behaviour is calling the binary.
      * This is only required if your part is also available as standalone application.
      */
     virtual void bringToForeground();
 
-    /**
+    /*!
      * Reimplement this method if you want to add your credits to the Kontact
      * about dialog.
      */
     [[nodiscard]] virtual const KAboutData aboutData();
 
-    /**
+    /*!
      * You can use this method if you need to access the current part. You can be
      * sure that you always get the same pointer as long as the part has not been
      * deleted.
      */
     [[nodiscard]] KParts::Part *part();
 
-    /**
+    /*!
      * This function is called when the plugin is selected by the user before the
      * widget of the KPart belonging to the plugin is raised.
      */
     virtual void select();
 
-    /**
+    /*!
      * Called by kontact when the plugin is selected by the user.
      * Calls the virtual method select(), but also handles some standard behavior
      * like "invisible toolbar actions".
      */
     void aboutToSelect();
 
-    /**
+    /*!
      * This function is called whenever the config dialog has been closed
      * successfully.
      */
     virtual void configUpdated();
 
-    /**
+    /*!
      * Reimplement this method if you want to add a widget for your application
      * to Kontact's summary page.
      *
-     * @param parent The parent widget of the summary widget.
+     * \a parent The parent widget of the summary widget.
      */
     [[nodiscard]] virtual Summary *createSummaryWidget(QWidget *parent);
 
-    /**
+    /*!
      * Returns whether the plugin provides a part that should be shown in the sidebar.
      */
     [[nodiscard]] virtual bool showInSideBar() const;
 
-    /**
+    /*!
      * Set if the plugin provides a part that should be shown in the sidebar.
-     * @param hasPart shows part in sidebar if set as @c true
+     * \a hasPart shows part in sidebar if set as true
      */
     void setShowInSideBar(bool hasPart);
 
-    /**
+    /*!
      * Reimplement this method if you want to add checks before closing the
      * main kontact window. Return true if it's OK to close the window.
      * If any loaded plugin returns false from this method, then the
@@ -201,114 +201,112 @@ public:
      */
     [[nodiscard]] virtual bool queryClose() const;
 
-    /**
+    /*!
      * Registers the client at DBus and returns the dbus identifier.
      */
     QString registerClient();
 
-    /**
+    /*!
      * Return the weight of the plugin. The higher the weight the lower it will
      * be displayed in the sidebar. The default implementation returns 0.
      */
     virtual int weight() const;
 
-    /**
-     * Inserts a custom "New" @p action.
-     * @param action the new action to insert
+    /*!
+     * Inserts a custom "New" \a action.
+     * \a action the new action to insert
      */
     void insertNewAction(QAction *action);
 
-    /**
-     * Inserts a custom "Sync" @p action.
-     * @param action the custom Sync action to insert
+    /*!
+     * Inserts a custom "Sync" \a action.
+     * \a action the custom Sync action to insert
      */
     void insertSyncAction(QAction *action);
 
-    /**
+    /*!
      * Returns the list of custom "New" actions.
      */
     [[nodiscard]] QList<QAction *> newActions() const;
 
-    /**
+    /*!
      * Returns the list of custom "Sync" actions.
      */
     [[nodiscard]] QList<QAction *> syncActions() const;
 
-    /**
+    /*!
      * Returns a list of action names that shall be hidden in the main toolbar.
      */
     [[nodiscard]] virtual QStringList invisibleToolbarActions() const;
 
-    /**
+    /*!
      * Returns whether the plugin can handle the drag object of the given mime type.
      */
     [[nodiscard]] virtual bool canDecodeMimeData(const QMimeData *data) const;
 
-    /**
+    /*!
      * Process drop event.
      */
     virtual void processDropEvent(QDropEvent *);
 
-    /**
+    /*!
      * Session management: read properties
      */
     virtual void readProperties(const KConfigGroup &);
 
-    /**
+    /*!
      * Session management: save properties
      */
     virtual void saveProperties(KConfigGroup &);
 
-    /**
+    /*!
      * Returns a pointer to the kontact core object.
      */
     [[nodiscard]] Core *core() const;
 
-    /**
+    /*!
      * Sets whether the plugin shall be disabled.
      */
     void setDisabled(bool value);
 
-    /**
+    /*!
      * Returns whether the plugin is disabled.
      */
     [[nodiscard]] bool disabled() const;
 
-    /**
-     * @since 4.13
+    /*!
+     * \since 4.13
      */
     virtual void shortcutChanged();
 
 public Q_SLOTS:
-    /**
-     * @internal usage
+    /*!
+     * \internal usage
      *
      * This slot is called whenever the configuration has been changed.
      */
     void slotConfigUpdated();
 
 protected:
-    /**
+    /*!
      * Reimplement and return the part here. Reimplementing createPart() is
      * mandatory!
      */
     virtual KParts::Part *createPart() = 0;
 
-    /**
+    /*!
      * Returns the loaded part.
      */
     KParts::Part *loadPart();
 
-    /**
+    /*!
      * Virtual hook for BC extension.
      */
     void virtual_hook(int id, void *data) override;
 
 private:
-    //@cond PRIVATE
     class PluginPrivate;
     std::unique_ptr<PluginPrivate> const d;
-    //@endcond
 };
 
 }

@@ -15,7 +15,7 @@ class QCommandLineParser;
 
 namespace KontactInterface
 {
-/**
+/*!
  * D-Bus Object that has the name of the standalone application (e.g. "kmail")
  * and implements newInstance() so that running the separate application does
  * the right thing when kontact is running.
@@ -37,15 +37,15 @@ public:
 
     [[nodiscard]] Plugin *plugin() const;
 
-    /**
-      Sets the main QWidget @p widget associated with this application.
-      @param widget the QWidget to set as main
+    /*!
+      Sets the main QWidget \a widget associated with this application.
+      \a widget the QWidget to set as main
     */
     static void setMainWidget(QWidget *widget);
 
-    /**
+    /*!
       Returns the main widget, which will zero if setMainWidget() has not be called yet.
-      @since 4.6
+      \since 4.6
     */
     [[nodiscard]] QWidget *mainWidget();
 
@@ -69,7 +69,7 @@ public:
     virtual UniqueAppHandler *createHandler(Plugin *) = 0;
 };
 
-/**
+/*!
  * Used by UniqueAppWatcher below, to create the above UniqueAppHandler object
  * when necessary.
  * The template argument is the UniqueAppHandler-derived class.
@@ -86,7 +86,7 @@ public:
     }
 };
 
-/**
+/*!
  * If the standalone application is running by itself, we need to watch
  * for when the user closes it, and activate the uniqueapphandler then.
  * This prevents, on purpose, that the standalone app can be restarted.
@@ -98,14 +98,14 @@ class KONTACTINTERFACE_EXPORT UniqueAppWatcher : public QObject
     Q_OBJECT
 
 public:
-    /**
+    /*!
      * Create an instance of UniqueAppWatcher, which does everything necessary
      * for the "unique application" behavior: create the UniqueAppHandler as soon
      * as possible, i.e. either right now or when the standalone app is closed.
      *
-     * @param factory templatized factory to create the handler. Example:
+     * \a factory templatized factory to create the handler. Example:
      * ...   Note that the watcher takes ownership of the factory.
-     * @param plugin is the plugin application
+     * \a plugin is the plugin application
      */
     UniqueAppWatcher(UniqueAppHandlerFactoryBase *factory, Plugin *plugin);
 

@@ -1,0 +1,33 @@
+include($KDE_DOCS/global/qt-module-defaults.qdocconf)
+
+project = KontactInterface
+description = This library provides the glue necessary for application "Parts" to be embedded as a Kontact component (or plugin).
+
+
+documentationinheaders = true
+
+headerdirs += .
+sourcedirs += .
+
+outputformats = HTML
+
+depends += \
+    qtcore
+
+navigation.landingpage = "KontactInterface"
+
+qhp.projects            = KontactInterface
+
+qhp.KontactInterface.file                = KontactInterface.qhp
+qhp.KontactInterface.namespace           = org.kde.KontactInterface.$QT_VERSION_TAG
+qhp.KontactInterface.virtualFolder       = KontactInterface
+qhp.KontactInterface.indexTitle          = KontactInterface
+qhp.KontactInterface.indexRoot           =
+
+qhp.KontactInterface.subprojects         = classes
+qhp.KontactInterface.subprojects.classes.title = C++ Classes
+qhp.KontactInterface.subprojects.classes.indexTitle = KontactInterface C++ Classes
+qhp.KontactInterface.subprojects.classes.selectors = class fake:headerfile
+qhp.KontactInterface.subprojects.classes.sortPages = true
+
+tagfile = KontactInterface.tags

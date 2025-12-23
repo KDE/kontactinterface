@@ -1,0 +1,21 @@
+/*!
+    \page kontactinterface-index.html
+    \title KontactInterface
+
+    This library provides the glue necessary for application "Parts"
+    to be embedded as a Kontact component (or plugin).
+
+    \section1 Using the Module
+
+    \include {module-use.qdocinc} {using the c++ api}
+
+    \section2 Building with CMake
+
+    \include {module-use.qdocinc} {building with cmake} {KPim6} {KontactInterface} {KPim6::KontactInterface}
+
+    \section1 API Reference
+
+    \list
+        \li \l{KontactInterface C++ Classes}
+    \endlist
+*/
