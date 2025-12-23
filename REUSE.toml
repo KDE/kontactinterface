@@ -1,0 +1,12 @@
+version = 1
+SPDX-FileCopyrightText = "none"
+SPDX-License-Identifier = "CC0-1.0"
+SPDX-PackageName = "kontactinterface"
+SPDX-PackageSupplier = "Montel Laurent <montel@kde.org>"
+SPDX-PackageDownloadLocation = "https://invent.kde.org/pim/kontactinterface"
+
+[[annotations]]
+path = ["src/kontactinterface-index.qdoc", "src/kontactinterface.qdoc", "src/kontactinterface.qdocconf"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "none"
+SPDX-License-Identifier = "CC0-1.0"
