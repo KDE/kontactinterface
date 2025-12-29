@@ -18,7 +18,9 @@
 
 #pragma once
 
+#ifdef Q_OS_WIN
 #include "kontactinterface_export.h"
+#endif
 
 #include <QList>
 

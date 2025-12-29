@@ -19,6 +19,9 @@ namespace KontactInterface
 class Plugin;
 class CorePrivate;
 /*!
+ * \class KontactInterface::Core
+ * \inmodule KontactInterface
+ * \inheaderfile KontactInterface/Core
  * \brief The abstract interface that represents the Kontact core.
  *
  * This class provides the interface to the Kontact core for the plugins.

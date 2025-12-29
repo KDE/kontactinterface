@@ -57,6 +57,10 @@ namespace KontactInterface
 class Core;
 class Summary;
 /*!
+ * \class KontactInterface::Plugin
+ * \inmodule KontactInterface
+ * \inheaderfile KontactInterface/Plugin
+ *
  * \brief Base class for all Plugins in Kontact.
  *
  * Inherit from it to get a plugin. It can insert an icon into the sidepane,

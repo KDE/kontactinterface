@@ -17,6 +17,10 @@ class QCommandLineParser;
 namespace KontactInterface
 {
 /*!
+ * \class KontactInterface::PimUniqueApplication
+ * \inmodule KontactInterface
+ * \inheaderfile KontactInterface/PimUniqueApplication
+ *
  * KDEPIM applications which can be integrated into kontact should use
  * PimUniqueApplication instead of QApplication + Dbus unique.
  * This makes command-line handling work, i.e. you can launch "korganizer"
@@ -29,9 +33,15 @@ class KONTACTINTERFACE_EXPORT PimUniqueApplication : public QApplication
     Q_CLASSINFO("D-Bus Interface", "org.kde.PIMUniqueApplication")
 
 public:
+    /*!
+     *
+     */
     explicit PimUniqueApplication(int &argc, char **argv[]);
     ~PimUniqueApplication() override;
 
+    /*!
+     *
+     */
     void setAboutData(KAboutData &aboutData);
 
     /*!
@@ -41,6 +51,9 @@ public:
      */
     static bool start(const QStringList &arguments);
 
+    /*!
+     *
+     */
     [[nodiscard]] QCommandLineParser *cmdArgs() const;
 
 public Q_SLOTS:

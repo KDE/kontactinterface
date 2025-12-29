@@ -16,6 +16,10 @@ class QCommandLineParser;
 namespace KontactInterface
 {
 /*!
+ * \class KontactInterface::UniqueAppHandler
+ * \inmodule KontactInterface
+ * \inheaderfile KontactInterface/UniqueAppHandler
+ *
  * D-Bus Object that has the name of the standalone application (e.g. "kmail")
  * and implements newInstance() so that running the separate application does
  * the right thing when kontact is running.
@@ -29,6 +33,9 @@ class KONTACTINTERFACE_EXPORT UniqueAppHandler : public QObject
     Q_CLASSINFO("D-Bus Interface", "org.kde.PIMUniqueApplication")
 
 public:
+    /*!
+     *
+     */
     explicit UniqueAppHandler(Plugin *plugin);
     ~UniqueAppHandler() override;
 
@@ -111,6 +118,9 @@ public:
 
     ~UniqueAppWatcher() override;
 
+    /*!
+     *
+     */
     bool isRunningStandalone() const;
 
 private Q_SLOTS:

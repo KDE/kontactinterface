@@ -18,6 +18,10 @@ class QDropEvent;
 namespace KontactInterface
 {
 /*!
+ * \class KontactInterface::Summary
+ * \inmodule KontactInterface
+ * \inheaderfile KontactInterface/Summary
+ *
  * \brief Base class for summary widgets in Kontact.
  * \namespace KontactInterface
  *
