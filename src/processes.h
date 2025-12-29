@@ -18,11 +18,11 @@
 
 #pragma once
 
+#include <QList>
+
 #ifdef Q_OS_WIN
 #include "kontactinterface_export.h"
 #endif
-
-#include <QList>
 
 class QString;
 
