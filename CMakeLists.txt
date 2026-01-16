@@ -134,6 +134,17 @@ ecm_set_disabled_deprecation_versions(QT 6.11.0
 )
 set(KONTACTINTERFACE_HAVE_X11 ${X11_FOUND})
 
+option(WARNINGS_AS_ERRORS "Warnings are errors -Werror" OFF)
+if(WARNINGS_AS_ERRORS)
+    if(MSVC)
+        add_compile_options(/WX)
+        add_compile_options(/wd4996)
+    else()
+        add_compile_options(-Werror)
+        add_compile_options(-Wno-error=deprecated-declarations)
+    endif()
+endif()
+
 add_subdirectory(src)
 
 configure_file(
