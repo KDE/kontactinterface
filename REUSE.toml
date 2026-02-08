@@ -10,3 +10,9 @@ path = ["src/kontactinterface-index.qdoc", "src/kontactinterface.qdoc", "src/kon
 precedence = "aggregate"
 SPDX-FileCopyrightText = "none"
 SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = [".gersemirc"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "Allen Winter <winter@kde.org>"
+SPDX-License-Identifier = "CC0-1.0"
