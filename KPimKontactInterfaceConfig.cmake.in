@@ -3,7 +3,10 @@
 
 @PACKAGE_INIT@
 include(CMakeFindDependencyMacro)
-find_dependency(KF6Parts "@KF_MIN_VERSION@")
+find_dependency(
+    KF6Parts
+    "@KF_MIN_VERSION@"
+)
 
 @PACKAGE_SETUP_AUTOMOC_VARIABLES@
 
