@@ -19,7 +19,11 @@ include(ECMGenerateExportHeader)
 include(ECMGenerateHeaders)
 
 include(ECMSetupVersion)
-file(GLOB_RECURSE ALL_CLANG_FORMAT_SOURCE_FILES src/*.cpp src/*.h)
+file(
+    GLOB_RECURSE ALL_CLANG_FORMAT_SOURCE_FILES
+    src/*.cpp
+    src/*.h
+)
 set(PRE_COMMIT_INSTALLED FALSE)
 if(${CMAKE_SOURCE_DIR} STREQUAL ${PROJECT_SOURCE_DIR})
     if(EXISTS "${PROJECT_SOURCE_DIR}/.git/hooks/pre-commit")
@@ -33,12 +37,10 @@ endif()
 if(NOT ${PRE_COMMIT_INSTALLED})
     find_program(PRE_COMMIT_EXECUTABLE pre-commit)
     if(PRE_COMMIT_EXECUTABLE)
-        message(
-            STATUS
-            "This module has pre-commit support. pre-commit binary was found. Installing pre-commit hook"
-        )
+        message(STATUS "This module has pre-commit support. pre-commit binary was found. Installing pre-commit hook")
         execute_process(
-            COMMAND "${PRE_COMMIT_EXECUTABLE}" install -f
+            COMMAND
+                "${PRE_COMMIT_EXECUTABLE}" install -f
             ERROR_QUIET
             RESULT_VARIABLE _precommitresult
             WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}"
@@ -55,10 +57,7 @@ if(NOT ${PRE_COMMIT_INSTALLED})
             kde_clang_format(${ALL_CLANG_FORMAT_SOURCE_FILES})
         endif()
     else()
-        message(
-            WARNING
-            "This module has pre-commit support. pre-commit binary was not found."
-        )
+        message(WARNING "This module has pre-commit support. pre-commit binary was not found.")
         include(KDEGitCommitHooks)
         include(KDEClangFormat)
         kde_clang_format(${ALL_CLANG_FORMAT_SOURCE_FILES})
@@ -72,15 +71,17 @@ include(ECMSetupQtPluginMacroNames)
 include(ECMGenerateQDoc)
 
 include(ECMCheckOutboundLicense)
-file(GLOB_RECURSE ALL_SOURCE_FILES src/*.cpp src/*.h)
+file(
+    GLOB_RECURSE ALL_SOURCE_FILES
+    src/*.cpp
+    src/*.h
+)
 ecm_check_outbound_license(LICENSES GPL-2.0-only  FILES ${ALL_SOURCE_FILES})
 
 add_definitions(-DTRANSLATION_DOMAIN=\"kontactinterfaces6\")
 
 set(KONTACTINTERFACE_LIB_VERSION ${PIM_VERSION})
-set(CMAKECONFIG_INSTALL_DIR
-    "${KDE_INSTALL_CMAKEPACKAGEDIR}/KPim6KontactInterface"
-)
+set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KPim6KontactInterface")
 
 ecm_setup_version(PROJECT VARIABLE_PREFIX KONTACTINTERFACE
                         VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/src/kontactinterface_version.h"
@@ -106,18 +107,19 @@ find_package(
     KF6
     ${KF_MIN_VERSION}
     REQUIRED
-    COMPONENTS CoreAddons Parts WindowSystem I18n XmlGui
+    COMPONENTS
+        CoreAddons
+        Parts
+        WindowSystem
+        I18n
+        XmlGui
 )
 
 if(NOT APPLE AND NOT WIN32)
     find_package(X11 REQUIRED)
 endif()
 
-option(
-    USE_UNITY_CMAKE_SUPPORT
-    "Use UNITY cmake support (speedup compile time)"
-    OFF
-)
+option(USE_UNITY_CMAKE_SUPPORT "Use UNITY cmake support (speedup compile time)" OFF)
 
 set(COMPILE_WITH_UNITY_CMAKE_SUPPORT OFF)
 if(USE_UNITY_CMAKE_SUPPORT)
@@ -147,10 +149,7 @@ endif()
 
 add_subdirectory(src)
 
-configure_file(
-    config-kontactinterface.h.in
-    ${CMAKE_CURRENT_BINARY_DIR}/config-kontactinterface.h
-)
+configure_file(config-kontactinterface.h.in ${CMAKE_CURRENT_BINARY_DIR}/config-kontactinterface.h)
 
 configure_package_config_file(
     "${CMAKE_CURRENT_SOURCE_DIR}/KPimKontactInterfaceConfig.cmake.in"
@@ -168,7 +167,8 @@ install(
 )
 
 install(
-    FILES ${CMAKE_CURRENT_BINARY_DIR}/src/kontactinterface_version.h
+    FILES
+        ${CMAKE_CURRENT_BINARY_DIR}/src/kontactinterface_version.h
     DESTINATION ${KDE_INSTALL_INCLUDEDIR}/KPim6/KontactInterface
     COMPONENT Devel
 )

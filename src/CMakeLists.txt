@@ -27,7 +27,12 @@ ecm_qt_declare_logging_category(KPim6KontactInterface HEADER kontactinterface_de
 )
 
 if(COMPILE_WITH_UNITY_CMAKE_SUPPORT)
-    set_target_properties(KPim6KontactInterface PROPERTIES UNITY_BUILD ON)
+    set_target_properties(
+        KPim6KontactInterface
+        PROPERTIES
+            UNITY_BUILD
+                ON
+    )
 endif()
 
 ecm_generate_export_header(KPim6KontactInterface
@@ -50,8 +55,15 @@ target_include_directories(
 
 target_link_libraries(
     KPim6KontactInterface
-    PUBLIC KF6::CoreAddons KF6::Parts KF6::XmlGui
-    PRIVATE KF6::WindowSystem KF6::I18n KF6::KIOGui Qt::DBus
+    PUBLIC
+        KF6::CoreAddons
+        KF6::Parts
+        KF6::XmlGui
+    PRIVATE
+        KF6::WindowSystem
+        KF6::I18n
+        KF6::KIOGui
+        Qt::DBus
 )
 
 if(KONTACTINTERFACE_HAVE_X11)
@@ -61,16 +73,15 @@ endif()
 set_target_properties(
     KPim6KontactInterface
     PROPERTIES
-        VERSION ${KONTACTINTERFACE_VERSION}
-        SOVERSION ${KONTACTINTERFACE_SOVERSION}
-        EXPORT_NAME KontactInterface
+        VERSION
+            ${KONTACTINTERFACE_VERSION}
+        SOVERSION
+            ${KONTACTINTERFACE_SOVERSION}
+        EXPORT_NAME
+            KontactInterface
 )
 
-install(
-    TARGETS KPim6KontactInterface
-    EXPORT KPim6KontactInterfaceTargets
-    ${KDE_INSTALL_TARGETS_DEFAULT_ARGS}
-)
+install(TARGETS KPim6KontactInterface EXPORT KPim6KontactInterfaceTargets ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 
 ########### install files ###############
 
@@ -90,15 +101,14 @@ install(
     FILES
         ${CMAKE_CURRENT_BINARY_DIR}/kontactinterface_export.h
         ${KontactInterface_HEADERS}
-    DESTINATION
-        ${KDE_INSTALL_INCLUDEDIR}/KPim6/KontactInterface/kontactinterface
+    DESTINATION ${KDE_INSTALL_INCLUDEDIR}/KPim6/KontactInterface/kontactinterface
     COMPONENT Devel
 )
 
 install(
-    FILES ${KontactInterface_CamelCase_HEADERS}
-    DESTINATION
-        ${KDE_INSTALL_INCLUDEDIR}/KPim6/KontactInterface/KontactInterface/
+    FILES
+        ${KontactInterface_CamelCase_HEADERS}
+    DESTINATION ${KDE_INSTALL_INCLUDEDIR}/KPim6/KontactInterface/KontactInterface/
     COMPONENT Devel
 )
 
