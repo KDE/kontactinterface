@@ -18,11 +18,6 @@
  * Daniel Molkentin \<molkentin@kde.org\>\n
  * Cornelius Schumacher \<schumacher@kde.org\>
  *
- * @maintainers
- * Allen Winter \<winter@kde.org\>
- *
- * @licenses
- * @lgpl
  */
 
 // DOXYGEN_PROJECTNAME = Kontact Plugin Interface Library
