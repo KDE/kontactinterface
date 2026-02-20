@@ -26,12 +26,3 @@ msgstr "Kevin Scannell"
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "kscanne@gmail.com"
-
-#~ msgid "Start with a specific Kontact module"
-#~ msgstr "Tosaigh le modúl áirithe Kontact"
-
-#~ msgid "Start in iconified (minimized) mode"
-#~ msgstr "Tosaigh sa mhód íoslaghdaithe"
-
-#~ msgid "List all possible modules and exit"
-#~ msgstr "Taispeáin gach modúl agus scoir"
