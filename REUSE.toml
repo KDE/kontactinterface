@@ -6,7 +6,7 @@ SPDX-PackageSupplier = "Montel Laurent <montel@kde.org>"
 SPDX-PackageDownloadLocation = "https://invent.kde.org/pim/kontactinterface"
 
 [[annotations]]
-path = ["src/kontactinterface-index.qdoc", "src/kontactinterface.qdoc", "src/kontactinterface.qdocconf"]
+path = ["src/kontactinterface-index.qdoc", "src/kontactinterface.qdoc", "src/kontactinterface.qdocconf", "readme-build-ftime.txt"]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "none"
 SPDX-License-Identifier = "CC0-1.0"
@@ -16,3 +16,21 @@ path = [".gersemirc"]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "Allen Winter <winter@kde.org>"
 SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = ["README-pre-commit.md"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2023-2026 Laurent Montel <montel@kde.org>"
+SPDX-License-Identifier = "BSD-3-Clause"
+
+[[annotations]]
+path = ["CMakePresets.json"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021-2026 Laurent Montel <montel@kde.org>"
+SPDX-License-Identifier = "BSD-3-Clause"
+
+[[annotations]]
+path = ["README-qdoc.md"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2023-2026 Laurent Montel <montel@kde.org>"
+SPDX-License-Identifier = "BSD-3-Clause"
