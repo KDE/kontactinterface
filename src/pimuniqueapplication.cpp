@@ -73,7 +73,13 @@ public:
     void exportFocusWindow()
     {
 #ifdef HAVE_WAYLAND
+#if KWINDOWSYSTEM_VERSION >= QT_VERSION_CHECK(6, 28, 0)
+        KWaylandExtras::exportToplevel(QGuiApplication::focusWindow()).then([this](const QString &token) {
+            qputenv("PINENTRY_GEOM_HINT", QUrl::toPercentEncoding(token));
+        });
+#else
         KWaylandExtras::self()->exportWindow(QGuiApplication::focusWindow());
+#endif
 #endif
     }
 
@@ -99,9 +105,11 @@ PimUniqueApplication::PimUniqueApplication(int &argc, char **argv[])
 #endif
 
 #ifdef HAVE_WAYLAND
+#if KWINDOWSYSTEM_VERSION < QT_VERSION_CHECK(6, 28, 0)
     connect(KWaylandExtras::self(), &KWaylandExtras::windowExported, this, [](const auto, const auto &token) {
         qputenv("PINENTRY_GEOM_HINT", QUrl::toPercentEncoding(token));
     });
+#endif
     connect(qApp, &QGuiApplication::focusWindowChanged, this, [this](auto w) {
         if (!w) {
             return;
