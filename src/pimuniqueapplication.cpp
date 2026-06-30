@@ -74,7 +74,7 @@ public:
     {
 #ifdef HAVE_WAYLAND
 #if KWINDOWSYSTEM_VERSION >= QT_VERSION_CHECK(6, 28, 0)
-        KWaylandExtras::exportToplevel(QGuiApplication::focusWindow()).then([this](const QString &token) {
+        KWaylandExtras::exportToplevel(QGuiApplication::focusWindow()).then([](const QString &token) {
             qputenv("PINENTRY_GEOM_HINT", QUrl::toPercentEncoding(token));
         });
 #else
