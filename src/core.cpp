@@ -29,6 +29,7 @@ public:
 
     void slotPartDestroyed(QObject *);
     void checkNewDay();
+    void checkNewMinute();
 
     QString lastErrorMessage;
     QDate mLastDate;
@@ -49,6 +50,9 @@ Core::Core(QWidget *parent, Qt::WindowFlags f)
     auto timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, [this]() {
         d->checkNewDay();
+    });
+    connect(timer, &QTimer::timeout, this, [this]() {
+        d->checkNewMinute();
     });
     timer->start(1000 * 60);
 }
@@ -102,6 +106,12 @@ void CorePrivate::checkNewDay()
 
     mLastDate = QDate::currentDate();
 }
+void CorePrivate::checkNewMinute()
+{
+    Q_EMIT q->minuteChanged(QDateTime::currentDateTime());
+}
+//@endcond
+
 //@endcond
 
 QString Core::lastErrorMessage() const

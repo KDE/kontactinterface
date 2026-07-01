@@ -80,6 +80,13 @@ Q_SIGNALS:
      */
     void dayChanged(const QDate &);
 
+    /*!
+     * This signal is emitted whenever the next minute starts.
+     *
+     * arg1 is the datetime of the next minute.
+     */
+    void minuteChanged(const QDateTime &);
+
 protected:
     /*!
      * Creates a new core object.
