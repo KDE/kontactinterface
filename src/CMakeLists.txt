@@ -114,3 +114,21 @@ install(
 
 ecm_qt_install_logging_categories(EXPORT KONTACTINTERFACE FILE kontactinterface.categories DESTINATION ${KDE_INSTALL_LOGGINGCATEGORIESDIR})
 ecm_generate_qdoc(KPim6KontactInterface kontactinterface.qdocconf)
+
+ecm_add_installed_library_check(KPim6KontactInterface
+    PACKAGE_NAME "KPim6KontactInterface"
+    PACKAGE_VERSION ${KONTACTINTERFACE_VERSION}
+    PACKAGE_TARGET_NAMESPACE "KPim6::"
+)
+
+ecm_installed_library_check_include_strings(KPim6KontactInterface
+    HEADERS
+    ${KontactInterface_HEADERS}
+    PREFIX kontactinterface
+)
+
+ecm_installed_library_check_include_strings(KPim6KontactInterface
+   HEADERS
+   ${KontactInterface_CamelCase_HEADERS}
+    PREFIX KontactInterface
+)
