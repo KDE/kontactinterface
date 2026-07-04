@@ -127,7 +127,7 @@ KParts::Part *Plugin::loadPart()
     return core()->createPart(d->partLibraryName.constData());
 }
 
-const KAboutData Plugin::aboutData()
+const KAboutData Plugin::aboutData() // NOLINT(readability-const-return-type)
 {
     return KAboutData();
 }
