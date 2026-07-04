@@ -136,8 +136,8 @@ BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam)
         DWORD pidwin;
 
         GetWindowThreadProcessId(hwnd, &pidwin);
-        if (pidwin == ((EnumWindowsStruct *)lParam)->pid) {
-            ((EnumWindowsStruct *)lParam)->windowId = hwnd;
+        if (pidwin == (struct<EnumWindowsStruct *>(lParam))->pid) {
+            (static_cast<EnumWindowsStruct *>(lParam))->windowId = hwnd;
             return FALSE;
         }
     }
