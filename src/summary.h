@@ -85,9 +85,9 @@ public Q_SLOTS:
 Q_SIGNALS:
     /*!
      * This signal can be emitted to signaling that an action is going on.
-     * The \a message will be shown in the status bar.
+     * The specified message QString will be shown in the status bar.
      */
-    void message(const QString &message);
+    void message(const QString &);
 
     /*!
      * \internal
@@ -95,7 +95,7 @@ Q_SIGNALS:
      * This signal is emitted whenever a summary widget has been dropped on
      * this summary widget.
      */
-    void summaryWidgetDropped(QWidget *target, QObject *object, int alignment);
+    void summaryWidgetDropped(QWidget *, QObject *, int);
 
 protected:
     void mousePressEvent(QMouseEvent *) override;

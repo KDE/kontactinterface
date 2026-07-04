@@ -57,7 +57,7 @@ public:
     [[nodiscard]] QWidget *mainWidget();
 
 public Q_SLOTS: // DBUS methods
-    int newInstance(const QByteArray &asn_id, const QStringList &args, const QString &workingDirectory);
+    int newInstance(const QByteArray &startupId, const QStringList &args, const QString &workingDirectory);
     bool load();
 
 protected:

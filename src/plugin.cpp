@@ -102,9 +102,9 @@ QString Plugin::icon() const
     return d->icon;
 }
 
-void Plugin::setExecutableName(const QString &bin)
+void Plugin::setExecutableName(const QString &exeName)
 {
-    d->executableName = bin;
+    d->executableName = exeName;
 }
 
 QString Plugin::executableName() const

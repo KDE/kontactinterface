@@ -60,10 +60,10 @@ public:
     /*!
      * \internal (for Plugin)
      *
-     * \a library the library to create part from
-     * Creates a part from the given \a library.
+     * \a libname the library to create part from
+     * Creates a part from the given \a libname.
      */
-    [[nodiscard]] KParts::Part *createPart(const char *library);
+    [[nodiscard]] KParts::Part *createPart(const char *libname);
 
     /*!
      * \internal (for Plugin)
@@ -76,9 +76,9 @@ Q_SIGNALS:
     /*!
      * This signal is emitted whenever a new day starts.
      *
-     * \a date The date of the new day
+     * arg1 The date of the new day
      */
-    void dayChanged(const QDate &date);
+    void dayChanged(const QDate &);
 
 protected:
     /*!

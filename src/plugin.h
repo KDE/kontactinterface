@@ -118,9 +118,9 @@ public:
     [[nodiscard]] QString icon() const;
 
     /*!
-     * Sets the \a name of executable (if existent).
+     * Sets the \a exeName of executable (if existent).
      */
-    void setExecutableName(const QString &name);
+    void setExecutableName(const QString &exeName);
 
     /*!
      * Returns the name of the executable (if existent).
@@ -271,7 +271,7 @@ public:
     /*!
      * Sets whether the plugin shall be disabled.
      */
-    void setDisabled(bool value);
+    void setDisabled(bool disabled);
 
     /*!
      * Returns whether the plugin is disabled.
