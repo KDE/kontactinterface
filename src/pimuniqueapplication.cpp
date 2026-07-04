@@ -150,7 +150,7 @@ static bool callNewInstance(const QString &appName, const QString &serviceName, 
     const QString objectName = u'/' + appName + "_PimApplication"_L1;
     QDBusInterface iface(serviceName, objectName, u"org.kde.PIMUniqueApplication"_s, QDBusConnection::sessionBus());
     if (iface.isValid()) {
-        QDBusReply<int> reply = iface.call(u"newInstance"_s, asn_id, arguments, QDir::currentPath());
+        const QDBusReply<int> reply = iface.call(u"newInstance"_s, asn_id, arguments, QDir::currentPath());
         if (reply.isValid()) {
             return true;
         }

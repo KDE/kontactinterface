@@ -189,7 +189,7 @@ UniqueAppWatcher::UniqueAppWatcher(UniqueAppHandlerFactoryBase *factory, Plugin 
     }
 #endif
 
-    QString owner = QDBusConnection::sessionBus().interface()->serviceOwner(serviceName);
+    const QString owner = QDBusConnection::sessionBus().interface()->serviceOwner(serviceName);
     if (d->mRunningStandalone && (owner == QDBusConnection::sessionBus().baseService())) {
         d->mRunningStandalone = false;
     }

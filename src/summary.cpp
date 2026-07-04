@@ -75,7 +75,7 @@ QWidget *Summary::createHeader(QWidget *parent, const QString &iconname, const Q
     hbox->setSpacing(0);
     box->setAutoFillBackground(true);
 
-    QIcon icon = QIcon::fromTheme(iconname);
+    const QIcon icon = QIcon::fromTheme(iconname);
 
     auto label = new QLabel(box);
     hbox->addWidget(label);

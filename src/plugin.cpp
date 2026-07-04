@@ -256,7 +256,7 @@ void Plugin::PluginPrivate::removeInvisibleToolbarActions(Plugin *plugin)
             // 2. Iterate over actions in toolbars
             QDomElement actionElem = containerElem.firstChildElement();
             while (!actionElem.isNull()) {
-                QDomElement nextActionElem = actionElem.nextSiblingElement();
+                const QDomElement nextActionElem = actionElem.nextSiblingElement();
                 if (QString::compare(actionElem.tagName(), "Action"_L1, Qt::CaseInsensitive) == 0) {
                     // qCDebug(KONTACTINTERFACE_LOG) << "Looking at action" << actionElem.attribute("name");
                     if (hideActions.contains(actionElem.attribute(u"name"_s))) {
