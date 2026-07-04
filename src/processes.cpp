@@ -122,7 +122,8 @@ void KontactInterface::getProcessesIdForName(const QString &processName, QList<i
 
 struct EnumWindowsStruct {
     EnumWindowsStruct()
-        : windowId(0)
+        : pid(0)
+        , windowId(0)
     {
     }
     int pid;
