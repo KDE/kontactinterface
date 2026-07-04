@@ -93,8 +93,8 @@ PimUniqueApplication::PimUniqueApplication(int &argc, char **argv[])
 {
 #ifdef Q_OS_WIN
     if (AttachConsole(ATTACH_PARENT_PROCESS)) {
-        freopen("CONOUT$", "w", stdout);
-        freopen("CONOUT$", "w", stderr);
+        std::ignore = freopen("CONOUT$", "w", stdout);
+        std::ignore = freopen("CONOUT$", "w", stderr);
     }
 
     setStyle(u"breeze"_s);
