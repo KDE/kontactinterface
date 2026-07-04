@@ -14,4 +14,5 @@ Dependencies:
 Options:
  require-passing-tests-on: ['Linux', 'FreeBSD', 'Windows']
  cmake-options: '-DWARNINGS_AS_ERRORS=ON'
+ cppcheck-arguments: '--enable=warning,performance,portability,style --suppress-xml=cppcheck-suppressions.xml'
  enable-lsan: True

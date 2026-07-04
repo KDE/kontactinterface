@@ -12,7 +12,7 @@ SPDX-FileCopyrightText = "none"
 SPDX-License-Identifier = "CC0-1.0"
 
 [[annotations]]
-path = [".gersemirc", ".clang-tidy"]
+path = [".gersemirc", "cppcheck-suppressions.xml", ".clang-tidy"]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "Allen Winter <winter@kde.org>"
 SPDX-License-Identifier = "CC0-1.0"
