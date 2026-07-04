@@ -29,6 +29,8 @@ using namespace KontactInterface;
 //@cond PRIVATE
 namespace KontactInterface
 {
+namespace
+{
 class SummaryMimeData : public QMimeData
 {
     Q_OBJECT
@@ -38,6 +40,7 @@ public:
         return format == "application/x-kontact-summary"_L1;
     }
 };
+}
 }
 //@endcond
 
