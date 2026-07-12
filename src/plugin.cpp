@@ -190,9 +190,8 @@ QStringList Plugin::invisibleToolbarActions() const
     return {};
 }
 
-bool Plugin::canDecodeMimeData(const QMimeData *data) const
+bool Plugin::canDecodeMimeData([[maybe_unused]] const QMimeData *data) const
 {
-    Q_UNUSED(data)
     return false;
 }
 
