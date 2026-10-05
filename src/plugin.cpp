@@ -8,7 +8,6 @@
 */
 
 #include "plugin.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "core.h"
 #include "kontactinterface_debug.h"
@@ -26,6 +25,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <QCoreApplication>
 #include <QStandardPaths>
 
+using namespace Qt::Literals::StringLiterals;
 using namespace KontactInterface;
 
 /**

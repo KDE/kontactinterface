@@ -8,7 +8,6 @@
 */
 
 #include "summary.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include <QDrag>
 #include <QDragEnterEvent>
@@ -24,6 +23,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <QPixmap>
 #include <QStyle>
 
+using namespace Qt::Literals::StringLiterals;
 using namespace KontactInterface;
 
 //@cond PRIVATE

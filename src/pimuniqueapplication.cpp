@@ -6,7 +6,6 @@
 */
 
 #include "pimuniqueapplication.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "kontactinterface_debug.h"
 
@@ -38,6 +37,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <QDBusConnectionInterface>
 #include <QDBusInterface>
 
+using namespace Qt::Literals::StringLiterals;
 using namespace KontactInterface;
 
 namespace

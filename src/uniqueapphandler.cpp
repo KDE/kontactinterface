@@ -7,7 +7,6 @@
 */
 
 #include "uniqueapphandler.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "core.h"
 
@@ -29,6 +28,8 @@ using namespace Qt::Literals::StringLiterals;
 #ifdef Q_OS_WIN
 #include <process.h>
 #endif
+
+using namespace Qt::Literals::StringLiterals;
 
 /*
  Test plan for the various cases of interaction between standalone apps and kontact:
