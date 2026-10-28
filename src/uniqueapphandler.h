@@ -34,7 +34,7 @@ class KONTACTINTERFACE_EXPORT UniqueAppHandler : public QObject
 
 public:
     /*!
-     *
+     * Creates a new handler for \a plugin.
      */
     explicit UniqueAppHandler(Plugin *plugin);
     ~UniqueAppHandler() override;
@@ -77,6 +77,10 @@ public:
 };
 
 /*!
+ * \class KontactInterface::UniqueAppHandlerFactory
+ * \inmodule KontactInterface
+ * \inheaderfile KontactInterface/UniqueAppHandler
+ *
  * Used by UniqueAppWatcher below, to create the above UniqueAppHandler object
  * when necessary.
  * The template argument is the UniqueAppHandler-derived class.
@@ -94,6 +98,10 @@ public:
 };
 
 /*!
+ * \class KontactInterface::UniqueAppWatcher
+ * \inmodule KontactInterface
+ * \inheaderfile KontactInterface/UniqueAppHandler
+ *
  * If the standalone application is running by itself, we need to watch
  * for when the user closes it, and activate the uniqueapphandler then.
  * This prevents, on purpose, that the standalone app can be restarted.
@@ -119,7 +127,7 @@ public:
     ~UniqueAppWatcher() override;
 
     /*!
-     *
+     * Returns true if the standalone application is running.
      */
     bool isRunningStandalone() const;
 

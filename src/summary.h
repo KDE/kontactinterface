@@ -23,7 +23,6 @@ namespace KontactInterface
  * \inheaderfile KontactInterface/Summary
  *
  * \brief Base class for summary widgets in Kontact.
- * \namespace KontactInterface
  *
  * This class should be used as base class when creating new
  * summary widgets for the Summary View plugin in Kontact.

@@ -34,13 +34,13 @@ class KONTACTINTERFACE_EXPORT PimUniqueApplication : public QApplication
 
 public:
     /*!
-     *
+     * Creates a new application with the command line arguments \a argc and \a argv.
      */
     explicit PimUniqueApplication(int &argc, char **argv[]);
     ~PimUniqueApplication() override;
 
     /*!
-     *
+     * Sets the \a aboutData of the application.
      */
     void setAboutData(KAboutData &aboutData);
 
@@ -48,6 +48,9 @@ public:
      * Register this process as a unique application, if not already running.
      * Typically called in main().
      * \a arguments should start with the appname, as QCoreApplication::arguments() does.
+     *
+     * Returns true if this process was registered as the unique application, false if
+     * the arguments were forwarded to an already running instance (main() can then exit).
      */
     static bool start(const QStringList &arguments);
 

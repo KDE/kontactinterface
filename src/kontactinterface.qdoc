@@ -7,3 +7,10 @@
 
     \brief This library provides the glue necessary for application "Parts" to be embedded as a Kontact component (or plugin).
 */
+
+/*!
+    \namespace KontactInterface
+    \inmodule KontactInterface
+
+    \brief Classes for integrating applications as Kontact components.
+*/

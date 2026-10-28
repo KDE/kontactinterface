@@ -32,11 +32,17 @@ class Part;
 }
 
 /*!
+  \macro KONTACT_PLUGIN_VERSION
+  \relates KontactInterface::Plugin
+
   Increase this version number whenever you make a change in the API.
  */
 #define KONTACT_PLUGIN_VERSION 11
 
 /*!
+  \macro EXPORT_KONTACT_PLUGIN_WITH_JSON(pluginclass, jsonFile)
+  \relates KontactInterface::Plugin
+
   Exports Kontact plugin.
   \a pluginclass the class to instantiate (must derive from KontactInterface::Plugin)
   \a jsonFile filename of the JSON file, generated from a .desktop file
@@ -76,6 +82,7 @@ public:
      *
      * \a core The core object that manages the plugin.
      * \a parent The parent object.
+     * \a data The plugin metadata.
      * \a appName The name of the application that
      *       provides the part. This is the name used for DBus registration.
      *       It's ok to have several plugins using the same application name.
@@ -244,7 +251,7 @@ public:
     [[nodiscard]] virtual QStringList invisibleToolbarActions() const;
 
     /*!
-     * Returns whether the plugin can handle the drag object of the given mime type.
+     * Returns whether the plugin can handle the drag object \a data of the given mime type.
      */
     [[nodiscard]] virtual bool canDecodeMimeData(const QMimeData *data) const;
 
@@ -269,7 +276,7 @@ public:
     [[nodiscard]] Core *core() const;
 
     /*!
-     * Sets whether the plugin shall be disabled.
+     * Sets whether the plugin shall be \a disabled.
      */
     void setDisabled(bool disabled);
 
@@ -305,6 +312,9 @@ protected:
 
     /*!
      * Virtual hook for BC extension.
+     *
+     * \a id The hook identifier.
+     * \a data The hook data.
      */
     void virtual_hook(int id, void *data) override;
 
