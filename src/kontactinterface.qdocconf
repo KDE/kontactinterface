@@ -18,9 +18,9 @@ navigation.landingpage = "KontactInterface"
 
 qhp.projects            = KontactInterface
 
-qhp.KontactInterface.file                = KontactInterface.qhp
-qhp.KontactInterface.namespace           = org.kde.KontactInterface.$QT_VERSION_TAG
-qhp.KontactInterface.virtualFolder       = KontactInterface
+qhp.KontactInterface.file                = kontactinterface.qhp
+qhp.KontactInterface.namespace           = org.kde.kontactinterface.$QT_VERSION_TAG
+qhp.KontactInterface.virtualFolder       = kontactinterface
 qhp.KontactInterface.indexTitle          = KontactInterface
 qhp.KontactInterface.indexRoot           =
 
@@ -30,4 +30,4 @@ qhp.KontactInterface.subprojects.classes.indexTitle = KontactInterface C++ Class
 qhp.KontactInterface.subprojects.classes.selectors = class fake:headerfile
 qhp.KontactInterface.subprojects.classes.sortPages = true
 
-tagfile = KontactInterface.tags
+tagfile = kontactinterface.tags
