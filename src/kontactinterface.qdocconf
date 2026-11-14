@@ -1,6 +1,7 @@
 include($KDE_DOCS/global/qt-module-defaults.qdocconf)
 
 project = KontactInterface
+moduleheader = kontactinterface_qdocmoduleheader.h
 description = This library provides the glue necessary for application "Parts" to be embedded as a Kontact component (or plugin).
 
 
