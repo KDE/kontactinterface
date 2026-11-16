@@ -2,8 +2,8 @@
     \module KontactInterface
     \title KontactInterface C++ Classes
     \ingroup modules
-    \cmakepackage KPim6
-    \cmakecomponent KontactInterface
+    \cmakepackage KPim6KontactInterface
+    \cmaketargetitem KPim6::KontactInterface
 
     \brief This library provides the glue necessary for application "Parts" to be embedded as a Kontact component (or plugin).
 */

@@ -11,7 +11,7 @@
 
     \section2 Building with CMake
 
-    \include {module-use.qdocinc} {building with cmake} {KPim6} {KontactInterface} {KPim6::KontactInterface}
+    \include {module-use.qdocinc} {building with cmake nomodule} {KPim6KontactInterface} {KPim6::KontactInterface}
 
     \section1 API Reference
 
