@@ -15,6 +15,7 @@
 #include <KPluginMetaData>
 
 #include <QDateTime>
+#include <QMap>
 #include <QTimer>
 
 using namespace KontactInterface;
