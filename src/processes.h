@@ -32,11 +32,15 @@ namespace KontactInterface
 /*
  * Sets @a pids to a list of processes having name @a processName.
  */
+/*!
+ */
 KONTACTINTERFACE_EXPORT void getProcessesIdForName(const QString &processName, QList<int> &pids);
 
 /*
  * Activates window for first found process with executable @a executableName
  * (without path and .exe extension)
+ */
+/*!
  */
 KONTACTINTERFACE_EXPORT void activateWindowForProcess(const QString &executableName);
 #endif

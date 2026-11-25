@@ -40,6 +40,9 @@ class Part;
 #define KONTACT_PLUGIN_VERSION 11
 
 /*!
+     * \class Instance
+     * \inmodule KontactInterface
+     * \inheaderfile KontactInterface/Plugin
   \macro EXPORT_KONTACT_PLUGIN_WITH_JSON(pluginclass, jsonFile)
   \relates KontactInterface::Plugin
 

@@ -97,9 +97,17 @@ Q_SIGNALS:
     void summaryWidgetDropped(QWidget *, QObject *, int);
 
 protected:
+    /*!
+     */
     void mousePressEvent(QMouseEvent *) override;
+    /*!
+     */
     void mouseMoveEvent(QMouseEvent *) override;
+    /*!
+     */
     void dragEnterEvent(QDragEnterEvent *) override;
+    /*!
+     */
     void dropEvent(QDropEvent *) override;
 
 private:

@@ -37,11 +37,17 @@ public:
      * Creates a new handler for \a plugin.
      */
     explicit UniqueAppHandler(Plugin *plugin);
+    /*!
+     */
     ~UniqueAppHandler() override;
 
     /// This must be reimplemented so that app-specific command line options can be parsed
+    /*!
+     */
     virtual void loadCommandLineOptions(QCommandLineParser *parser) = 0;
 
+    /*!
+     */
     [[nodiscard]] Plugin *plugin() const;
 
     /*!
@@ -57,10 +63,16 @@ public:
     [[nodiscard]] QWidget *mainWidget();
 
 public Q_SLOTS: // DBUS methods
+    /*!
+     */
     int newInstance(const QByteArray &startupId, const QStringList &args, const QString &workingDirectory);
+    /*!
+     */
     bool load();
 
 protected:
+    /*!
+     */
     virtual int activate(const QStringList &args, const QString &workingDirectory);
 
 private:
@@ -69,10 +81,19 @@ private:
 };
 
 /// Base class for UniqueAppHandler
+/*!
+ * \class KontactInterface::UniqueAppHandlerFactoryBase
+ * \inmodule KontactInterface
+ * \inheaderfile KontactInterface/UniqueAppHandler
+ */
 class UniqueAppHandlerFactoryBase
 {
 public:
+    /*!
+     */
     virtual ~UniqueAppHandlerFactoryBase() = default;
+    /*!
+     */
     virtual UniqueAppHandler *createHandler(Plugin *) = 0;
 };
 
@@ -90,6 +111,8 @@ template<class T>
 class UniqueAppHandlerFactory : public UniqueAppHandlerFactoryBase
 {
 public:
+    /*!
+     */
     UniqueAppHandler *createHandler(Plugin *plugin) override
     {
         plugin->registerClient();
@@ -124,6 +147,8 @@ public:
      */
     UniqueAppWatcher(UniqueAppHandlerFactoryBase *factory, Plugin *plugin);
 
+    /*!
+     */
     ~UniqueAppWatcher() override;
 
     /*!

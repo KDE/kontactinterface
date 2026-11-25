@@ -37,6 +37,8 @@ public:
      * Creates a new application with the command line arguments \a argc and \a argv.
      */
     explicit PimUniqueApplication(int &argc, char **argv[]);
+    /*!
+     */
     ~PimUniqueApplication() override;
 
     /*!
@@ -64,6 +66,8 @@ public Q_SLOTS:
     Q_SCRIPTABLE virtual int newInstance(const QByteArray &startupId, const QStringList &arguments, const QString &workingDirectory);
 
 protected:
+    /*!
+     */
     virtual int activate(const QStringList &arguments, const QString &workingDirectory);
 
 private:
